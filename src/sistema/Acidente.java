@@ -2,9 +2,6 @@ package sistema;
 
 import java.util.Date;
 
-/**
- * Created by 20161bsi0314 on 11/04/2018.
- */
 public class Acidente {
     private boolean saidaPista;
     private boolean derrapagem;
@@ -18,6 +15,7 @@ public class Acidente {
     private int numCnhCondutor;
 
     
+    /* Gets e Sets */
     public boolean isSaidaPista() {
         return saidaPista;
     }
@@ -82,19 +80,19 @@ public class Acidente {
         this.data = data;
     }
 
-	public String getPlaca() {
-		return placa;
-	}
+    public String getPlaca() {
+            return placa;
+    }
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
+    public void setPlaca(String placa) {
+            this.placa = placa;
+    }
 
-	public int getCnhCondutor() {
-		return numCnhCondutor;
-	}
+    public int getCnhCondutor() {
+            return numCnhCondutor;
+    }
 
-	public void setNumCnhCondutor(int cnhCondutor) {
-		this.numCnhCondutor = cnhCondutor;
-	}
+    public void setNumCnhCondutor(int cnhCondutor) {
+            this.numCnhCondutor = cnhCondutor;
+    }
 }

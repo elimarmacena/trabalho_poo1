@@ -7,6 +7,9 @@ public class Rg {
     private String orgaoEmissor;
     private String estado;
 
+    
+    /* Gets e Sets*/
+    
     public String getNumRg() {
         return numRg;
     }

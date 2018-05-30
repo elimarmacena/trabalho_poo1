@@ -6,11 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Created by 20161bsi0314 on 11/04/2018.
- */
 public class Veiculo {
     private String chassi;
     private String placa;
@@ -18,10 +16,12 @@ public class Veiculo {
     private String modelo;
     private String cor;
     private int ano;
-    private DonoVeiculo proprietario;
-    private Condutor motorista;
+    private Condutor proprietario;
+    private ArrayList<Condutor> condutores; //Lista de condutores
     private Acidente acontecimento;
 
+    
+    /* Gets e Sets*/
     public String getChassi() {
         return chassi;
     }
@@ -86,28 +86,28 @@ public class Veiculo {
         this.ano = ano;
     }
 
-    public DonoVeiculo getProprietario() {
-        return proprietario;
-    }
-
-    public void setProprietario(DonoVeiculo proprietario) {
-        this.proprietario = proprietario;
-    }
-
-    public Condutor getMotorista() {
-        return motorista;
-    }
-
-    public void setMotorista(Condutor motorista) {
-        this.motorista = motorista;
-    }
-
     public Acidente getAcontecimento() {
         return acontecimento;
     }
 
     public void setAcontecimento(Acidente acontecimento) {
         this.acontecimento = acontecimento;
+    }
+
+    public Condutor getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Condutor proprietario) {
+        this.proprietario = proprietario;
+    }
+
+    public ArrayList<Condutor> getCondutores() {
+        return condutores;
+    }
+
+    public void setCondutores(ArrayList<Condutor> condutores) {
+        this.condutores = condutores;
     }
     
 }

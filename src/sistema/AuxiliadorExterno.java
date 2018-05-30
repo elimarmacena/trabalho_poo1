@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 public class AuxiliadorExterno extends Pessoa {
     private String orgaoAssociado;
 
+    /* Gets e Sets */
+    
     public String getOrgaoAssociado() {
         return orgaoAssociado;
     }
@@ -19,12 +21,15 @@ public class AuxiliadorExterno extends Pessoa {
         this.orgaoAssociado = orgaoAssociado;
     }
 	
+    
+    /* Metodos */
+    
     public String dataToString(Date data) {
         DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return formatoData.format(data);
     }
 
-    public void envioInfoAcidente(String placa, int numOcupantes, int numCnh, Date data ) {
+    public void envioInfoAcidente(String placa, int numOcupantes, String condutorCnh, Date data ) {
         FileWriter arquivo = null;
         try {
             arquivo = new FileWriter(".\\acidentes_info.csv",true);
@@ -34,7 +39,7 @@ public class AuxiliadorExterno extends Pessoa {
             arquivo.append(this.getOrgaoAssociado() + ";");
             arquivo.append( placa + ";");
             arquivo.append(numOcupantes + ";");
-            arquivo.append(numCnh + ";");
+            arquivo.append(condutorCnh + ";");
             String saidaPista = JOptionPane.showInputDialog("Acidente envolve saida da pista?");
             arquivo.append(saidaPista.equalsIgnoreCase("sim")+";");
             String derrapagem = JOptionPane.showInputDialog("Acidente envolve derrapagem?");

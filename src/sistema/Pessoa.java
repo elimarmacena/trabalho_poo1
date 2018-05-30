@@ -1,20 +1,18 @@
 package sistema;
 
-
 import java.util.Date;
 import java.util.Scanner;
 
-/**
- * Created by 20161bsi0314 on 11/04/2018.
- */
-public class Pessoa {
+public abstract class Pessoa {
     private String nome;
     private Date dataNascimento;
     private String sexo;
-    //private int[] cpf = new int[2];
-    private String cpf;
+    private String numCpf;
     private Rg rg;
 
+    
+    /* Gets e Sets */
+    
     public String getNome() {
         return nome;
     }
@@ -56,7 +54,7 @@ public class Pessoa {
     }
 
     public String getCpf() {
-        return cpf;
+        return numCpf;
     }
 
     public void setCpf(String cpf) { //EXEMPLO CPF: 123456789-10 (length 12)
@@ -67,11 +65,7 @@ public class Pessoa {
             setCpf(tentativaCPF);
         }
         else {
-            this.cpf = cpf;
+            this.numCpf = cpf;
         }
-    }
-    
-    
-    
-    
+    }  
 }
