@@ -1,7 +1,9 @@
-package sistema;
+package model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import crud.BuscaInfosArquivos;
+import crud.CadastramentosArquivos;
 
 public class Funcionario extends Pessoa {
     private String login;

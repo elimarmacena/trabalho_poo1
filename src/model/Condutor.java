@@ -1,4 +1,4 @@
-package sistema;
+package model;
 
 public class Condutor extends Pessoa {
     private Cnh cnh;

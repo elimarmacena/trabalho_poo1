@@ -1,4 +1,5 @@
 package sistema;
+import model.Funcionario;
 import java.util.ArrayList;
 
 

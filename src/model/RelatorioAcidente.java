@@ -1,5 +1,5 @@
 
-package sistema;
+package model;
 
 public class RelatorioAcidente {
     private String placa;
