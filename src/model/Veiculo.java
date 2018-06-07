@@ -16,9 +16,12 @@ public class Veiculo {
     private String modelo;
     private String cor;
     private int ano;
-    private Condutor proprietario;
+    //proprietario pode ser indicado na classe condutor, uma vez que ele só cadastrado caso o acidente aconteca
+    /*private Condutor proprietario;
     private ArrayList<Condutor> condutores; //Lista de condutores
-    private Acidente acontecimento;
+    private Acidente acontecimento;/*
+    //Nao eh o acidente que esta relacionado com o veiculo e sim o veiculo com acidente, sendo o veiculo q eh referenciado pelo acidente, nao o contrario.
+    */
 
     
     /* Gets e Sets*/
