@@ -80,6 +80,7 @@ public class CadastramentosArquivos {
     }
     
     /* cadastra titular do veiculo escrevendo no arquivo*/
+    /*
     public static void cadastroTitularVeiculo(Titular titular) {
         FileWriter arquivo = null;
         try {
@@ -106,7 +107,7 @@ public class CadastramentosArquivos {
             }
     	}
     }
-    
+    */
     /* cadastra acidentes escrevendo no arquivo*/
     public static void cadastroAcidentes(Acidente acidente) {
         FileWriter arquivo = null; 

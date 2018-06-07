@@ -7,6 +7,9 @@ public class Funcionario extends Pessoa {
     private String login;
     private String senha; //ESSA NAO EH A TIPAGEM FINAL, APENAS USADA PARA A FORMACAO DO TRABALHO.
     
+    
+    /* Gets e Sets*/
+    
     public String getLogin() {
         return login;
     }
@@ -47,9 +50,9 @@ public class Funcionario extends Pessoa {
         CadastramentosArquivos.cadastroCondutor(condutor);
     }
 
-    public void cadastroTitularVeiculo(Titular titular) {
-        CadastramentosArquivos.cadastroTitularVeiculo(titular);
-    }
+    /*public void cadastroTitularVeiculo(Titular titular) {
+    CadastramentosArquivos.cadastroTitularVeiculo(titular);
+    }*/
 
     public void cadastroAcidente() {
         //verifica os acidentes informados por terceiros e eh feita uma intersecao entre a base de dados de informacoes de terceiro

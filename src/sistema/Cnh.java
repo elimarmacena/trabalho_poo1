@@ -6,6 +6,9 @@ public class Cnh {
     private String numCnh;
     private String categoria;
 
+    
+    /* Gets e Sets */
+    
     public String getNumCnh() {
         return numCnh;
     }

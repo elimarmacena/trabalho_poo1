@@ -1,28 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package monitoria;
+package sistema;
 
 import java.util.Date;
 
-/**
- *
- * @author helle
- */
 public class DadosRotina {
     private int velocidade;
     private double localizacao[] = new double[2]; /* DUVIDA: ja instancia aqui ou deixa pro construtor algo do tipo? */
-    private Date date; //Precisamos de um nome que identifique melhor esse atributo, pode ser sigla
+    private Date dataColeta;
+    private Veiculo veiculo;
+    
 
     /* GETS E SETS */
     
-    /* 
+    /*
     Em especial os sets aqui nao carregam regras pois quem trata desses eventuais
     problemas é o sistema embarcado.
-    */
+     */
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
 
+     public Veiculo getVeiculo() {
+        return veiculo;
+    }
+    
     public int getVelocidade() {
         return velocidade;
     }
@@ -39,13 +39,14 @@ public class DadosRotina {
         this.localizacao = localizacao;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDataColeta() {
+        return dataColeta;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDataColeta(Date dataColeta) {
+        this.dataColeta = dataColeta;
     }
+
     
     //AS FUNCOES A SEGUIR SAO APENAS FUNCOES USADAS PARA EMULAR O VERDADEIRO FUNCIONAMENTO APOS A INTEGRACAO COM O SISTEMA DO VEICULO
     /*
@@ -92,5 +93,7 @@ public class DadosRotina {
     }
     
     */
+
+    
     
 }
