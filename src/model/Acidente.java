@@ -3,49 +3,20 @@ package model;
 import java.util.Date;
 
 public class Acidente {
-    private boolean saidaPista;
-    private boolean derrapagem;
-    private boolean capotagem;
-    private boolean colisao;
+    private String descricao;
     private int velocidade;
     private int ocupantes;
     private double[] localizacao = new double[2]; //latitude(index 0) e longitude(index 1)
     private Date data; //variavel para guardar dia e hora do acidente.
     private String placa;
-    private int numCnhCondutor;
+    private String numCnhCondutor;
 
-    
-    /* Gets e Sets */
-    public boolean isSaidaPista() {
-        return saidaPista;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setSaidaPista(boolean saidaPista) {
-        this.saidaPista = saidaPista;
-    }
-
-	public boolean isDerrapagem() {
-        return derrapagem;
-    }
-
-    public void setDerrapagem(boolean derrapagem) {
-        this.derrapagem = derrapagem;
-    }
-
-    public boolean isCapotagem() {
-        return capotagem;
-    }
-
-    public void setCapotagem(boolean capotagem) {
-        this.capotagem = capotagem;
-    }
-
-    public boolean isColisao() {
-        return colisao;
-    }
-
-    public void setColisao(boolean colisao) {
-        this.colisao = colisao;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public int getVelocidade() {
@@ -88,11 +59,11 @@ public class Acidente {
             this.placa = placa;
     }
 
-    public int getCnhCondutor() {
+    public String getCnhCondutor() {
             return numCnhCondutor;
     }
 
-    public void setNumCnhCondutor(int cnhCondutor) {
+    public void setNumCnhCondutor(String cnhCondutor) {
             this.numCnhCondutor = cnhCondutor;
     }
 }

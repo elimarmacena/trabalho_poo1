@@ -6,6 +6,7 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.sql.SQLException;
  */
 public interface OperacoesBaseDados<T> {
     void createTable() throws SQLException, ClassNotFoundException;
-    void cadastar(T informacao);
+    void cadastar(T informacao) throws SQLException, ClassNotFoundException;
+    void cadastrarMulti(ArrayList<T> informacoes) throws SQLException, ClassNotFoundException;
     
 }

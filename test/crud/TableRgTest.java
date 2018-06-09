@@ -6,6 +6,7 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Rg;
@@ -58,13 +59,23 @@ public class TableRgTest {
         // TODO review the generated test code and remove the default call to fail.
         
     }
-
     /**
      * Test of cadastar method, of class TableRg.
      */
     @Test
-    public void testCadastar() {
-        
+    public void testCadastar() throws Exception {
+        System.out.println("cadastar");
+        Rg informacao = new Rg();
+        informacao.setEstado("ES");
+        informacao.setOrgaoEmissor("STPC");
+        informacao.setNumRg("1222333-ES");
+        TableRg instance = new TableRg();
+        instance.cadastar(informacao);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
+
+
+    
     
 }

@@ -6,6 +6,7 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.DadosRotina;
 /**
  *
@@ -15,7 +16,7 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
 
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE dados_rotina"+
+        String sql = "CREATE TABLE IF NOT EXISTS dados_rotina"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "id_veiculo INTEGER,"+
                 "velocidade INTEGER,"+
@@ -27,7 +28,20 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
     }
 
     @Override
-    public void cadastar(DadosRotina informacao) {
+    public void cadastar(DadosRotina informacao)throws SQLException, ClassNotFoundException {
+        TableVeiculo tbVeiculo = new TableVeiculo();
+        String sql = "INSERT INTO dados_rotina (id_veiculo, velocidade,longitude,latitude,data)"+
+                "VALUES ("+
+                tbVeiculo.idByPlaca(informacao.getVeiculo().getPlaca())+","+ /*acessa a placa referente ao veiculo que os dados esta sendo enviado*/
+                informacao.getVelocidade()+","+
+                informacao.getLocalizacao()[0]+","+
+                informacao.getLocalizacao()[1]+","+
+                "DATE('"+informacao.getDataColeta()+"')";
+        SqlExecution.executeSQL(sql);
+    }
+
+    @Override
+    public void cadastrarMulti(ArrayList<DadosRotina> informacoes) throws SQLException, ClassNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

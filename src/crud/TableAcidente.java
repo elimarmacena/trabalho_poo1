@@ -5,6 +5,7 @@
  */
 package crud;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.Acidente;
 /**
  *
@@ -14,7 +15,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
 
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE acidente"+
+        String sql = "CREATE TABLE IF NOT EXISTS acidente"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "id_condutor INTEGER,"+
                 "id_veiculo INTEGER,"+
@@ -30,7 +31,24 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
     }
 
     @Override
-    public void cadastar(Acidente informacao) {
+    public void cadastar(Acidente informacao) throws SQLException, ClassNotFoundException {
+        TableCondutor tbCondutor = new TableCondutor();
+        TableVeiculo tbVeiculo = new TableVeiculo();
+        String sql = "INSERT INTO acidente (id_condutor,id_veiculo,num_ocupantes,velocidade,descicao,latitude,longitude,data)"+
+                "VALUES ("+
+                tbCondutor.idByNumCnh(informacao.getCnhCondutor())+","+
+                tbVeiculo.idByPlaca(informacao.getPlaca())+","+
+                informacao.getOcupantes()+","+
+                informacao.getVelocidade()+","+
+                "'"+informacao.getDescricao()+"',"+
+                informacao.getLocalizacao()[0]+","+
+                informacao.getLocalizacao()[1]+","+
+                "DATE('"+informacao.getData()+"') )";
+        SqlExecution.executeSQL(sql);
+    }
+
+    @Override
+    public void cadastrarMulti(ArrayList<Acidente> informacoes) throws SQLException, ClassNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
