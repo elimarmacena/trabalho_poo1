@@ -5,6 +5,7 @@
  */
 package crud;
 
+import java.sql.SQLException;
 import model.RelatorioAcidente;
 /**
  *
@@ -13,7 +14,7 @@ import model.RelatorioAcidente;
 public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcidente>{
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException, ClassNotFoundException{
         String sql= "CREATE TABLE relatorio_acidente"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "id_contribuidor INTEGER"+
@@ -21,7 +22,8 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
                 "nome_condutor CHAR(70),"+
                 "num_cnh CHAR(12),"+
                 "num_ocupantes INTEGER,"+
-                "info_acidente CHAR(400))";
+                "info_acidente CHAR(400),"+
+                "FOREIGN KEY (id_contribuidor) REFERENCES contribuidor(id) )";
         SqlExecution.executeSQL(sql);
     }
 

@@ -5,6 +5,7 @@
  */
 package crud;
 
+import java.sql.SQLException;
 import model.Veiculo;
 
 /**
@@ -14,7 +15,7 @@ import model.Veiculo;
 public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE  veiculo "+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "chassi CHAR(17),"+
@@ -22,8 +23,7 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
                 "marca CHAR(40),"+
                 "modelo CHAR(40),"+
                 "cor CHAR(40),"+
-                "ano INTEGER,"+
-                "id_condutor INTEGER)";
+                "ano INTEGER )";
         SqlExecution.executeSQL(sql);
     }
 

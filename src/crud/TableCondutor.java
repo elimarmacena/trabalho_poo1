@@ -5,6 +5,7 @@
  */
 package crud;
 
+import java.sql.SQLException;
 import model.Condutor;
 /**
  *
@@ -13,12 +14,14 @@ import model.Condutor;
 public class TableCondutor implements OperacoesBaseDados<Condutor> {
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE condutor"+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT"+
+                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "id_cadastro INTEGER,"+
                 "titular_veiculo INTEGER,"+
-                "id_cnh INTEGER)";
+                "id_cnh INTEGER,"+
+                "FOREIGN KEY (id_cadastro) REFERENCES cadastro(id),"+
+                "FOREIGN KEY (id_cnh) REFERENCES cnh(id) )";
         SqlExecution.executeSQL(sql);
     }
 

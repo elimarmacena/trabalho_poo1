@@ -5,12 +5,14 @@
  */
 package crud;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author 20161bsi0314
  */
 public interface OperacoesBaseDados<T> {
-    void createTable();
+    void createTable() throws SQLException, ClassNotFoundException;
     void cadastar(T informacao);
     
 }

@@ -5,6 +5,7 @@
  */
 package crud;
 
+import java.sql.SQLException;
 import model.Rg;
 /**
  *
@@ -13,7 +14,7 @@ import model.Rg;
 public class TableRg implements OperacoesBaseDados<Rg> {
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE rg "+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "num_rg CHAR(13),"+

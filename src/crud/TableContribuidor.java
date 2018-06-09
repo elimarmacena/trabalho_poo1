@@ -5,6 +5,7 @@
  */
 package crud;
 
+import java.sql.SQLException;
 import model.Contribuidor;
 /**
  *
@@ -13,11 +14,12 @@ import model.Contribuidor;
 public class TableContribuidor implements OperacoesBaseDados<Contribuidor> {
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE contribuidor"+
-                "(id INTEGER PRIMARY KEY AUTOINCRIMENT,"+
+                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "id_cadastro INTEGER,"+
-                "orgao_associado CHAR(40))";
+                "orgao_associado CHAR(40),"+
+                "FOREIGN KEY  (id_cadastro) REFERENCES cadastro(id) )";
         SqlExecution.executeSQL(sql);
     }
 

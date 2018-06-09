@@ -5,6 +5,7 @@
  */
 package crud;
 
+import java.sql.SQLException;
 import model.DadosRotina;
 /**
  *
@@ -13,14 +14,15 @@ import model.DadosRotina;
 public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE dados_rotina"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "placa CHAR(8),"+
+                "id_veiculo INTEGER,"+
                 "velocidade INTEGER,"+
                 "longitude REAL,"+
                 "latitude REAL,"+
-                "data DATETIME)";
+                "data DATETIME,"+
+                "FOREIGN KEY (id_veiculo) REFERENCES veiculo(id) )"; //com id_veiculo eh possivel buscar outras informacoes referente o veiculo para poder fazer uma interseccao de dados com o relatorio.
         SqlExecution.executeSQL(sql);
     }
 

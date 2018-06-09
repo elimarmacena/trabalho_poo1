@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package crud;
+import java.sql.SQLException;
 import model.Pessoa;
 /**
  *
@@ -14,14 +15,15 @@ import model.Pessoa;
 public class TableCadastro implements OperacoesBaseDados<Pessoa> {
 
     @Override
-    public void createTable() {
+    public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE cadastro"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "nome CHAR(70),"+
                 "data_nasc DATETIME,"+
                 "id_rg INTEGER,"+
                 "num_cpf CHAR(11),"+
-                "sexo CHAR(1))";
+                "sexo CHAR(1),"+
+                "FOREIGN KEY (id_rg) REFERENCES rg(id) )";
         SqlExecution.executeSQL(sql);
     }
 
