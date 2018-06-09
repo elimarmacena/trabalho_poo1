@@ -89,29 +89,6 @@ public class Veiculo {
         this.ano = ano;
     }
 
-    public Acidente getAcontecimento() {
-        return acontecimento;
-    }
-
-    public void setAcontecimento(Acidente acontecimento) {
-        this.acontecimento = acontecimento;
-    }
-
-    public Condutor getProprietario() {
-        return proprietario;
-    }
-
-    public void setProprietario(Condutor proprietario) {
-        this.proprietario = proprietario;
-    }
-
-    public ArrayList<Condutor> getCondutores() {
-        return condutores;
-    }
-
-    public void setCondutores(ArrayList<Condutor> condutores) {
-        this.condutores = condutores;
-    }
     
 }
 

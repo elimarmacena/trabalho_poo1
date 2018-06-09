@@ -16,7 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import model.AuxiliadorExterno;
+import model.Contribuidor;
 class TestAuxiliador {
 	
 @BeforeClass
@@ -41,7 +41,7 @@ void tearDown() throws Exception {
 void testEnvioInfoAcidente() {
     //informacoes para escrita
     String auxEsperado = "joaozin";
-    AuxiliadorExterno tAuxiliador = new AuxiliadorExterno();
+    Contribuidor tAuxiliador = new Contribuidor();
     tAuxiliador.setNome(auxEsperado);
     tAuxiliador.setOrgaoAssociado("samu");
     tAuxiliador.envioInfoAcidente("PPX-4111", 2, "333442", new Date());		

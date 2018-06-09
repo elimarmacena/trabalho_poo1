@@ -15,7 +15,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
     public void createTable() {
         String sql = "CREATE TABLE funcionario"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "id_infos INTEGER,"+
+                "id_cadastro INTEGER,"+
                 "senha CHAR(12) )"; //senha expressada dessa forma apenas para testes.
         SqlExecution.executeSQL(sql);
     }

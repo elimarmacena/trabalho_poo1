@@ -6,7 +6,7 @@ public class RelatorioAcidente {
     private String condutor;
     private int numOcupantes;
     private String tipoAcidente;
-    private AuxiliadorExterno auxiliador;
+    private Contribuidor auxiliador;
     
     
     /* Gets e Sets */ 
@@ -43,11 +43,11 @@ public class RelatorioAcidente {
         this.tipoAcidente = tipoAcidente;
     }
 
-    public AuxiliadorExterno getAuxiliador() {
+    public Contribuidor getAuxiliador() {
         return auxiliador;
     }
 
-    public void setAuxiliador(AuxiliadorExterno auxiliador) {
+    public void setAuxiliador(Contribuidor auxiliador) {
         this.auxiliador = auxiliador;
     }
     

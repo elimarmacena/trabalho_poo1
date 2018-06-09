@@ -4,31 +4,30 @@
  * and open the template in the editor.
  */
 package crud;
-
-import model.Veiculo;
-
+import model.Acidente;
 /**
  *
- * @author 20161bsi0314
+ * @author elmr
  */
-public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
+public class TableAcidente implements OperacoesBaseDados<Acidente>{
 
     @Override
     public void createTable() {
-        String sql = "CREATE TABLE  veiculo "+
+        String sql = "CREATE TABLE acidente"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "chassi CHAR(17),"+
-                "placa CHAR(7),"+
-                "marca CHAR(40),"+
-                "modelo CHAR(40),"+
-                "cor CHAR(40),"+
-                "ano INTEGER,"+
-                "id_condutor INTEGER)";
+                "placa CHAR(8),"+
+                "id_condutor INTEGER,"+
+                "num_ocupantes INTEGER,"+
+                "velocidade INTEGER,"+
+                "descricao CHAR(400),"+
+                "latitude REAL,"+
+                "longitude REAL,"+
+                "data DATETIME)";
         SqlExecution.executeSQL(sql);
     }
 
     @Override
-    public void cadastar(Veiculo informacao) {
+    public void cadastar(Acidente informacao) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

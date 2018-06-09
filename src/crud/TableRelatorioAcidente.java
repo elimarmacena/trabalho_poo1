@@ -5,30 +5,28 @@
  */
 package crud;
 
-import model.Veiculo;
-
+import model.RelatorioAcidente;
 /**
  *
- * @author 20161bsi0314
+ * @author elmr
  */
-public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
+public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcidente>{
 
     @Override
     public void createTable() {
-        String sql = "CREATE TABLE  veiculo "+
+        String sql= "CREATE TABLE relatorio_acidente"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "chassi CHAR(17),"+
-                "placa CHAR(7),"+
-                "marca CHAR(40),"+
-                "modelo CHAR(40),"+
-                "cor CHAR(40),"+
-                "ano INTEGER,"+
-                "id_condutor INTEGER)";
+                "id_contribuidor INTEGER"+
+                "placa CHAR(8),"+
+                "nome_condutor CHAR(70),"+
+                "num_cnh CHAR(12),"+
+                "num_ocupantes INTEGER,"+
+                "info_acidente CHAR(400))";
         SqlExecution.executeSQL(sql);
     }
 
     @Override
-    public void cadastar(Veiculo informacao) {
+    public void cadastar(RelatorioAcidente informacao) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
