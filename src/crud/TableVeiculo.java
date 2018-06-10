@@ -20,12 +20,12 @@ import model.Veiculo;
 public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
     public int idByPlaca(String placa){
         int id = 0;
-        String sql = "SELECT id FROM veiculo WHERE placa="+placa;
+        String sql = "SELECT id FROM veiculo WHERE placa='"+placa+"'";
         Connection conexao = null;
         Statement statement = null;
         try{
             Class.forName("org.sqlite.JDBC");
-            conexao = DriverManager.getConnection("jdbc:sqllite:sistemaAcidentes.db");
+            conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
             statement = conexao.createStatement();
             ResultSet resultado = statement.executeQuery(sql);
             id = Integer.parseInt(resultado.getString("id") );

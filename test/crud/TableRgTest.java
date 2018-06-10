@@ -63,16 +63,27 @@ public class TableRgTest {
      * Test of cadastar method, of class TableRg.
      */
     @Test
-    public void testCadastar() throws Exception {
+    public void testCadastar() {
         System.out.println("cadastar");
+        TableRg instance = new TableRg();
         Rg informacao = new Rg();
+        //setando informacoes do rg
         informacao.setEstado("ES");
         informacao.setOrgaoEmissor("STPC");
         informacao.setNumRg("1222333-ES");
-        TableRg instance = new TableRg();
+        //
+        
+        try{
         instance.cadastar(informacao);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        }
+        catch(SQLException sqlerr){
+            sqlerr.printStackTrace();
+            fail("erro ao inserir o dado na tabela RG.");
+        }
+        catch(ClassNotFoundException clserr){
+            fail("biblioteca sqlite nao foi encontrada.");
+        }
+        
     }
 
 

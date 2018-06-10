@@ -6,9 +6,14 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Funcionario;
 import model.Pessoa;
+import model.Rg;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -59,12 +64,46 @@ public class TableCadastroTest {
         
     }
 
+
     /**
      * Test of cadastar method, of class TableCadastro.
      */
     @Test
     public void testCadastar() {
- 
-    }
-    
+        System.out.println("cadastar");
+        TableCadastro tbCadastro = new TableCadastro();
+        Pessoa informacao = new Funcionario();
+        //setando informacoes basicas de pessoa
+        informacao.setCpf("111222333-44");
+        informacao.setNome("joao paulo");
+        informacao.setSexo("m");
+        //
+        //setando data de nascimento fazendo uso de calendar e apos solicitando Date
+        Calendar nascimento = Calendar.getInstance();
+        nascimento.set(1990, 5, 25);
+        informacao.setDataNascimento(nascimento.getTime());
+        //
+        //criando e setando o objeto RG
+        Rg rgComplete = new Rg();
+        rgComplete.setEstado("ES");
+        rgComplete.setOrgaoEmissor("POLICIA FEDERAL");
+        rgComplete.setNumRg("9999999-ES");
+        informacao.setRg(rgComplete);
+        //
+        
+        try{
+            tbCadastro.cadastar((Pessoa)informacao);
+            //>>>>>>>>>FALAR COM PROFESSOR<<<<<<<<<<<<<<
+            //ESTA FUNCIONANDO, POREM NO VISUALIZADOR DO NETBEANS NAO MOSTRA OS VALORES DA TABELA
+            //JA TESTEI EM OUTROS AMBIENTES E ESTA TUDO CORRETO 
+            
+        }
+        catch(SQLException sqlerr){
+            fail("erro ao inserir o dado na tabela CADASTRO.");
+        }
+        catch(ClassNotFoundException clserr){
+            fail("biblioteca sqlite nao encontrada.");
+        }
+        
+    }    
 }

@@ -14,6 +14,7 @@ public class Cnh {
     }
 
     public void setNumCnh(String numCnh) { //CNH tem 11 digitos 12346578910
+        
         if(numCnh.length() != 11) {
             System.out.println("Entrada invalida\nO campo CNH deve conter 11 caracteres\nInsira novamente o CNH: ");
             Scanner scan = new Scanner(System.in);

@@ -28,6 +28,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         TableCadastro tbCadastro = new TableCadastro();
         tbCadastro.cadastar((Pessoa)informacao);
         String sql = "INSERT INTO funcionario(id_cadastro,senha)"+
+                "VALUES("+
                 tbCadastro.lastId()+","+
                 "'"+informacao.getSenha()+"')";
         SqlExecution.executeSQL(sql);

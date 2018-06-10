@@ -5,7 +5,10 @@
  */
 package crud;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import model.Acidente;
 /**
  *
@@ -13,6 +16,12 @@ import model.Acidente;
  */
 public class TableAcidente implements OperacoesBaseDados<Acidente>{
 
+    public static String dataToString(Date data) {
+        DateFormat formatoData = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        System.out.println(formatoData.format(data));
+        return formatoData.format(data);
+    }
+    
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS acidente"+
@@ -34,16 +43,16 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
     public void cadastar(Acidente informacao) throws SQLException, ClassNotFoundException {
         TableCondutor tbCondutor = new TableCondutor();
         TableVeiculo tbVeiculo = new TableVeiculo();
-        String sql = "INSERT INTO acidente (id_condutor,id_veiculo,num_ocupantes,velocidade,descicao,latitude,longitude,data)"+
+        String sql = "INSERT INTO acidente (id_condutor,id_veiculo,num_ocupantes,velocidade,descricao,latitude,longitude,data)"+
                 "VALUES ("+
-                tbCondutor.idByNumCnh(informacao.getCnhCondutor())+","+
-                tbVeiculo.idByPlaca(informacao.getPlaca())+","+
+                tbCondutor.idByNumCnh(informacao.getCondutor().getCnh().getNumCnh())+","+
+                tbVeiculo.idByPlaca(informacao.getVeiculo().getPlaca())+","+
                 informacao.getOcupantes()+","+
                 informacao.getVelocidade()+","+
                 "'"+informacao.getDescricao()+"',"+
                 informacao.getLocalizacao()[0]+","+
                 informacao.getLocalizacao()[1]+","+
-                "DATE('"+informacao.getData()+"') )";
+                "'"+this.dataToString(informacao.getData() )+"' )";
         SqlExecution.executeSQL(sql);
     }
 

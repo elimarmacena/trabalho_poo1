@@ -18,10 +18,10 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
     public void createTable() throws SQLException, ClassNotFoundException{
         String sql= "CREATE TABLE IF NOT EXISTS relatorio_acidente"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "id_contribuidor INTEGER"+
+                "id_contribuidor INTEGER,"+
                 "placa CHAR(8),"+
                 "nome_condutor CHAR(70),"+
-                "num_cnh CHAR(12),"+
+                "num_cnh CHAR(11),"+
                 "num_ocupantes INTEGER,"+
                 "info_acidente CHAR(400),"+
                 "FOREIGN KEY (id_contribuidor) REFERENCES contribuidor(id) )";
@@ -38,7 +38,7 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
                 "'"+informacao.getCondutor()+"',"+
                 "'"+informacao.getNumCnh()+"',"+
                 informacao.getNumOcupantes()+","+
-                "'"+informacao.getTipoAcidente()+")";
+                "'"+informacao.getTipoAcidente()+"')";
         SqlExecution.executeSQL(sql);
         
         

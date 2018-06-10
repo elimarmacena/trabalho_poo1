@@ -15,6 +15,7 @@ public class Rg {
     }
 
     public void setNumRg(String numRg) {
+        /* NUMERO DO RG VARIA EM ESTADOS DO BRASIL
         if(numRg.length() != 9) { //ainda da pra adicionar a regra de só conter numeros
             System.out.println("Entrada invalida\nInforme RG válido: ");
             Scanner scan = new Scanner(System.in);
@@ -24,6 +25,8 @@ public class Rg {
         else {
             this.numRg = numRg;    
         }
+        */
+        this.numRg = numRg;
     }
 
     public String getOrgaoEmissor() {

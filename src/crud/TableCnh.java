@@ -24,7 +24,7 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
         Statement statement = null;
         try{
             Class.forName("org.sqlite.JDBC");
-            conexao = DriverManager.getConnection("jdbc:sqllite:sistemaAcidentes.db");
+            conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
             statement = conexao.createStatement();
             ResultSet resultado = statement.executeQuery(sql);
             id = Integer.parseInt(resultado.getString("id") );
@@ -43,7 +43,7 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS cnh"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "num_cnh CHAR(12),"+
+                "num_cnh CHAR(11),"+
                 "categoria CHAR(3))";
         SqlExecution.executeSQL(sql);
     }

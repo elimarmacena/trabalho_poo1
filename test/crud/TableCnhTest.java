@@ -6,6 +6,7 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Cnh;
@@ -57,12 +58,31 @@ public class TableCnhTest {
         }
     }
 
+
     /**
      * Test of cadastar method, of class TableCnh.
      */
     @Test
     public void testCadastar() {
-
+        System.out.println("cadastar");
+        TableCnh instance = new TableCnh();
+        Cnh informacao = new Cnh();
+        //setando informacoes da CNH
+        informacao.setNumCnh("77777777777");
+        informacao.setCategoria("B");
+        //
+        
+        try {
+            instance.cadastar(informacao);
+        } catch (SQLException ex) {
+            fail("falha ao inserir os dados na tabela CNH.");
+        } catch (ClassNotFoundException ex) {
+            fail("biblioteca sqlite nao encontrada.");
+        }
+        
     }
+
+
+
     
 }

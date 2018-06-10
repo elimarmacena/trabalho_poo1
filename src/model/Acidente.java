@@ -8,8 +8,8 @@ public class Acidente {
     private int ocupantes;
     private double[] localizacao = new double[2]; //latitude(index 0) e longitude(index 1)
     private Date data; //variavel para guardar dia e hora do acidente.
-    private String placa;
-    private String numCnhCondutor;
+    private Veiculo veiculo;
+    private Condutor condutor;
 
     public String getDescricao() {
         return descricao;
@@ -51,19 +51,21 @@ public class Acidente {
         this.data = data;
     }
 
-    public String getPlaca() {
-            return placa;
+    public Veiculo getVeiculo() {
+        return veiculo;
     }
 
-    public void setPlaca(String placa) {
-            this.placa = placa;
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
     }
 
-    public String getCnhCondutor() {
-            return numCnhCondutor;
+    public Condutor getCondutor() {
+        return condutor;
     }
 
-    public void setNumCnhCondutor(String cnhCondutor) {
-            this.numCnhCondutor = cnhCondutor;
+    public void setCondutor(Condutor condutor) {
+        this.condutor = condutor;
     }
+
+
 }

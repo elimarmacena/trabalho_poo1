@@ -6,7 +6,10 @@
 package crud;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import model.DadosRotina;
 /**
  *
@@ -14,6 +17,12 @@ import model.DadosRotina;
  */
 public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
 
+    public static String dataToString(Date data) {
+        DateFormat formatoData = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        System.out.println(formatoData.format(data));
+        return formatoData.format(data);
+    }
+    
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS dados_rotina"+
@@ -36,7 +45,7 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
                 informacao.getVelocidade()+","+
                 informacao.getLocalizacao()[0]+","+
                 informacao.getLocalizacao()[1]+","+
-                "DATE('"+informacao.getDataColeta()+"')";
+                "'"+this.dataToString(informacao.getDataColeta())+"')";
         SqlExecution.executeSQL(sql);
     }
 

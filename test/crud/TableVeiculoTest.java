@@ -6,6 +6,7 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Veiculo;
@@ -59,12 +60,34 @@ public class TableVeiculoTest {
         
     }
 
+
+
     /**
      * Test of cadastar method, of class TableVeiculo.
      */
     @Test
-    public void testCadastar() {
+    public void testCadastar()  {
+        System.out.println("cadastar");
+        TableVeiculo instance = new TableVeiculo();
+        Veiculo informacao = new Veiculo();
+        //setando informacoes do veiculo
+        informacao.setAno(2018);
+        informacao.setChassi("A44433FBD33R30J83");
+        informacao.setCor("preto");
+        informacao.setMarca("jeep");
+        informacao.setModelo("renegade");
+        informacao.setPlaca("LAN-7777");
+        
+        try {
+            instance.cadastar(informacao);
+        } 
+        catch (SQLException ex) {
+            fail("falha ao inserir o dado na tabela VEICULO.");;
+        }
+        catch (ClassNotFoundException ex) {
+            fail("biblioteca sqlite nao encontrada.");;
+        }
+        
         
     }
-    
 }

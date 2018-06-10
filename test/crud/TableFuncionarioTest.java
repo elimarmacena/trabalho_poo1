@@ -6,9 +6,13 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Funcionario;
+import model.Pessoa;
+import model.Rg;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -63,8 +67,41 @@ public class TableFuncionarioTest {
      * Test of cadastar method, of class TableFuncionario.
      */
     @Test
-    public void testCadastar() {
+    public void testCadastar()  {
+        System.out.println("cadastar");
+        TableFuncionario instance = new TableFuncionario();
+        Funcionario informacao = new Funcionario();
+        //setando informacoes basicas de funcionario
+        informacao.setSenha("asdfgh");
+        informacao.setCpf("999888777-66");
+        informacao.setNome("luiza joaona");
+        informacao.setSexo("f");
+        //
+        //setando data de nascimento fazendo uso de calendar e apos solicitando Date
+        Calendar nascimento = Calendar.getInstance();
+        nascimento.set(1991, 3, 22);
+        informacao.setDataNascimento(nascimento.getTime());
+        //
+        //criando e setando objeto rg
+        Rg rgComplete = new Rg();
+        rgComplete.setEstado("SP");
+        rgComplete.setOrgaoEmissor("POLICIA CIVIL");
+        rgComplete.setNumRg("8888888-SP");
+        informacao.setRg(rgComplete);
+        //
         
+        try {
+            instance.cadastar((Funcionario)informacao);
+        } 
+        catch (SQLException ex) {
+            ex.printStackTrace();
+            fail("erro ao inserir o dado na tabela FUNCIONARIO.");
+        } 
+        catch (ClassNotFoundException ex) {
+            fail("biblioteca sqlite nao encontrada.");
+        }
     }
+
+    
     
 }
