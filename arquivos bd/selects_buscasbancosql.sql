@@ -1,4 +1,4 @@
-/*BUSCA POR DATA (data a partir de 2018-08-10)*/
+ta/*BUSCA POR DATA (data a partir de 2018-08-10)*/
 SELECT cadastro.nome, veiculo.modelo, acidente.numero_ocupantes FROM cadastro INNER JOIN acidente ON acidente.data >= '2017-08-10' INNER JOIN veiculo ON veiculo.id = acidente.id_veiculo INNER JOIN condutor ON condutor.id = acidente.id_condutor AND condutor.id_cadastro = cadastro.id
 
 /*BUSCA POR MARCA (marca smart)*/
