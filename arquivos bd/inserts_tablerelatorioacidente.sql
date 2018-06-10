@@ -1,4 +1,4 @@
-INSERT INTO relatorio_acidente (id_contribuidor,placa,num_cnh,nome_condutor,num_ocupantes,info_acidente) VALUES
+INSERT INTO relatorio_acidente (id_contribuidor,placa,nome_condutor,num_cnh,num_ocupantes,info_acidente) VALUES
 (1,'PPX-0000','Haydee Harlin','35113468463',2,'DERRAPAGEM SEGUIDO DE SAIDA DA PISTA'),
 (5,'NEK-8383','Cecila Caraveo','68826715813',5,'DERRAPAGEM SEGUIDO DE SAIDA DA PISTA'),
 (6,'JGB-1958','Tambra Trapani','52234489837',5,'DERRAPAGEM SEGUIDO DE SAIDA DA PISTA'),
