@@ -1,4 +1,4 @@
-INSERT INTO veiculo(chassi,placa,modelo,cor,marca,ano) VALUES
+INSERT INTO veiculo(renavam,placa,modelo,cor,marca,ano) VALUES
 ('24249387031','PPX-0000','Engesa 4x4 2.5/4.1','Preto','Engesa',1985),
 ('99889603536','NEK-8383','Buggy 2000W 1.8 8V/ 1.8 8V Flex','Marrom','Fyber',2004),
 ('55771141073','JGB-1958','Sportage EX 2.0 16V/ 2.0 16V Flex Aut','Preto','Kia Motors',2008),
