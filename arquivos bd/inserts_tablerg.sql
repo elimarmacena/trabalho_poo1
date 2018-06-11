@@ -1,4 +1,4 @@
-INSERT INTO rg (num_rg,orgao,estado) VALUES
+INSERT INTO rg (numero_rg,orgao,estado) VALUES
 ('35821731-3','SPTC','SP'),
 ('45788698-5','SSP-ES','ES'),
 ('25336835-2','SSP-SP','SP'),

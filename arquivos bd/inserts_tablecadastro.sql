@@ -1,4 +1,4 @@
-INSERT INTO cadastro(nome,data_nasc,id_rg,num_cpf,sexo) VALUES
+INSERT INTO cadastro(nome,data_nasc,id_rg,numero_cpf,sexo) VALUES
 ('Ryan Ribeiro Costa','1938-03-18', 1, '466461086-68','m'),
 ('Mateus Fernandes Melo','1982-09-08', 2,'137904782-02','m'),
 ('Shelly Seel', '1981-08-09', 3, '989370108-55', 'f'),

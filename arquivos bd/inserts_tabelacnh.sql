@@ -1,4 +1,4 @@
-INSERT INTO cnh (num_cnh,categoria) VALUES
+INSERT INTO cnh (numero_cnh,categoria) VALUES
 ('35113468463','B'),
 ('68826715813','E'),
 ('52234489837','E'),
