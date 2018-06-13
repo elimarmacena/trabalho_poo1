@@ -1,4 +1,4 @@
-INSERT INTO contribuidor (id_cadastro, orgao_associado) VALUES
+INSERT INTO Contribuidor (FK_Cadastro_id, orgao_associado) VALUES
 (2,'POLICIA FEDERAL'),
 (3,'CORPO DE BOMBEIROS'),
 (4,'SAMU'),

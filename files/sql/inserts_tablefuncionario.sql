@@ -1,4 +1,4 @@
-INSERT INTO funcionario(id_cadastro, senha) VALUES
+INSERT INTO Funcionario(FK_Cadastro_id, senha) VALUES
 (1,'admin123'),
 (5,'sys123'),
 (7,'litesql'),
