@@ -5,11 +5,15 @@
  */
 package gui;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author luizk
  */
 public class JanelaPrincipal extends javax.swing.JFrame {
+	
+	private byte cadastroSelecionado = 1;
 
 	/**
 	 * Creates new form JanelaPrincipal
@@ -29,33 +33,34 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         painelUniversal = new javax.swing.JPanel();
-        labelPic1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelLogoPic = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         painelExibicao = new javax.swing.JPanel();
         painelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        buttonCadCondutor = new javax.swing.JButton();
-        buttonCadVeiculo = new javax.swing.JButton();
-        buttonCadFuncionario = new javax.swing.JButton();
+        jButtonMainCond = new javax.swing.JButton();
+        jButtonMainVeic = new javax.swing.JButton();
+        jButtonMainFunc = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        buttonRelMapa = new javax.swing.JButton();
-        buttonRelTabelas = new javax.swing.JButton();
-        buttonRelGraficos = new javax.swing.JButton();
+        jButtonMainMapa = new javax.swing.JButton();
+        jButtonMainTab = new javax.swing.JButton();
+        jButtonMainGrap = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         painelEmBranco = new javax.swing.JPanel();
         painelCadastros = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButtonNovo = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonVoltar = new javax.swing.JButton();
+        jTableCadastros = new javax.swing.JTable();
+        jButtonCadNovo = new javax.swing.JButton();
+        jButtonCadEditar = new javax.swing.JButton();
+        jButtonCadVoltar = new javax.swing.JButton();
         painelRelatorios = new javax.swing.JPanel();
         jPanelRelCentro = new javax.swing.JPanel();
         jPanelRelCentroBranco = new javax.swing.JPanel();
         jPanelRelMapa = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jPanelRelTabela = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanelRelGrafico = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jPanelRelLateral = new javax.swing.JPanel();
@@ -63,25 +68,25 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTxtFieldRelData1 = new javax.swing.JTextField();
+        jTxtFieldRelData2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTxtFieldRelHora1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTxtFieldRelHora2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTxtFieldRelAreaX = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        jTxtFieldRelAreaY = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
-        jButtonRelMapa1 = new javax.swing.JButton();
-        jButtonRelMapa2 = new javax.swing.JButton();
+        jButtonRelQtdAcid = new javax.swing.JButton();
+        jButtonRelGravAcid = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jButtonRelTabela = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonRelBarras = new javax.swing.JButton();
+        jButtonRelLinhas = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
 
@@ -90,16 +95,16 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         painelUniversal.setBackground(new java.awt.Color(0, 0, 102));
 
-        labelPic1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        labelPic1.setForeground(new java.awt.Color(255, 255, 255));
-        labelPic1.setText("< Logo aqui >");
+        jLabelLogoPic.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelLogoPic.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelLogoPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/GenericLogoTrsp.png"))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 153, 153));
-        jLabel1.setText("< Titulo do Programa (clique aqui para janela principal) >");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelTitulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 153, 153));
+        jLabelTitulo.setText("Road Monitor Online");
+        jLabelTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                jLabelTituloMouseClicked(evt);
             }
         });
 
@@ -108,20 +113,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         painelUniversalLayout.setHorizontalGroup(
             painelUniversalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelUniversalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelPic1)
+                .addGap(28, 28, 28)
+                .addComponent(jLabelLogoPic)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addContainerGap(610, Short.MAX_VALUE))
+                .addComponent(jLabelTitulo)
+                .addContainerGap(1051, Short.MAX_VALUE))
         );
         painelUniversalLayout.setVerticalGroup(
             painelUniversalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelUniversalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelUniversalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelPic1)
-                    .addComponent(jLabel1))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(painelUniversalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelUniversalLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelLogoPic))
+                    .addGroup(painelUniversalLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabelTitulo)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(painelUniversal, java.awt.BorderLayout.PAGE_START);
@@ -132,27 +140,27 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Cadastros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
-        buttonCadCondutor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonCadCondutor.setText("Condutor");
-        buttonCadCondutor.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMainCond.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonMainCond.setText("Condutor");
+        jButtonMainCond.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCadCondutorActionPerformed(evt);
+                jButtonMainCondActionPerformed(evt);
             }
         });
 
-        buttonCadVeiculo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonCadVeiculo.setText("Veiculo");
-        buttonCadVeiculo.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMainVeic.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonMainVeic.setText("Veiculo");
+        jButtonMainVeic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCadVeiculoActionPerformed(evt);
+                jButtonMainVeicActionPerformed(evt);
             }
         });
 
-        buttonCadFuncionario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonCadFuncionario.setText("Funcionario");
-        buttonCadFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMainFunc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonMainFunc.setText("Funcionario");
+        jButtonMainFunc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCadFuncionarioActionPerformed(evt);
+                jButtonMainFuncActionPerformed(evt);
             }
         });
 
@@ -162,11 +170,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(buttonCadCondutor, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMainCond, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonCadVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMainVeic, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonCadFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMainFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,33 +182,38 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonCadCondutor, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCadVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCadFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonMainCond, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMainVeic, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMainFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Relatorios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
-        buttonRelMapa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonRelMapa.setText("Mapa de Calor");
-        buttonRelMapa.setActionCommand("MapaDeCalor");
-        buttonRelMapa.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMainMapa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonMainMapa.setText("Mapa de Calor");
+        jButtonMainMapa.setActionCommand("MapaDeCalor");
+        jButtonMainMapa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonRelMapaActionPerformed(evt);
+                jButtonMainMapaActionPerformed(evt);
             }
         });
 
-        buttonRelTabelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonRelTabelas.setText("Tabelas");
-        buttonRelTabelas.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMainTab.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonMainTab.setText("Tabelas");
+        jButtonMainTab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonRelTabelasActionPerformed(evt);
+                jButtonMainTabActionPerformed(evt);
             }
         });
 
-        buttonRelGraficos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonRelGraficos.setText("Graficos");
+        jButtonMainGrap.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonMainGrap.setText("Graficos");
+        jButtonMainGrap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMainGrapActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -208,11 +221,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(buttonRelMapa, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMainMapa, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonRelTabelas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMainTab, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonRelGraficos, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMainGrap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -220,9 +233,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonRelMapa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonRelTabelas, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonRelGraficos, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonMainMapa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMainTab, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMainGrap, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -262,7 +275,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(87, 87, 87)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(296, Short.MAX_VALUE))
         );
 
         painelExibicao.add(painelPrincipal, "card6");
@@ -271,36 +284,41 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         painelEmBranco.setLayout(painelEmBrancoLayout);
         painelEmBrancoLayout.setHorizontalGroup(
             painelEmBrancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+            .addGap(0, 1326, Short.MAX_VALUE)
         );
         painelEmBrancoLayout.setVerticalGroup(
             painelEmBrancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 661, Short.MAX_VALUE)
+            .addGap(0, 720, Short.MAX_VALUE)
         );
 
         painelExibicao.add(painelEmBranco, "card4");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCadastros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableCadastros);
 
-        jButtonNovo.setText("Novo");
-        jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCadNovo.setText("Novo");
+        jButtonCadNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNovoActionPerformed(evt);
+                jButtonCadNovoActionPerformed(evt);
             }
         });
 
-        jButtonEditar.setText("Editar");
-        jButtonEditar.setEnabled(false);
+        jButtonCadEditar.setText("Editar");
+        jButtonCadEditar.setEnabled(false);
 
-        jButtonVoltar.setText("Voltar");
+        jButtonCadVoltar.setText("Voltar");
+        jButtonCadVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelCadastrosLayout = new javax.swing.GroupLayout(painelCadastros);
         painelCadastros.setLayout(painelCadastrosLayout);
@@ -309,12 +327,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(painelCadastrosLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonVoltar))
+                    .addComponent(jButtonCadEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonCadNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonCadVoltar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(525, Short.MAX_VALUE))
+                .addContainerGap(571, Short.MAX_VALUE))
         );
         painelCadastrosLayout.setVerticalGroup(
             painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,13 +340,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastrosLayout.createSequentialGroup()
-                        .addComponent(jButtonNovo)
+                        .addComponent(jButtonCadNovo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonEditar)
+                        .addComponent(jButtonCadEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonVoltar))
+                        .addComponent(jButtonCadVoltar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(214, Short.MAX_VALUE))
+                .addContainerGap(273, Short.MAX_VALUE))
         );
 
         painelExibicao.add(painelCadastros, "card5");
@@ -344,7 +362,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         );
         jPanelRelCentroBrancoLayout.setVerticalGroup(
             jPanelRelCentroBrancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addGap(0, 692, Short.MAX_VALUE)
         );
 
         jPanelRelCentro.add(jPanelRelCentroBranco, "card2");
@@ -365,12 +383,20 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanelRelMapaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel12)
-                .addContainerGap(606, Short.MAX_VALUE))
+                .addContainerGap(665, Short.MAX_VALUE))
         );
 
         jPanelRelCentro.add(jPanelRelMapa, "card3");
 
-        jLabel13.setText("jLabel13");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanelRelTabelaLayout = new javax.swing.GroupLayout(jPanelRelTabela);
         jPanelRelTabela.setLayout(jPanelRelTabelaLayout);
@@ -378,15 +404,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jPanelRelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelTabelaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13)
-                .addContainerGap(819, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 866, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelRelTabelaLayout.setVerticalGroup(
             jPanelRelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelTabelaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel13)
-                .addContainerGap(606, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanelRelCentro.add(jPanelRelTabela, "card4");
@@ -407,7 +433,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanelRelGraficoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addContainerGap(606, Short.MAX_VALUE))
+                .addContainerGap(665, Short.MAX_VALUE))
         );
 
         jPanelRelCentro.add(jPanelRelGrafico, "card5");
@@ -423,48 +449,58 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jLabel5.setText("Horário de:");
 
-        jTextField3.setText("--:--");
+        jTxtFieldRelHora1.setText("--:--");
 
         jLabel6.setText("Até:");
 
-        jTextField4.setText("--:--");
+        jTxtFieldRelHora2.setText("--:--");
 
         jLabel7.setText("Área X:");
 
-        jTextField5.setText("--:--");
+        jTxtFieldRelAreaX.setText("--:--");
 
         jLabel8.setText("Y:");
 
-        jTextField6.setText("--:--");
+        jTxtFieldRelAreaY.setText("--:--");
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel9.setText("Mapa De Calor");
 
-        jButtonRelMapa1.setText("Quantidade de Acidentes");
-        jButtonRelMapa1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRelQtdAcid.setText("Quantidade de Acidentes");
+        jButtonRelQtdAcid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRelMapa1ActionPerformed(evt);
+                jButtonRelQtdAcidActionPerformed(evt);
             }
         });
 
-        jButtonRelMapa2.setText("Gravidade dos Acidentes");
-        jButtonRelMapa2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRelGravAcid.setText("Gravidade dos Acidentes");
+        jButtonRelGravAcid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRelMapa2ActionPerformed(evt);
+                jButtonRelGravAcidActionPerformed(evt);
             }
         });
 
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel10.setText("Tabelas");
 
-        jButton3.setText("Todos Os Dados");
+        jButtonRelTabela.setText("Todos Os Dados");
+        jButtonRelTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRelTabelaActionPerformed(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel11.setText("Gráficos");
 
-        jButton4.setText("Barras");
+        jButtonRelBarras.setText("Barras");
+        jButtonRelBarras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRelBarrasActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Linhas");
+        jButtonRelLinhas.setText("Linhas");
 
         javax.swing.GroupLayout jPanelRelLateralLayout = new javax.swing.GroupLayout(jPanelRelLateral);
         jPanelRelLateral.setLayout(jPanelRelLateralLayout);
@@ -484,40 +520,43 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addGroup(jPanelRelLateralLayout.createSequentialGroup()
                                         .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
+                                            .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanelRelLateralLayout.createSequentialGroup()
+                                                    .addGap(33, 33, 33)
+                                                    .addComponent(jLabel7))
+                                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                            .addComponent(jLabel3))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jTextField1)
-                                                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                                                .addComponent(jTxtFieldRelData1)
+                                                .addComponent(jTxtFieldRelData2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                                             .addGroup(jPanelRelLateralLayout.createSequentialGroup()
                                                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING))
+                                                    .addComponent(jTxtFieldRelAreaX, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                                                    .addComponent(jTxtFieldRelHora1, javax.swing.GroupLayout.Alignment.LEADING))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                     .addComponent(jLabel6)
                                                     .addComponent(jLabel8))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                    .addComponent(jTxtFieldRelHora2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jTxtFieldRelAreaY, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                     .addComponent(jLabel9)
                                     .addComponent(jLabel10)
-                                    .addComponent(jButtonRelMapa1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButtonRelMapa2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 106, Short.MAX_VALUE)))))
+                                    .addComponent(jButtonRelQtdAcid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonRelGravAcid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButtonRelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 152, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanelRelLateralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel11)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonRelLinhas, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(jButtonRelBarras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelRelLateralLayout.setVerticalGroup(
@@ -528,55 +567,53 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRelLateralLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)))
+                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtFieldRelData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtFieldRelData2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtFieldRelHora1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7))
+                        .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtFieldRelAreaX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)))
                     .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtFieldRelHora2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8))
-                    .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtFieldRelAreaY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonRelMapa1)
+                .addComponent(jButtonRelQtdAcid)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonRelMapa2)
+                .addComponent(jButtonRelGravAcid)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(jButtonRelTabela)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(jButtonRelBarras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(jButtonRelLinhas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -608,58 +645,85 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonCadCondutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCadCondutorActionPerformed
-        painelExibicao.removeAll();
-		painelExibicao.add(painelCadastros);
-		painelExibicao.repaint();
-		painelExibicao.revalidate();
-    }//GEN-LAST:event_buttonCadCondutorActionPerformed
+    private void jButtonMainCondActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainCondActionPerformed
+        this.cadastroSelecionado = 1;
+		mudarPainel(painelExibicao, painelCadastros);
+    }//GEN-LAST:event_jButtonMainCondActionPerformed
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void jLabelTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTituloMouseClicked
         this.goToMenu();
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_jLabelTituloMouseClicked
 
-    private void buttonCadVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCadVeiculoActionPerformed
-        painelExibicao.removeAll();
-		painelExibicao.add(painelCadastros);
-		painelExibicao.repaint();
-		painelExibicao.revalidate();
-    }//GEN-LAST:event_buttonCadVeiculoActionPerformed
+    private void jButtonMainVeicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainVeicActionPerformed
+        this.cadastroSelecionado = 2;
+		mudarPainel(painelExibicao, painelCadastros);
+    }//GEN-LAST:event_jButtonMainVeicActionPerformed
 
-    private void buttonCadFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCadFuncionarioActionPerformed
-        painelExibicao.removeAll();
-		painelExibicao.add(painelCadastros);
-		painelExibicao.repaint();
-		painelExibicao.revalidate();
-    }//GEN-LAST:event_buttonCadFuncionarioActionPerformed
+    private void jButtonMainFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainFuncActionPerformed
+        this.cadastroSelecionado = 3;
+		mudarPainel(painelExibicao, painelCadastros);
+    }//GEN-LAST:event_jButtonMainFuncActionPerformed
 
-    private void buttonRelMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRelMapaActionPerformed
+    private void jButtonMainMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainMapaActionPerformed
         painelExibicao.removeAll();
 		painelExibicao.add(painelRelatorios);
-		goToRelatorioMapa1();
+		goToRelatorioMapa();
 		painelExibicao.repaint();
 		painelExibicao.revalidate();
-    }//GEN-LAST:event_buttonRelMapaActionPerformed
+    }//GEN-LAST:event_jButtonMainMapaActionPerformed
 
-    private void jButtonRelMapa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelMapa2ActionPerformed
-        goToRelatorioMapa2();
-    }//GEN-LAST:event_jButtonRelMapa2ActionPerformed
+    private void jButtonRelGravAcidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelGravAcidActionPerformed
+        goToRelatorioMapa();
+    }//GEN-LAST:event_jButtonRelGravAcidActionPerformed
 
-    private void jButtonRelMapa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelMapa1ActionPerformed
-        goToRelatorioMapa1();
-    }//GEN-LAST:event_jButtonRelMapa1ActionPerformed
+    private void jButtonRelQtdAcidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelQtdAcidActionPerformed
+        goToRelatorioMapa();
+    }//GEN-LAST:event_jButtonRelQtdAcidActionPerformed
 
-    private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
-        popupCadFuncionario();
-    }//GEN-LAST:event_jButtonNovoActionPerformed
+    private void jButtonCadNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadNovoActionPerformed
+		switch (this.cadastroSelecionado) {
+			case 1:
+				popupCadCondutor();
+				break;
+			case 2:
+				popupCadVeiculo();
+				break;
+			case 3:
+				popupCadFuncionario();
+				break;
+			default:
+				break;
+		}
+    }//GEN-LAST:event_jButtonCadNovoActionPerformed
 
-    private void buttonRelTabelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRelTabelasActionPerformed
+    private void jButtonMainTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainTabActionPerformed
         painelExibicao.removeAll();
 		painelExibicao.add(painelRelatorios);
+		goToRelatorioTabela();
 		painelExibicao.repaint();
 		painelExibicao.revalidate();
-		goToRelatorioMapa1();
-    }//GEN-LAST:event_buttonRelTabelasActionPerformed
+    }//GEN-LAST:event_jButtonMainTabActionPerformed
+
+    private void jButtonRelTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelTabelaActionPerformed
+        //goToRelatorioTabela();
+		mudarPainel(jPanelRelCentro, jPanelRelTabela);
+    }//GEN-LAST:event_jButtonRelTabelaActionPerformed
+
+    private void jButtonMainGrapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainGrapActionPerformed
+        painelExibicao.removeAll();
+		painelExibicao.add(painelRelatorios);
+		goToRelatorioGrafico();
+		painelExibicao.repaint();
+		painelExibicao.revalidate();
+    }//GEN-LAST:event_jButtonMainGrapActionPerformed
+
+    private void jButtonRelBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelBarrasActionPerformed
+        goToRelatorioGrafico();
+    }//GEN-LAST:event_jButtonRelBarrasActionPerformed
+
+    private void jButtonCadVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadVoltarActionPerformed
+        goToMenu();
+    }//GEN-LAST:event_jButtonCadVoltarActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -697,25 +761,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonCadCondutor;
-    private javax.swing.JButton buttonCadFuncionario;
-    private javax.swing.JButton buttonCadVeiculo;
-    private javax.swing.JButton buttonRelGraficos;
-    private javax.swing.JButton buttonRelMapa;
-    private javax.swing.JButton buttonRelTabelas;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButtonEditar;
-    private javax.swing.JButton jButtonNovo;
-    private javax.swing.JButton jButtonRelMapa1;
-    private javax.swing.JButton jButtonRelMapa2;
-    private javax.swing.JButton jButtonVoltar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButtonCadEditar;
+    private javax.swing.JButton jButtonCadNovo;
+    private javax.swing.JButton jButtonCadVoltar;
+    private javax.swing.JButton jButtonMainCond;
+    private javax.swing.JButton jButtonMainFunc;
+    private javax.swing.JButton jButtonMainGrap;
+    private javax.swing.JButton jButtonMainMapa;
+    private javax.swing.JButton jButtonMainTab;
+    private javax.swing.JButton jButtonMainVeic;
+    private javax.swing.JButton jButtonRelBarras;
+    private javax.swing.JButton jButtonRelGravAcid;
+    private javax.swing.JButton jButtonRelLinhas;
+    private javax.swing.JButton jButtonRelQtdAcid;
+    private javax.swing.JButton jButtonRelTabela;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -725,6 +787,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelLogoPic;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -735,18 +799,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelRelMapa;
     private javax.swing.JPanel jPanelRelTabela;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JLabel labelPic1;
+    private javax.swing.JTable jTableCadastros;
+    private javax.swing.JTextField jTxtFieldRelAreaX;
+    private javax.swing.JTextField jTxtFieldRelAreaY;
+    private javax.swing.JTextField jTxtFieldRelData1;
+    private javax.swing.JTextField jTxtFieldRelData2;
+    private javax.swing.JTextField jTxtFieldRelHora1;
+    private javax.swing.JTextField jTxtFieldRelHora2;
     private javax.swing.JPanel painelCadastros;
     private javax.swing.JPanel painelEmBranco;
     private javax.swing.JPanel painelExibicao;
@@ -755,6 +820,18 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel painelUniversal;
     // End of variables declaration//GEN-END:variables
 
+	private void popupCadFuncionario() {
+		JanelaCadFuncionario tela = new JanelaCadFuncionario();
+		tela.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        tela.setVisible(true);
+	}
+	
+	private void popupCadCondutor() {
+		JanelaCadCondutor tela = new JanelaCadCondutor();
+		tela.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        tela.setVisible(true);
+	}
+	
 	public void goToMenu(){
 		painelExibicao.removeAll();
 		painelExibicao.add(painelPrincipal);
@@ -770,26 +847,32 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		painelRelatorios.revalidate();
 	}
 
-	private void goToRelatorioMapa1() {
+	private void goToRelatorioMapa() {
 		goToRelatorioMain();
-		jPanelRelCentro.removeAll();
-		jPanelRelCentro.add(jPanelRelMapa);
-		jPanelRelCentro.repaint();
-		jPanelRelCentro.revalidate();
+		mudarPainel(jPanelRelCentro, jPanelRelMapa);
+		//TODO add mapa
 	}
 
-	private void goToRelatorioMapa2() {
+	private void goToRelatorioTabela() {
 		goToRelatorioMain();
-		jPanelRelCentro.removeAll();
-		jPanelRelCentro.add(jPanelRelTabela);
-		jPanelRelCentro.repaint();
-		jPanelRelCentro.revalidate();
+		mudarPainel(jPanelRelCentro, jPanelRelTabela);
+	}
+
+	private void goToRelatorioGrafico() {
+		goToRelatorioMain();
+		mudarPainel(jPanelRelCentro, jPanelRelGrafico);
+		// TODO add relatorio
 	}
 	
-	private void popupCadFuncionario() {
-		JanelaCadFuncionario tela = new JanelaCadFuncionario();
-		tela.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        tela.setVisible(true);
+	private void mudarPainel(JPanel painelPai, JPanel painelFilho){
+		painelPai.removeAll();
+		painelPai.add(painelFilho);
+		painelPai.repaint();
+		painelPai.revalidate();
+	}
+
+	private void popupCadVeiculo() {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
 
 }
