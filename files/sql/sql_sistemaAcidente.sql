@@ -6,9 +6,9 @@ CREATE TABLE IF NOT EXISTS Condutor (
     FK_Cadastro_id INTEGER,
     FK_cnh_id INTEGER,
 	FOREIGN KEY (FK_Cadastro_id)
-    REFERENCES Cadastro (id),
+    REFERENCES Cadastro (id) ON DELETE CASCADE,
 	FOREIGN KEY (FK_cnh_id)
-	REFERENCES Cnh(id)
+	REFERENCES Cnh(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Cadastro (
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS Funcionario (
     FK_Cadastro_id INTEGER,
 	senha CHAR(12),
 	FOREIGN KEY (FK_Cadastro_id)
-    REFERENCES Cadastro (id)
+    REFERENCES Cadastro (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Contribuidor (
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Contribuidor (
     orgao_associado CHAR(40),
     FK_Cadastro_id INTEGER,
 	FOREIGN KEY (FK_Cadastro_id)
-    REFERENCES Cadastro (id)
+    REFERENCES Cadastro (id) ON DELETE CASCADE 
 );
 
 CREATE TABLE IF NOT EXISTS Relatorio_acidente (
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS Relatorio_acidente (
 	longitude REAL,
     FK_Contribuidor_id INTEGER,
 	FOREIGN KEY (FK_Contribuidor_id)
-    REFERENCES Contribuidor (id)
+    REFERENCES Contribuidor (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Veiculo (
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS Dados_rotina (
     data DATETIME,
     FK_Veiculo_id INTEGER,
 	FOREIGN KEY (FK_Veiculo_id)
-    REFERENCES Veiculo (id)
+    REFERENCES Veiculo (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Acidente (
@@ -95,9 +95,9 @@ CREATE TABLE IF NOT EXISTS Ocorrencia_acidente (
     condutor_titular INTEGER,
 	velocidade INTEGER,
 	FOREIGN KEY (FK_Veiculo_id)
-    REFERENCES Veiculo (id),
+    REFERENCES Veiculo (id) ON DELETE CASCADE,
 	FOREIGN KEY (FK_Acidente_id)
-    REFERENCES Acidente (id),
+    REFERENCES Acidente (id) ON DELETE CASCADE,
 	FOREIGN KEY (FK_Condutor_id)
-    REFERENCES Condutor (id)
+    REFERENCES Condutor (id) ON DELETE CASCADE
 );

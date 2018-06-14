@@ -1,0 +1,8 @@
+/*
+ATIVAR FOREING KEYS TODA VEZ QUE ESTABELECER CONEXAO COM SERVIDOR
+PRAGMA foreign_keys = ON
+*/
+---DELETE FUNCIONARIO COM BASE NO SEU CPF
+PRAGMA foreign_keys = ON;
+DELETE FROM Condutor
+WHERE EXISTS (SELECT FK_Cadastro_id FROM Cadastro ca WHERE ca.numero_cpf = '248469318-20' AND Condutor.FK_Cadastro_id = ca.id)
