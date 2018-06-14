@@ -88,7 +88,8 @@ CREATE TABLE IF NOT EXISTS Cnh (
 );
 
 CREATE TABLE IF NOT EXISTS Ocorrencia_acidente (
-    FK_Acidente_id INTEGER,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+	FK_Acidente_id INTEGER,
     FK_Veiculo_id INTEGER,
     FK_Condutor_id INTEGER,
     condutor_titular INTEGER,

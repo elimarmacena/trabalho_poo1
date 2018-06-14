@@ -1,40 +1,58 @@
-ta/*BUSCA POR DATA (data a partir de 2018-08-10)*/
-SELECT cadastro.nome, veiculo.modelo, acidente.numero_ocupantes FROM cadastro INNER JOIN acidente ON acidente.data >= '2017-08-10' INNER JOIN veiculo ON veiculo.id = acidente.id_veiculo INNER JOIN condutor ON condutor.id = acidente.id_condutor AND condutor.id_cadastro = cadastro.id
+---ACIDENTES A PARTIR DE UMA DATA X
+SELECT ac.data AS 'DATA HORA', ac.id AS 'ID', ac.pessoas_envolvidas AS 'PESSOAS ENVOLVIDAS', ac.descricao AS 'DESCRICAO', ac.latitude AS 'LATITUDE', ac.longitude AS 'LONGITUDE' FROM Acidente ac 
+WHERE ac.data >= '2017-08-10'; /*apenas alterar esse valor de acordo com a necessidade*/
 
-/*BUSCA POR MARCA (marca smart)*/
-SELECT placa AS 'placa veiculo' FROM veiculo INNER JOIN acidente ac on ac.id_veiculo = veiculo.id AND veiculo.marca='smart'
+---CONDUTORES E VEICULOS ENVOLVIDOS EM UM ACIDENTE X A PARTIR DO SEU ID
+SELECT ca.nome AS 'NOME CONDUTOR', cnh.numero_cnh AS 'NUMERO CNH', vi.placa AS 'PLACA VEICULO', vi.modelo AS 'MODELO VEICULO' FROM cadastro ca
+INNER JOIN ocorrencia_acidente oa ON oa.FK_Acidente_id = 1 
+INNER JOIN Veiculo vi ON oa.FK_Veiculo_id = vi.id
+INNER JOIN Condutor co ON oa.FK_Condutor_id = co.id AND co.FK_Cadastro_id = ca.id
+INNER JOIN Cnh cnh ON co.FK_cnh_id = cnh.id;
 
-/*BUSCA POR NOME (Ruthe Rubino)*/
-SELECT ca.nome AS 'nome condutor', ac.descricao AS 'descricao acidente', ac.velocidade AS 'velocidade',vc.modelo 'modelo veiculo', ac.numero_ocupantes AS 'numero ocupantes', ac.data AS 'data acidente' FROM acidente ac 
-INNER JOIN cadastro ca ON ca.nome='Ruthe Rubino'INNER JOIN veiculo vc INNER JOIN condutor ct ON  ct.id = ac.id_condutor AND ac.id_veiculo = vc.id AND ct.id_cadastro = ca.id
+---ACIDENTES A PARTIR DE UMA MARCA X DE VEICULO
+SELECT ac.data AS 'DATA HORA', ac.id AS 'ID ACIDENTE', vi.placa as 'PLACA VEICULO',ac.pessoas_envolvidas AS 'PESSOAS ENVOLVIDAS', ac.descricao as 'DESCRICAO',ac.latitude AS 'LATITUDE', ac.longitude AS 'LONGITUDE' FROM Acidente ac
+INNER JOIN Veiculo vi ON vi.marca= 'Engesa' /*apenas alterar esse valor de acordo com necessidade*/
+INNER JOIN ocorrencia_acidente oa ON oa.FK_Veiculo_id = vi.id  AND oa.FK_Acidente_id = ac.id
 
-/*BUSCA POR VELOCIDADE (velocidade acima de 90 km)*/
-SELECT ca.nome AS 'nome condutor', vi.modelo AS 'modelo veiculo', vi.marca AS 'marca veiculo',ac.velocidade AS 'velocidade durante acidente', ac.latitude AS 'latitude', ac.longitude AS 'longitude' FROM veiculo vi
-INNER JOIN acidente ac ON vi.id= ac.id_veiculo and ac.velocidade>=90 INNER JOIN condutor INNER JOIN cadastro ca ON ac.id_condutor= condutor.id AND condutor.id_cadastro = ca.id
+---ACIDENTE A PARTIR DO NOME DE UM CONDUTOR
+SELECT ac.data as 'DATA HORA', ac.id as 'ID ACIDENTE', vi.placa AS 'PLACA VEICULO', ac.pessoas_envolvidas AS 'PESSOAS ENVOLVIDAS', ac.descricao as 'DESCRICAO', ac.latitude AS 'LATITUDE', ac.longitude AS 'LONGITUDE' FROM Acidente ac
+INNER JOIN Cadastro ca ON ca.nome= 'Tambra Trapani' /*apenas alterar esse valor de acordo com a necessidade*/
+INNER JOIN Condutor co ON ca.id = co.FK_Cadastro_id
+INNER JOIN ocorrencia_acidente oa ON oa.FK_Condutor_id = co.id AND ac.id = oa.FK_Acidente_id
+INNER JOIN Veiculo vi ON vi.id = oa.FK_Veiculo_id
 
-/*RECUPERANDO O OBJETO FUNCIONARIO <CLASSE JAVA> */
-SELECT ca.nome AS 'nome', ca.data_nasc AS 'data_nasc', ca.sexo AS 'sexo', ca.numero_cpf AS 'numero_cpf', rg.numero_rg AS 'numero_rg', rg.orgao AS 'orgao', rg.estado AS 'estado', fun.senha AS 'senha' FROM funcionario fun
-INNER JOIN rg INNER JOIN cadastro ca ON fun.id_cadastro= ca.id AND ca.id_rg= rg.id
+---ACIDENTE A PARTIR DA VELOCIDADE DOS VEICULOS ENVOLVIDOS
+SELECT ac.data AS 'DATA HORA', ac.id AS 'ID ACIDENTE',vi.placa AS 'PLACA VEICULO', ac.pessoas_envolvidas AS 'PESSOAS ENVOLVIDAS', ac.descricao AS 'DESCRICAO', ac.latitude AS 'LATITUDE', ac.longitude AS 'LONGITUDE' FROM Acidente ac 
+INNER JOIN ocorrencia_acidente oa ON oa.velocidade >= 80/*alterar valor e condicao de acordo com a necessidade*/ AND ac.id = oa.FK_Acidente_id
+INNER JOIN Veiculo vi ON vi.id = oa.FK_Veiculo_id
 
-/*RECUPERANDO O OBJETO CONTRIBUIDOR <CLASSE JAVA>*/
-SELECT ca.nome AS 'nome',cont.orgao_associado AS 'orgao associado',  ca.data_nasc AS 'data_nasc', ca.sexo AS 'sexo', ca.numero_cpf AS 'numero_cpf', rg.numero_rg AS 'numero_rg', rg.orgao AS 'orgao', rg.estado AS 'estado' FROM contribuidor cont
-INNER JOIN rg INNER JOIN cadastro ca ON cont.id_cadastro= ca.id AND ca.id_rg= rg.id
+---RECUPERACAO DO OBJETO FUNCIONARIO <CLASSE JAVA>
+SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', fn.senha AS 'senha' FROM Funcionario fn
+INNER JOIN Cadastro ca ON fn.FK_Cadastro_id = ca.id
 
-/*RECUPERANDO O OBJETO CONDUTOR <CLASSE JAVA>*/
-SELECT ca.nome AS 'nome',cond.titular AS 'titular',  ca.data_nasc AS 'data_nasc', ca.sexo AS 'sexo', ca.numero_cpf AS 'numero_cpf', rg.numero_rg AS 'numero_rg', rg.orgao AS 'orgao', rg.estado AS 'estado', cnh.numero_cnh AS 'numero_cnh', cnh.categoria AS 'categoria' FROM condutor cond
-INNER JOIN rg INNER JOIN cadastro ca ON cond.id_cadastro= ca.id AND ca.id_rg= rg.id  INNER JOIN cnh ON cnh.id = cond.id_cnh
+---RECUPERACAO DO OBJETO  CONTRIBUIDOR <CLASSE JAVA>
+SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',ct.Orgao_associado AS 'orgao_associado' FROM Contribuidor ct
+INNER JOIN Cadastro ca ON ct.FK_Cadastro_id = ca.id
 
-/*RECUPERANDO O OBJETO VEICULO <CLASSE JAVA>*/
-SELECT renavam,placa,modelo,cor,marca,ano FROM veiculo
+---RECUPERACAO DO OBJETO CONDUTOR <CLASSE JAVA>
+SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' FROM Condutor cd
+INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id
+INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id
 
-/*RECUPERANDO O OBJETO RELATORIO ACIDENTE <CLASSE JAVA>*/
-SELECT ra.placa AS 'placa', ra.nome_condutor AS 'nome_condutor', ra.numero_cnh AS 'numero_cnh', ra.numero_ocupantes AS 'numero_ocupantes', ra.info_acidente AS 'info_acidente', ca.nome AS 'nome',cont.orgao_associado AS 'orgao_associado',  ca.data_nasc AS 'data_nasc', ca.sexo AS 'sexo', ca.numero_cpf AS 'numero_cpf', rg.numero_rg AS 'numero_rg', rg.orgao AS 'orgao', rg.estado AS 'estado' FROM relatorio_acidente ra
-INNER JOIN contribuidor cont ON cont.id=ra.id_contribuidor  INNER JOIN rg INNER JOIN cadastro ca ON cont.id_cadastro= ca.id AND ca.id_rg= rg.id
+---RECUPERACAO DO OBJETO VEICULO <CLASSE JAVA>
+SELECT vi.renavam AS 'renavam', vi.placa AS 'placa', vi.modelo AS 'modelo', vi.cor AS 'cor', vi.marca AS 'marca', vi.ano AS 'ano' FROM Veiculo vi
 
-/*RECUPERANDO O OBJETO DADOS ROTINA <CLASSE JAVA>*/
-SELECT dr.velocidade AS 'velocidade', dr.latitude AS 'latitude', dr.longitude AS 'longitude', dr.data AS 'data', vi.renavam AS 'renavam',vi.placa AS 'placa',vi.modelo AS 'modelo',vi.cor AS 'cor',vi.marca AS 'marca',vi.ano AS 'ano' FROM dados_rotina dr
-INNER JOIN veiculo vi ON dr.id_veiculo = vi.id
 
-/*RECUPERANDO O OBJETO ACIDENTE <CLASSE JAVA>*/
-SELECT ac.descricao AS 'descricao', ac.velocidade AS 'velocidade', ac.numero_ocupantes AS 'numero_ocupantes', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.data as 'data', vi.renavam AS 'renavam',vi.placa AS 'placa',vi.modelo AS 'modelo',vi.cor AS 'cor',vi.marca AS 'marca',vi.ano AS 'ano', ca.nome AS 'nome',cond.titular AS 'titular',  ca.data_nasc AS 'data_nasc', ca.sexo AS 'sexo', ca.numero_cpf AS 'numero_cpf', rg.numero_rg AS 'numero_rg', rg.orgao AS 'orgao', rg.estado AS 'estado', cnh.numero_cnh AS 'numero_cnh', cnh.categoria AS 'categoria' FROM acidente ac
-INNER JOIN veiculo vi ON ac.id_veiculo = vi.id INNER JOIN rg  INNER JOIN condutor cond INNER JOIN cadastro ca ON cond.id_cadastro= ca.id AND ca.id_rg= rg.id AND ac.id_condutor = cond.id  INNER JOIN cnh ON cnh.id = cond.id_cnh
+---RECUPERACAO DO OBJETO ACIDENTE <CLASSE JAVA>
+SELECT ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' FROM Acidente ac
+
+---RECUPERACAO OBJETO OCORRENCIA ACIDENTE <CLASSE JAVA>
+SELECT oa.condutor_titular AS 'condutor_titular', oa.velocidade AS 'velocidade',
+ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria', /*condutor do veiculo na seguinte ocorrencia*/
+vi.renavam AS 'renavam', vi.placa AS 'placa', vi.modelo AS 'modelo', vi.cor AS 'cor', vi.marca AS 'marca', vi.ano AS 'ano', /*veiculo na seguinte ocorrencia*/
+ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' FROM ocorrencia_acidente oa /*acidente na seguinte ocorrencia*/
+INNER JOIN Condutor cd ON cd.id = oa.FK_Condutor_id
+INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id
+INNER JOIN Veiculo vi ON vi.id = oa.FK_Veiculo_id
+INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id
+INNER JOIN Acidente ac ON ac.id = oa.FK_Acidente_id
