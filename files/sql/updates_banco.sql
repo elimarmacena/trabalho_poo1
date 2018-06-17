@@ -22,3 +22,8 @@ WHERE numero_cpf = '755393713-60'
 UPDATE Cadastro
 SET nome = 'Maria Paula'
 WHERE EXISTS (SELECT FK_Cadastro_id FROM Condutor cd WHERE cd.id = 10 AND cd.FK_Cadastro_id = Cadastro.id)
+
+---ATUALIZACAO DOS DADOS DE ROTINA COM BASE NO ID DO VEICULO
+UPDATE Dados_rotina
+SET velocidade= 100, latitude = -33.523274, longitude =  -54.123588, data = '2018-02-04'
+WHERE FK_Veiculo_id = 10/*mudar de acordo com a necessidade*/;

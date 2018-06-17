@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS Funcionario (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     FK_Cadastro_id INTEGER,
 	senha CHAR(12),
+    ativo INTEGER, /*1 PARA ATIVO 0 PARA DESATIVADO*/
 	FOREIGN KEY (FK_Cadastro_id)
     REFERENCES Cadastro (id) ON DELETE CASCADE
 );
@@ -46,9 +47,10 @@ CREATE TABLE IF NOT EXISTS Relatorio_acidente (
     info_acidente CHAR(400),
 	latitude REAL,
 	longitude REAL,
+    data DATE,
     FK_Contribuidor_id INTEGER,
 	FOREIGN KEY (FK_Contribuidor_id)
-    REFERENCES Contribuidor (id) ON DELETE CASCADE
+    REFERENCES Contribuidor (id)
 );
 
 CREATE TABLE IF NOT EXISTS Veiculo (
@@ -64,12 +66,12 @@ CREATE TABLE IF NOT EXISTS Veiculo (
 CREATE TABLE IF NOT EXISTS Dados_rotina (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     velocidade INTEGER,
-    longitude REAL,
     latitude REAL,
+    longitude REAL,
     data DATETIME,
     FK_Veiculo_id INTEGER,
 	FOREIGN KEY (FK_Veiculo_id)
-    REFERENCES Veiculo (id) ON DELETE CASCADE
+    REFERENCES Veiculo (id)
 );
 
 CREATE TABLE IF NOT EXISTS Acidente (

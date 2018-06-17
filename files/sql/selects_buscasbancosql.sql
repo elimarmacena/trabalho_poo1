@@ -26,6 +26,9 @@ SELECT ac.data AS 'DATA HORA', ac.id AS 'ID ACIDENTE',vi.placa AS 'PLACA VEICULO
 INNER JOIN ocorrencia_acidente oa ON oa.velocidade >= 80/*alterar valor e condicao de acordo com a necessidade*/ AND ac.id = oa.FK_Acidente_id
 INNER JOIN Veiculo vi ON vi.id = oa.FK_Veiculo_id
 
+---LOCALIZACOES DOS ACIDENTES
+SELECT id, latidude, longitude FROM Acidente;
+
 ---RECUPERACAO DO OBJETO FUNCIONARIO <CLASSE JAVA>
 SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', fn.senha AS 'senha' FROM Funcionario fn
 INNER JOIN Cadastro ca ON fn.FK_Cadastro_id = ca.id
