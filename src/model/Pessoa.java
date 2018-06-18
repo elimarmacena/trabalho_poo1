@@ -8,7 +8,8 @@ public abstract class Pessoa {
     private Date dataNascimento;
     private String sexo;
     private String numCpf;
-    private Rg rg;
+    private String numeroRg;
+    private String estadorg;
 
     
     /* Gets e Sets */
@@ -45,12 +46,20 @@ public abstract class Pessoa {
         }
     }
 
-    public Rg getRg() {
-        return rg;
+    public String getNumeroRg() {
+        return numeroRg;
     }
 
-    public void setRg(Rg rg) {
-        this.rg = rg;
+    public void setNumeroRg(String numeroRg) {
+        this.numeroRg = numeroRg;
+    }
+
+    public String getEstadorg() {
+        return estadorg;
+    }
+
+    public void setEstadorg(String estadorg) {
+        this.estadorg = estadorg;
     }
 
     public String getCpf() {

@@ -1,6 +1,8 @@
 
 package model;
 
+import java.util.Date;
+
 public class RelatorioAcidente {
     private String placa;
     private String condutor; //nome do condutor
@@ -8,6 +10,10 @@ public class RelatorioAcidente {
     private int numOcupantes;
     private String tipoAcidente;
     private Contribuidor auxiliador;
+//informacoes necessarias para o cruzamento de informacoes
+    private double [] localizacao = new double[2];
+    private Date data;
+//fim
     
     
     /* Gets e Sets */ 
@@ -58,6 +64,23 @@ public class RelatorioAcidente {
     public void setNumCnh(String numCnh) {
         this.numCnh = numCnh;
     }
+
+    public double[] getLocalizacao() {
+        return localizacao;
+    }
+
+    public void setLocalizacao(double[] localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+    
     
     
 }

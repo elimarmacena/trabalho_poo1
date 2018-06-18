@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Veiculo {
-    private String chassi;
+    private String renavam;
     private String placa;
     private String marca;
     private String modelo;
@@ -25,19 +25,19 @@ public class Veiculo {
 
     
     /* Gets e Sets*/
-    public String getChassi() {
-        return chassi;
+    public String getRenavam() {
+        return this.renavam;
     }
 
-    public void setChassi(String chassi) {
-        if(chassi.length() != 17) {
-            System.out.println("Entrada invalida\nInforme RG válido: ");
+    public void setRenavam(String renavam) {
+        if(renavam.length() != 11) {
+            System.out.println("Entrada invalida\nInforme RENAVAM válido: ");
             Scanner scan = new Scanner(System.in);
-            String tentativaChassi = scan.nextLine();
-            setChassi(tentativaChassi);
+            String tentativaRenavam = scan.nextLine();
+            setRenavam(tentativaRenavam);
         }
         else {
-            this.chassi = chassi;
+            this.renavam = renavam;
         }
     }
 

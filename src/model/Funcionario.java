@@ -6,27 +6,14 @@ import crud.BuscaInfosArquivos;
 import crud.CadastramentosArquivos;
 
 public class Funcionario extends Pessoa {
-    private String login;
+    //private String login; login representado pelo numeroCpf do funcionario
     private String senha; //ESSA NAO EH A TIPAGEM FINAL, APENAS USADA PARA A FORMACAO DO TRABALHO.
+    private boolean ativo; //indica se o funcionario ainda esta ativo no sistema  possui acesso as funcoes.
     
     
     /* Gets e Sets*/
     
-    public String getLogin() {
-        return login;
-    }
 
-    public void setLogin(String login) {
-        if(login.length() < 4 || login.length() > 20) { //o login deve 4 < login < 20
-            System.out.println("O login precisa conter entre 4 e 20 caracteres\nInsira login válido: ");
-            Scanner scan = new Scanner(System.in);
-            String tentativaLogin = scan.nextLine();
-            setLogin(tentativaLogin);
-        }
-        else {
-            this.login = login;
-        }
-    }
 
     public String getSenha() {
         return senha;
@@ -43,7 +30,15 @@ public class Funcionario extends Pessoa {
             this.senha = senha;
         }
     }
-
+    
+    public void setAtivo(boolean ativo){
+        this.ativo = ativo;
+    }
+    
+    public boolean isAtivo(){
+        return this.ativo;
+    }
+    
     public void cadastroFuncionario(Funcionario funcionario) {
         CadastramentosArquivos.cadastroFuncionario(funcionario);
     }
