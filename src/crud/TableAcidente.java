@@ -4,7 +4,11 @@
  * and open the template in the editor.
  */
 package crud;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,20 +26,39 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         return formatoData.format(data);
     }
     
+    public int lastId(){
+        int id = 0;
+        String sql = "SELECT id FROM Acidente ORDER BY id DESC LIMIT 1";
+        Connection conexao = null;
+        Statement statement = null;
+        try{
+            Class.forName("org.sqlite.JDBC");
+            conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+            statement = conexao.createStatement();
+            ResultSet resultado = statement.executeQuery(sql);
+            id = Integer.parseInt(resultado.getString("id") );
+            statement.close();
+            conexao.close();
+        }
+        catch(SQLException sqler){
+            sqler.printStackTrace();
+        }
+        catch(ClassNotFoundException clser){
+           clser.printStackTrace();
+        }
+        return id;
+    }
+    
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE IF NOT EXISTS acidente"+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "id_condutor INTEGER,"+
-                "id_veiculo INTEGER,"+
-                "num_ocupantes INTEGER,"+
-                "velocidade INTEGER,"+
-                "descricao CHAR(400),"+
-                "latitude REAL,"+
-                "longitude REAL,"+
-                "data DATETIME,"+
-                "FOREIGN KEY (id_condutor) REFERENCES condutor(id),"+
-                "FOREIGN KEY (id_veiculo) REFERENCES veiculo(id) )";
+        String sql = "CREATE TABLE IF NOT EXISTS Acidente ("+
+            "pessoas_envolvidas INTEGER,"+
+            "latitude REAL,"+
+            "longitude REAL,"+
+            "descricao CHAR(400),"+
+            "data DATETIME,"+
+            "id INTEGER PRIMARY KEY AUTOINCREMENT"+
+            ")";
         SqlExecution.executeSQL(sql);
     }
 
@@ -43,22 +66,15 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
     public void cadastar(Acidente informacao) throws SQLException, ClassNotFoundException {
         TableCondutor tbCondutor = new TableCondutor();
         TableVeiculo tbVeiculo = new TableVeiculo();
-        String sql = "INSERT INTO acidente (id_condutor,id_veiculo,num_ocupantes,velocidade,descricao,latitude,longitude,data)"+
+        String sql = "INSERT INTO acidente (pessoas_envolvidas,latitude,longitude,data,descricao) "+
                 "VALUES ("+
-                tbCondutor.idByNumCnh(informacao.getCondutor().getCnh().getNumCnh())+","+
-                tbVeiculo.idByPlaca(informacao.getVeiculo().getPlaca())+","+
-                informacao.getOcupantes()+","+
-                informacao.getVelocidade()+","+
-                "'"+informacao.getDescricao()+"',"+
+                informacao.getPessoasEnvolvidas()+","+
                 informacao.getLocalizacao()[0]+","+
                 informacao.getLocalizacao()[1]+","+
-                "'"+this.dataToString(informacao.getData() )+"' )";
+                "'"+this.dataToString(informacao.getData() )+"',"+
+                "'"+informacao.getDescricao()+"')";
         SqlExecution.executeSQL(sql);
     }
 
-    @Override
-    public void cadastrarMulti(ArrayList<Acidente> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }

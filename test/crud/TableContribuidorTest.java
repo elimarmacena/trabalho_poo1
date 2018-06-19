@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import model.Contribuidor;
 import model.Funcionario;
 import model.Pessoa;
-import model.Rg;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -76,21 +75,18 @@ public class TableContribuidorTest {
         TableContribuidor instance = new TableContribuidor();
         Contribuidor informacao = new Contribuidor();
         //setando as informacoes basicas de contribuidor
-        informacao.setCpf("777777777-77");
-        informacao.setNome("raffa moreira mano");
-        informacao.setSexo("m");
-        informacao.setOrgaoAssociado("fxnxndx");
+        informacao.setCpf("183750627-23");
+        informacao.setNome("Isabella Mariah Sales");
+        informacao.setSexo("F");
+        informacao.setOrgaoAssociado("APERJ");
         //
-        //criando e setando o objeto RG
-        Rg rgComplete = new Rg();
-        rgComplete.setEstado("SP");
-        rgComplete.setOrgaoEmissor("LEAN");
-        rgComplete.setNumRg("7777777-SP");
-        informacao.setRg(rgComplete);
+        //informacoes sobre o rg
+       informacao.setNumeroRg("27948313-2");
+       informacao.setEstadorg("RJ");
         //
         //setando data de nascimento fazendo uso de calendar e apos solicitando Date
         Calendar nascimento = Calendar.getInstance();
-        nascimento.set(1990, 7, 7);
+        nascimento.set(1968, 10, 19); //ANO, MES, DIA
         informacao.setDataNascimento(nascimento.getTime());
         //
         

@@ -16,29 +16,29 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
     
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE IF NOT EXISTS funcionario"+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "id_cadastro INTEGER,"+
-                "senha CHAR(12),"+ /*senha expressada dessa forma apenas para testes*/
-                "FOREIGN KEY (id_cadastro) REFERENCES cadastro(id) )";
+        String sql = "CREATE TABLE IF NOT EXISTS Funcionario (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "FK_Cadastro_id INTEGER," +
+            "senha CHAR(12)," +
+            "ativo INTEGER, /*1 PARA ATIVO 0 PARA DESATIVADO*/" +
+            "FOREIGN KEY (FK_Cadastro_id)" +
+            "REFERENCES Cadastro (id) " +
+            ")";
         SqlExecution.executeSQL(sql);
     }
     @Override
     public void cadastar(Funcionario informacao) throws SQLException, ClassNotFoundException {
         TableCadastro tbCadastro = new TableCadastro();
         tbCadastro.cadastar((Pessoa)informacao);
-        String sql = "INSERT INTO funcionario(id_cadastro,senha)"+
-                "VALUES("+
-                tbCadastro.lastId()+","+
-                "'"+informacao.getSenha()+"')";
+        int idCadastro = tbCadastro.lastId();
+        String sql = "INSERT INTO Funcionario(FK_Cadastro_id, senha, ativo) VALUES("+
+                idCadastro+","+
+                "'"+informacao.getSenha()+"',"+
+                "1)";//UM POIS TODO FUNCIONARIO CADASTRADO ESTA ATIVO NO SISTEMA
         SqlExecution.executeSQL(sql);
         
     }
 
-    @Override
-    public void cadastrarMulti(ArrayList<Funcionario> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     
     

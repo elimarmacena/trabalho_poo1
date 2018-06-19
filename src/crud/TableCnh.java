@@ -43,23 +43,20 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS cnh"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "num_cnh CHAR(11),"+
+                "num_cnh CHAR(12),"+
                 "categoria CHAR(3))";
         SqlExecution.executeSQL(sql);
     }
 
     @Override
     public void cadastar(Cnh informacao)throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO cnh(num_cnh,categoria)"+
+        String sql = "INSERT INTO cnh (numero_cnh,categoria)"+
                 "VALUES("+
                 "'"+informacao.getNumCnh()+"',"+
                 "'"+informacao.getCategoria()+"')";
         SqlExecution.executeSQL(sql);
     }
 
-    @Override
-    public void cadastrarMulti(ArrayList<Cnh> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }

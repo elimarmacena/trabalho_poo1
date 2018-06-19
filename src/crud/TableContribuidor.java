@@ -65,28 +65,25 @@ public class TableContribuidor implements OperacoesBaseDados<Contribuidor> {
     }
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE IF NOT EXISTS contribuidor"+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "id_cadastro INTEGER,"+
-                "orgao_associado CHAR(40),"+
-                "FOREIGN KEY  (id_cadastro) REFERENCES cadastro(id) )";
+        String sql = "CREATE TABLE IF NOT EXISTS Contribuidor (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "orgao_associado CHAR(40)," +
+            "FK_Cadastro_id INTEGER," +
+            "FOREIGN KEY (FK_Cadastro_id)" +
+            "REFERENCES Cadastro (id) " +
+            ")";
         SqlExecution.executeSQL(sql);
     }
 
     @Override
     public void cadastar(Contribuidor informacao) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO contribuidor (id_cadastro,orgao_associado)";
         TableCadastro tbCadastro = new TableCadastro();
         tbCadastro.cadastar((Pessoa)informacao);
-        sql= sql+ "VALUES("+
-                tbCadastro.lastId()+","+
-                "'"+informacao.getOrgaoAssociado()+"')";
+        int idCadastro = tbCadastro.lastId();
+        String sql = "INSERT INTO Contribuidor (FK_Cadastro_id, orgao_associado) VALUES("
+                + idCadastro+","
+                + "'"+informacao.getOrgaoAssociado()+"')"; //getOrgaoAssociado retorna o nome do orgao no qual o contribuidor possui vinculo.
         SqlExecution.executeSQL(sql);
     }
-
-    @Override
-    public void cadastrarMulti(ArrayList<Contribuidor> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+ 
 }

@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Funcionario;
 import model.Pessoa;
-import model.Rg;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -72,9 +71,9 @@ public class TableFuncionarioTest {
         TableFuncionario instance = new TableFuncionario();
         Funcionario informacao = new Funcionario();
         //setando informacoes basicas de funcionario
-        informacao.setSenha("asdfgh");
-        informacao.setCpf("999888777-66");
-        informacao.setNome("luiza joaona");
+        informacao.setSenha("JUnit123");
+        informacao.setCpf("128406532-49");
+        informacao.setNome("Letícia Andrea Teixeira");
         informacao.setSexo("f");
         //
         //setando data de nascimento fazendo uso de calendar e apos solicitando Date
@@ -82,12 +81,9 @@ public class TableFuncionarioTest {
         nascimento.set(1991, 3, 22);
         informacao.setDataNascimento(nascimento.getTime());
         //
-        //criando e setando objeto rg
-        Rg rgComplete = new Rg();
-        rgComplete.setEstado("SP");
-        rgComplete.setOrgaoEmissor("POLICIA CIVIL");
-        rgComplete.setNumRg("8888888-SP");
-        informacao.setRg(rgComplete);
+        //setando informacoes do rg
+        informacao.setNumeroRg("27978279-2");
+        informacao.setEstadorg("AC");
         //
         
         try {

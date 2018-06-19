@@ -10,19 +10,11 @@ package model;
  * @author 20161bsi0314
  */
 public class OcorrenciaAcidente {
-    Acidente acidente;
+    
     Veiculo veiculo;
     Condutor condutor;
     boolean condutor_titular;
     int velocidade;
-
-    public Acidente getAcidente() {
-        return acidente;
-    }
-
-    public void setAcidente(Acidente acidente) {
-        this.acidente = acidente;
-    }
 
     public Veiculo getVeiculo() {
         return veiculo;

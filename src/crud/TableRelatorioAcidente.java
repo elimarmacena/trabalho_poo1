@@ -6,7 +6,9 @@
 package crud;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import model.RelatorioAcidente;
 /**
  *
@@ -14,39 +16,52 @@ import model.RelatorioAcidente;
  */
 public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcidente>{
 
+    public static String dataToString(Date data) {
+        DateFormat formatoData = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        System.out.println(formatoData.format(data));
+        return formatoData.format(data);
+    }
     @Override
     public void createTable() throws SQLException, ClassNotFoundException{
-        String sql= "CREATE TABLE IF NOT EXISTS relatorio_acidente"+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "id_contribuidor INTEGER,"+
-                "placa CHAR(8),"+
-                "nome_condutor CHAR(70),"+
-                "num_cnh CHAR(11),"+
-                "num_ocupantes INTEGER,"+
-                "info_acidente CHAR(400),"+
-                "FOREIGN KEY (id_contribuidor) REFERENCES contribuidor(id) )";
+        String sql= "CREATE TABLE IF NOT EXISTS Relatorio_acidente (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "placa CHAR(8)," +
+            "nome_condutor CHAR(70)," +
+            "cnh_condutor CHAR(12)," +
+            "numero_ocupantes INTEGER," +
+            "info_acidente CHAR(400)," +
+            "latitude REAL," +
+            "longitude REAL," +
+            "data DATE," +
+            "FK_Contribuidor_id INTEGER," +
+            "FOREIGN KEY (FK_Contribuidor_id)" +
+            "REFERENCES Contribuidor (id)" +
+            ")";
         SqlExecution.executeSQL(sql);
     }
 
     @Override
     public void cadastar(RelatorioAcidente informacao) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO relatorio_acidente(id_contribuidor,placa,nome_condutor,num_cnh,num_ocupantes,info_acidente)";
         TableContribuidor tbContribuidor = new TableContribuidor();
-        sql = sql+"VALUES ("+
-                tbContribuidor.idByNameAndOrgao(informacao.getAuxiliador().getNome(), informacao.getAuxiliador().getOrgaoAssociado())+","+
-                "'"+informacao.getPlaca()+"',"+
-                "'"+informacao.getCondutor()+"',"+
-                "'"+informacao.getNumCnh()+"',"+
-                informacao.getNumOcupantes()+","+
-                "'"+informacao.getTipoAcidente()+"')";
+        int idContribuidor = tbContribuidor.idByNameAndOrgao(informacao.getAuxiliador().getNome(), informacao.getAuxiliador().getOrgaoAssociado());
+        String sql = "INSERT INTO relatorio_acidente (FK_Contribuidor_id,placa,nome_condutor,cnh_condutor,numero_ocupantes,info_acidente, latitude, longitude,data) "
+                + "VALUES("
+                + idContribuidor+","
+                +"'" + informacao.getPlaca() + "',"
+                +"'" + informacao.getNomeCondutor() + "',"
+                +"'" + informacao.getNumCnh() + "',"
+                + informacao.getNumOcupantes()+","
+                + "'" + informacao.getDescricao() + "',"
+                + informacao.getLocalizacao()[0]+","
+                + informacao.getLocalizacao()[1]+","
+                + "'" + this.dataToString( informacao.getData() ) + "')";
+                
+                
         SqlExecution.executeSQL(sql);
         
         
     }
 
-    @Override
-    public void cadastrarMulti(ArrayList<RelatorioAcidente> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }

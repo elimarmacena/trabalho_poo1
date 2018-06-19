@@ -20,7 +20,7 @@ import model.Pessoa;
 public class TableCondutor implements OperacoesBaseDados<Condutor> {
     public int idByNumCnh(String numCnh){
         int id = 0;
-        String sql = "SELECT condutor.id FROM condutor INNER JOIN cnh ON cnh.num_cnh='"+numCnh+"'";
+        String sql = "SELECT condutor.id FROM Condutor INNER JOIN Cnh ON cnh.numero_cnh='"+numCnh+"' AND Condutor.FK_Cnh_id = Cnh.id";
         Connection conexao = null;
         Statement statement = null;
         try{
@@ -43,13 +43,15 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
     
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE IF NOT EXISTS condutor"+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "id_cadastro INTEGER,"+
-                "titular_veiculo INTEGER,"+
-                "id_cnh INTEGER,"+
-                "FOREIGN KEY (id_cadastro) REFERENCES cadastro(id),"+
-                "FOREIGN KEY (id_cnh) REFERENCES cnh(id) )";
+        String sql = "CREATE TABLE IF NOT EXISTS Condutor (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "FK_Cadastro_id INTEGER," +
+            "FK_cnh_id INTEGER," +
+            "FOREIGN KEY (FK_Cadastro_id)" +
+            "REFERENCES Cadastro (id)," +
+            "FOREIGN KEY (FK_cnh_id)" +
+            "REFERENCES Cnh(id) ON DELETE CASCADE" +
+            ")";
         SqlExecution.executeSQL(sql);
     }
 
@@ -64,20 +66,17 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
     public void cadastar(Condutor informacao) throws SQLException, ClassNotFoundException{
         TableCnh tbCnh  = new TableCnh();
         TableCadastro tbCadastro = new TableCadastro();
-        String sql = "INSERT INTO condutor(id_cadastro,titular_veiculo,id_cnh)";
         tbCnh.cadastar(informacao.getCnh());
         tbCadastro.cadastar((Pessoa)informacao);
-        int titular = informacao.isTitularVeiculo() ? 1:0; //caso seja titular o valor guardado na tabela eh 1
-        sql= sql+"VALUES("+
-                tbCadastro.lastId()+","+
-                titular+","+
-                tbCnh.lastId()+")";
+        int idCadastro = tbCadastro.lastId();
+        int idCnh = tbCnh.lastId();
+        String sql= "INSERT INTO condutor (FK_Cadastro_id,FK_cnh_id) "
+                + "VALUES("
+                + idCadastro+","
+                + idCnh+")";
         SqlExecution.executeSQL(sql);
     }
 
-    @Override
-    public void cadastrarMulti(ArrayList<Condutor> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }

@@ -5,10 +5,10 @@ import java.util.Date;
 
 public class RelatorioAcidente {
     private String placa;
-    private String condutor; //nome do condutor
+    private String nomeCondutor; ////nome do condutor
     private String numCnh;
     private int numOcupantes;
-    private String tipoAcidente;
+    private String descricao;
     private Contribuidor auxiliador;
 //informacoes necessarias para o cruzamento de informacoes
     private double [] localizacao = new double[2];
@@ -26,12 +26,12 @@ public class RelatorioAcidente {
         this.placa = placa;
     }
 
-    public String getCondutor() {
-        return condutor;
+    public String getNomeCondutor() {
+        return nomeCondutor;
     }
 
-    public void setCondutor(String condutor) {
-        this.condutor = condutor;
+    public void setNomeCondutor(String nome) {
+        this.nomeCondutor = nome;
     }
 
     public int getNumOcupantes() {
@@ -42,12 +42,12 @@ public class RelatorioAcidente {
         this.numOcupantes = numOcupantes;
     }
 
-    public String getTipoAcidente() {
-        return tipoAcidente;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setTipoAcidente(String tipoAcidente) {
-        this.tipoAcidente = tipoAcidente;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Contribuidor getAuxiliador() {

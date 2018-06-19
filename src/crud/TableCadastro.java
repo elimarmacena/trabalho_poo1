@@ -53,36 +53,33 @@ public class TableCadastro implements OperacoesBaseDados<Pessoa> {
     
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE IF NOT EXISTS cadastro"+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "nome CHAR(70),"+
-                "data_nasc DATETIME,"+
-                "id_rg INTEGER,"+
-                "num_cpf CHAR(11),"+
-                "sexo CHAR(1),"+
-                "FOREIGN KEY (id_rg) REFERENCES rg(id) )";
+        String sql = "CREATE TABLE IF NOT EXISTS Cadastro (" +
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "numero_rg CHAR(13)," +
+            "estado_rg CHAR(2)," +
+            "nome CHAR(70)," +
+            "data_nasc DATE," +
+            "sexo CHAR(1)," +
+            "numero_cpf CHAR(12)" +
+            ")";
         SqlExecution.executeSQL(sql);
     }
 
     @Override
     public void cadastar(Pessoa informacao) throws SQLException, ClassNotFoundException {
         String nascimento = dataToString(informacao.getDataNascimento());
-        String sql = "INSERT INTO cadastro (nome,data_nasc,id_rg,num_cpf,sexo)";
-        TableRg tbRg = new TableRg();
-        tbRg.cadastar(informacao.getRg());
-        sql = sql+"VALUES("+
-                "'"+informacao.getNome()+"',"+
-                "'"+nascimento+"',"+
-                tbRg.lastId()+","+
-                "'"+informacao.getCpf()+"',"+
-                "'"+informacao.getSexo()+"' )";
+        String sql = "INSERT INTO cadastro(nome,data_nasc,numero_cpf,sexo,numero_rg,estado_rg)"
+                + " VALUES("
+                +"'"+informacao.getNome()+"',"
+                +"'"+nascimento+"',"
+                + "'"+informacao.getCpf()+"',"
+                + "'"+informacao.getSexo()+"',"
+                + "'"+informacao.getNumeroRg()+"',"
+                + "'"+informacao.getEstadorg()+"')";
         SqlExecution.executeSQL(sql);
         
     }
 
-    @Override
-    public void cadastrarMulti(ArrayList<Pessoa> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }

@@ -11,9 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.Funcionario;
-import model.Pessoa;
-import model.Rg;
+import model.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -74,21 +72,18 @@ public class TableCadastroTest {
         TableCadastro tbCadastro = new TableCadastro();
         Pessoa informacao = new Funcionario();
         //setando informacoes basicas de pessoa
-        informacao.setCpf("111222333-44");
-        informacao.setNome("joao paulo");
-        informacao.setSexo("m");
+        informacao.setCpf("821688047-29");
+        informacao.setNome("Carolina Sarah Regina Oliveira");
+        informacao.setSexo("f");
         //
         //setando data de nascimento fazendo uso de calendar e apos solicitando Date
         Calendar nascimento = Calendar.getInstance();
         nascimento.set(1990, 5, 25);
         informacao.setDataNascimento(nascimento.getTime());
         //
-        //criando e setando o objeto RG
-        Rg rgComplete = new Rg();
-        rgComplete.setEstado("ES");
-        rgComplete.setOrgaoEmissor("POLICIA FEDERAL");
-        rgComplete.setNumRg("9999999-ES");
-        informacao.setRg(rgComplete);
+        //instanciando informacoes referentes ao rg
+        informacao.setEstadorg("ES");
+        informacao.setNumeroRg("42185922-2");
         //
         
         try{

@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Contribuidor;
 import model.RelatorioAcidente;
-import model.Rg;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -72,32 +71,41 @@ public class TableRelatorioAcidenteTest {
         //instanciando o contribuidor do realtorio
         Contribuidor contribuidor = new Contribuidor();
         //setando as informacoes basicas de contribuidor
-        contribuidor.setCpf("777777777-77");
-        contribuidor.setNome("raffa moreira mano");
+        contribuidor.setCpf("137904782-02");
+        contribuidor.setNome("Mateus Fernandes Melo");
         contribuidor.setSexo("m");
-        contribuidor.setOrgaoAssociado("fxnxndx");
+        contribuidor.setOrgaoAssociado("POLICIA FEDERAL");
         //
-        //criando e setando o objeto RG
-        Rg rgComplete = new Rg();
-        rgComplete.setEstado("SP");
-        rgComplete.setOrgaoEmissor("LEAN");
-        rgComplete.setNumRg("7777777-SP");
-        contribuidor.setRg(rgComplete);
+        //setando informacoes referente ao RG
+        contribuidor.setEstadorg("SP");
+        contribuidor.setNumeroRg("45788698-5");
         //
         //setando data de nascimento fazendo uso de calendar e apos solicitando Date
         Calendar nascimento = Calendar.getInstance();
-        nascimento.set(1990, 7, 7);
+        nascimento.set(1982, 9, 8);
         contribuidor.setDataNascimento(nascimento.getTime());
         //
         
         //instanciando o relatorio
+        double[] localizacaoAcidente = new double [2]; //variavel que sera enviada como parametro para localizacao do acidente
+        localizacaoAcidente[0]=36.6780334;
+        localizacaoAcidente[1]=-121.7442384;
         RelatorioAcidente informacao = new RelatorioAcidente();
         informacao.setAuxiliador(contribuidor);
-        informacao.setCondutor("bilbo");
-        informacao.setNumCnh("333333333333");
+        informacao.setNomeCondutor("Patrícia Evelyn Eliane Baptista");
+        informacao.setNumCnh("39770613360");
         informacao.setNumOcupantes(2);
-        informacao.setPlaca("PPX-0000");
-        informacao.setTipoAcidente("derrapagem seguido de capotagem");
+        informacao.setPlaca("MQX-6834");
+        informacao.setDescricao("derrapagem seguido de capotagem");
+        informacao.setLocalizacao(localizacaoAcidente);
+        //setando dia e hora do acidente
+        Calendar horarioAcidente = Calendar.getInstance();
+        horarioAcidente.set(2018,6,19);
+        horarioAcidente.set(Calendar.HOUR,18);
+        horarioAcidente.set(Calendar.MINUTE,47);
+        horarioAcidente.set(Calendar.SECOND,0);
+        //
+        informacao.setData(horarioAcidente.getTime());
         
         try {
             instance.cadastar(informacao);

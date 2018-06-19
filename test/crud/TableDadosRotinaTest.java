@@ -69,24 +69,24 @@ public class TableDadosRotinaTest {
     public void testCadastar()  {
         System.out.println("cadastar");
         TableDadosRotina instance = new TableDadosRotina();
+        TableVeiculo tbVeiculo = new TableVeiculo();
         DadosRotina informacao = new DadosRotina();
         Veiculo car = new Veiculo();
         //setando informacoes do veiculo
-        car.setAno(2018);
-        car.setChassi("A44433FBD33R30J83");
-        car.setCor("preto");
-        car.setMarca("jeep");
-        car.setModelo("renegade");
-        car.setPlaca("LAN-7777");
-        //
+        car.setAno(2015);
+        car.setRenavam("83844990836");
+        car.setCor("Branco");
+        car.setMarca("BMW");
+        car.setModelo("225i Active Tourer Sport 2.0 TB Aut.");
+        car.setPlaca("MQX-6834");
         //setando dados rotina
         informacao.setVeiculo(car);
         informacao.setVelocidade(80);
         //
         //vetor de localizacao
         double[] localizacao = new double[2];
-        localizacao[0] = 37.806312;
-        localizacao[1] = -122.475768;
+        localizacao[0] = 36.6780334;
+        localizacao[1] = -121.6442384;
         informacao.setLocalizacao(localizacao);
         //
         //setando data do envio

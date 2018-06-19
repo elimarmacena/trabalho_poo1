@@ -72,10 +72,10 @@ public class TableVeiculoTest {
         Veiculo informacao = new Veiculo();
         //setando informacoes do veiculo
         informacao.setAno(2018);
-        informacao.setChassi("A44433FBD33R30J83");
+        informacao.setRenavam("24249387031");
         informacao.setCor("preto");
-        informacao.setMarca("jeep");
-        informacao.setModelo("renegade");
+        informacao.setMarca("Jeep");
+        informacao.setModelo("Renegade");
         informacao.setPlaca("LAN-7777");
         
         try {

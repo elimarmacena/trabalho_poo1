@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Cnh;
 import model.Condutor;
-import model.Rg;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -73,27 +72,25 @@ public class TableCondutorTest {
         System.out.println("cadastar");
         TableCondutor instance = new TableCondutor();
         Condutor informacao = new Condutor();
+         //instanciando Cnh para condutor
         Cnh cnh = new Cnh();
         //setando informacoes da CNH
-        cnh.setNumCnh("77777777777");
-        cnh.setCategoria("B");
+        cnh.setNumCnh("39770613360");
+        cnh.setCategoria("A");
         informacao.setCnh(cnh);
         //
         //setando as informacoes basicas de contribuidor
-        informacao.setCpf("557777755-77");
-        informacao.setNome("paulo antonio");
-        informacao.setSexo("m");
+        informacao.setCpf("748145697-69");
+        informacao.setNome("Patrícia Evelyn Eliane Baptista");
+        informacao.setSexo("F");
         //
-        //criando e setando o objeto RG
-        Rg rgComplete = new Rg();
-        rgComplete.setEstado("PR");
-        rgComplete.setOrgaoEmissor("LEAN");
-        rgComplete.setNumRg("7777337-PR");
-        informacao.setRg(rgComplete);
+        //informacoes sobre o rg
+       informacao.setNumeroRg("30246102-4");
+       informacao.setEstadorg("ES");
         //
         //setando data de nascimento fazendo uso de calendar e apos solicitando Date
         Calendar nascimento = Calendar.getInstance();
-        nascimento.set(1990, 7, 7);
+        nascimento.set(1985, 11, 21); //ANO, MES, DIA
         informacao.setDataNascimento(nascimento.getTime());
         //
         try {

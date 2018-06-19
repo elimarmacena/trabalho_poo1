@@ -68,8 +68,9 @@ public class TableCnhTest {
         TableCnh instance = new TableCnh();
         Cnh informacao = new Cnh();
         //setando informacoes da CNH
-        informacao.setNumCnh("77777777777");
+        informacao.setNumCnh("12480757262");
         informacao.setCategoria("B");
+        //
         //
         
         try {

@@ -20,7 +20,7 @@ import model.Veiculo;
 public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
     public int idByPlaca(String placa){
         int id = 0;
-        String sql = "SELECT id FROM veiculo WHERE placa='"+placa+"'";
+        String sql = "SELECT id FROM veiculo WHERE placa='" + placa + "'";
         Connection conexao = null;
         Statement statement = null;
         try{
@@ -43,33 +43,30 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
     
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
-        String sql = "CREATE TABLE IF NOT EXISTS  veiculo "+
-                "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                "chassi CHAR(17),"+
-                "placa CHAR(7),"+
-                "marca CHAR(40),"+
-                "modelo CHAR(40),"+
-                "cor CHAR(40),"+
-                "ano INTEGER )";
+        String sql = "CREATE TABLE IF NOT EXISTS Veiculo (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "renavam CHAR(11)," +
+                "placa CHAR(8)," +
+                "modelo CHAR(40)," +
+                "cor CHAR(40)," +
+                "marca CHAR(40)," +
+                "ano INTEGER" +
+                ")";
         SqlExecution.executeSQL(sql);
     }
 
     @Override
     public void cadastar(Veiculo informacao) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO veiculo (chassi,placa,marca, modelo,cor,ano)"+
-                "VALUES("+
-                "'"+informacao.getChassi()+"',"+
-                "'"+informacao.getPlaca()+"',"+
-                "'"+informacao.getMarca()+"',"+
-                "'"+informacao.getModelo()+"',"+
-                "'"+informacao.getCor()+"',"+
+        String sql = "INSERT INTO veiculo(renavam,placa,modelo,cor,marca,ano) "
+                + "VALUES("+
+                "'" + informacao.getRenavam() + "',"+
+                "'" + informacao.getPlaca() + "',"+
+                "'" + informacao.getModelo() + "',"+
+                "'" + informacao.getCor() + "',"+
+                "'" + informacao.getMarca() + "',"+
                 informacao.getAno()+")";
         SqlExecution.executeSQL(sql);
     }
 
-    @Override
-    public void cadastrarMulti(ArrayList<Veiculo> informacoes) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
 }
