@@ -2,8 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import crud.BuscaInfosArquivos;
-import crud.CadastramentosArquivos;
+
 
 public class Funcionario extends Pessoa {
     //private String login; login representado pelo numeroCpf do funcionario
@@ -38,7 +37,7 @@ public class Funcionario extends Pessoa {
     public boolean isAtivo(){
         return this.ativo;
     }
-    
+    /*
     public void cadastroFuncionario(Funcionario funcionario) {
         CadastramentosArquivos.cadastroFuncionario(funcionario);
     }
@@ -51,6 +50,7 @@ public class Funcionario extends Pessoa {
     CadastramentosArquivos.cadastroTitularVeiculo(titular);
     }*/
 
+    /*
     public void cadastroAcidente() {
         //verifica os acidentes informados por terceiros e eh feita uma intersecao entre a base de dados de informacoes de terceiro
         //e a base de dados enviadas pelo odb do veiculo, assim efetuando o preenchimento do banco de dados final com os acidentes propriamente dito
@@ -66,6 +66,7 @@ public class Funcionario extends Pessoa {
             CadastramentosArquivos.cadastroAcidentes(acidenteX);
         }
     }
+    */
 }
 
 
