@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import model.Funcionario;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.*;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.Pragma;
 
@@ -13,10 +16,16 @@ import org.sqlite.SQLiteConfig.Pragma;
 
 public class teste {
     public static void main (String[] args) throws SQLException{
-        SQLiteConfig sqLiteConfig = new SQLiteConfig();
-        Properties properties = sqLiteConfig.toProperties();
-        properties.setProperty(Pragma.DATE_STRING_FORMAT.pragmaName, "yyyy-MM-dd HH:mm:ss");
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db", properties);
+        ArrayList<Condutor> condutores = new ArrayList();
+        TableCondutor tbCondutor = new TableCondutor();
+        try {
+            condutores =tbCondutor.selectCondutores();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (Condutor teste : condutores){
+            System.out.println(teste.getNome());
+        }
 
     }
 }

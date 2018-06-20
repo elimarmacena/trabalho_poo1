@@ -38,7 +38,7 @@ SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estad
 INNER JOIN Cadastro ca ON ct.FK_Cadastro_id = ca.id
 
 ---RECUPERACAO DO OBJETO CONDUTOR <CLASSE JAVA>
-SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' FROM Condutor cd
+SELECT ca.nome AS 'nome', ca.numero_cpf AS 'numero_cpf', ca.numero_rg AS 'numero_rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' FROM Condutor cd
 INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id
 INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id
 
