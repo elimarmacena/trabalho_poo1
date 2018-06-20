@@ -5,12 +5,17 @@
  */
 package crud;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import model.DadosRotina;
+import model.Veiculo;
 /**
  *
  * @author elmr
@@ -35,7 +40,7 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
             "FOREIGN KEY (FK_Veiculo_id)" +
             "REFERENCES Veiculo (id)" +
             ")"; //com id_veiculo eh possivel buscar outras informacoes referente o veiculo para poder fazer uma interseccao de dados com o relatorio.
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
     @Override
@@ -44,11 +49,36 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
         int idVeiculo =tbVeiculo.idByPlaca (informacao.getVeiculo().getPlaca());
         String sql = "INSERT INTO dados_rotina (velocidade,latitude,longitude,data,FK_Veiculo_id) VALUES("+
                 informacao.getVelocidade()+","+
-                informacao.getLocalizacao()[0]+","+
-                informacao.getLocalizacao()[1]+","+
+                informacao.getLatitude()+","+
+                informacao.getLongitude()+","+
                 "'"+this.dataToString( informacao.getDataColeta() )+"',"+
                 idVeiculo+")";/*acessa a placa referente ao veiculo que os dados esta sendo enviado*/
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
+    }
+    
+    public DadosRotina recuperarByPlaca(String placa) throws ClassNotFoundException, SQLException{
+        TableVeiculo tbVeiculo = new TableVeiculo();
+        DadosRotina dados = new DadosRotina();
+        String sql = "SELECT * FROM Dados_rotina " +
+                "INNER JOIN Veiculo vi ON vi.placa = '"+ placa +"' AND vi.id = Dados_rotina.FK_Veiculo_id";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        //por se tratar de uma unica linha os dados sao restaurados sem a necessidade de um laco
+        Veiculo veiculo = new Veiculo();
+        veiculo = tbVeiculo.recuperarById(Integer.parseInt( resultado.getString("FK_Veiculo_id") ));
+        dados.setVeiculo(veiculo);
+        dados.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
+        dados.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+        dados.setVelocidade(Integer.parseInt( resultado.getString("velocidade") ));
+        Date dataHora = Utilitarios.strDateTime(resultado.getString("data"));
+        dados.setDataColeta(dataHora);
+        statement.close();
+        conexao.close();
+        return dados;
     }
 
 }

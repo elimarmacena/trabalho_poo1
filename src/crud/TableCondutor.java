@@ -26,16 +26,6 @@ import model.Pessoa;
  */
 public class TableCondutor implements OperacoesBaseDados<Condutor> {
     
-    public Date strDate (String strData){
-        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        Date data = null;
-        try {
-            data = (Date)formato.parse(strData);
-        } catch (ParseException ex) {
-            Logger.getLogger(TableCondutor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return data;
-    }
     
     public int idByNumCnh(String numCnh){
         int id = 0;
@@ -71,7 +61,7 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
             "FOREIGN KEY (FK_cnh_id)" +
             "REFERENCES Cnh(id) ON DELETE CASCADE" +
             ")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
     /**
@@ -93,16 +83,16 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
                 + "VALUES("
                 + idCadastro+","
                 + idCnh+")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
     
      /**
-     *O metodo retorna todos os Objetos Condutor possiveis de restaurar no banco de dados.
+     *O metodo retorna todos os Condutor(classe java) possiveis de restaurar no banco de dados.
      * @return lista com os condutores registrados no sistema
      * 
      */
 
-    public ArrayList<Condutor> selectCondutores() throws SQLException,ClassNotFoundException{
+    public ArrayList<Condutor> recuperarCondutoes() throws SQLException,ClassNotFoundException{
         ArrayList<Condutor> condutores = new ArrayList();
         Condutor resultadoCondutor;
         String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'numero_cpf', ca.numero_rg AS 'numero_rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' "+
@@ -122,7 +112,7 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
             resultadoCondutor.setNumeroRg(resultado.getString("numero_rg"));
             resultadoCondutor.setEstadorg(resultado.getString("estado_rg"));
             resultadoCondutor.setSexo(resultado.getString("sexo"));
-            Date dataNasc = strDate(resultado.getString("data_nasc"));
+            Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
             resultadoCondutor.setDataNascimento(dataNasc);
             Cnh cnhCondutor = new Cnh();
             cnhCondutor.setNumCnh(resultado.getString("cnh"));

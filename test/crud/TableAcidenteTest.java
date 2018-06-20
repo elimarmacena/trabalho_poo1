@@ -118,10 +118,8 @@ public class TableAcidenteTest {
         acidente.setData(data);
         acidente.setPessoasEnvolvidas(10);
         //vetor de localizacao
-        double[] localizacao = new double[2];
-        localizacao[0] = 37.806312;
-        localizacao[1] = -122.475768;
-        acidente.setLocalizacao(localizacao);
+        acidente.setLatitude(37.806312);
+        acidente.setLongitude(-122.475768);
         //
         acidente.setDescricao("derrapagem seguido de capotagem");
         

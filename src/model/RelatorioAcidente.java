@@ -11,7 +11,8 @@ public class RelatorioAcidente {
     private String descricao;
     private Contribuidor auxiliador;
 //informacoes necessarias para o cruzamento de informacoes
-    private double [] localizacao = new double[2];
+    private double latitude;
+    private double longitude;
     private Date data;
 //fim
     
@@ -65,13 +66,23 @@ public class RelatorioAcidente {
         this.numCnh = numCnh;
     }
 
-    public double[] getLocalizacao() {
-        return localizacao;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocalizacao(double[] localizacao) {
-        this.localizacao = localizacao;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+
 
     public Date getData() {
         return data;

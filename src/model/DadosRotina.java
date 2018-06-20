@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class DadosRotina {
     private int velocidade;
-    private double localizacao[] = new double[2]; /* DUVIDA: ja instancia aqui ou deixa pro construtor algo do tipo? */
+    private double latitude;
+    private double longitude;
     private Date dataColeta;
     private Veiculo veiculo;
     
@@ -31,13 +32,23 @@ public class DadosRotina {
         this.velocidade = velocidade;
     }
 
-    public double[] getLocalizacao() {
-        return localizacao;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocalizacao(double[] localizacao) {
-        this.localizacao = localizacao;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+
 
     public Date getDataColeta() {
         return dataColeta;

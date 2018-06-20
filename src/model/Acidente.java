@@ -5,7 +5,8 @@ import java.util.Date;
 
 public class Acidente {
     private int pessoasEnvolvidas;
-    private double[] localizacao = new double[2];
+    private double latitude;
+    private double longitude;
     private String descricao;
     private Date data;
     ArrayList<OcorrenciaAcidente> veiculosEnvolvidos;
@@ -18,12 +19,20 @@ public class Acidente {
         this.pessoasEnvolvidas = pessoasEnvolvidas;
     }
 
-    public double[] getLocalizacao() {
-        return localizacao;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLocalizacao(double[] localizacao) {
-        this.localizacao = localizacao;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public String getDescricao() {

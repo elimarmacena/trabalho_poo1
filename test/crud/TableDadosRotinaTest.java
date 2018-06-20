@@ -84,10 +84,8 @@ public class TableDadosRotinaTest {
         informacao.setVelocidade(80);
         //
         //vetor de localizacao
-        double[] localizacao = new double[2];
-        localizacao[0] = 36.6780334;
-        localizacao[1] = -121.6442384;
-        informacao.setLocalizacao(localizacao);
+        informacao.setLatitude(36.6780334);
+        informacao.setLongitude(-121.6442384);
         //
         //setando data do envio
         Date data = new Date();

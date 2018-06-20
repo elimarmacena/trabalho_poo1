@@ -45,7 +45,7 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "num_cnh CHAR(12),"+
                 "categoria CHAR(3))";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
                 "VALUES("+
                 "'"+informacao.getNumCnh()+"',"+
                 "'"+informacao.getCategoria()+"')";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
 

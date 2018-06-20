@@ -62,7 +62,7 @@ public class TableCadastro implements OperacoesBaseDados<Pessoa> {
             "sexo CHAR(1)," +
             "numero_cpf CHAR(12)" +
             ")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class TableCadastro implements OperacoesBaseDados<Pessoa> {
                 + "'"+informacao.getSexo()+"',"
                 + "'"+informacao.getNumeroRg()+"',"
                 + "'"+informacao.getEstadorg()+"')";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
         
     }
 

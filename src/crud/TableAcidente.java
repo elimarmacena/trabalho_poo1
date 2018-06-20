@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Acidente;
+import model.OcorrenciaAcidente;
 /**
  *
  * @author elmr
@@ -59,7 +60,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
             "data DATETIME,"+
             "id INTEGER PRIMARY KEY AUTOINCREMENT"+
             ")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
     @Override
@@ -69,11 +70,44 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         String sql = "INSERT INTO acidente (pessoas_envolvidas,latitude,longitude,data,descricao) "+
                 "VALUES ("+
                 informacao.getPessoasEnvolvidas()+","+
-                informacao.getLocalizacao()[0]+","+
-                informacao.getLocalizacao()[1]+","+
+                informacao.getLatitude()+","+
+                informacao.getLongitude()+","+
                 "'"+this.dataToString(informacao.getData() )+"',"+
                 "'"+informacao.getDescricao()+"')";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
+    }
+    
+    /**
+     *O metodo retorna todos os Acidentes(classe java) possiveis de restaurar no banco de dados.
+     * @return array de Acidentes.
+     */
+    public ArrayList<Acidente> recuperarAcidentes() throws ClassNotFoundException, SQLException{
+        TableOcorrenciaAcidente tbOA = new TableOcorrenciaAcidente(); //instanciando classe para poder ter acesso aos metodos da mesma
+        ArrayList<Acidente> acidentes = new ArrayList();
+        String sql = "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' "
+                + "FROM Acidente ac";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Acidente acidente = new Acidente();
+            ArrayList<OcorrenciaAcidente> ocorrencias = new ArrayList();
+            ocorrencias = tbOA.getOcorrenciaByAcidenteId(Integer.parseInt( resultado.getString("id") ));
+            acidente.setVeiculosEnvolvidos(ocorrencias);
+            acidente.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
+            acidente.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+            acidente.setDescricao(resultado.getString("descricao"));
+            Date dataHora = Utilitarios.strDateTime(resultado.getString("data"));
+            acidente.setData(dataHora);
+            acidente.setPessoasEnvolvidas(Integer.parseInt( resultado.getString("pessoas_envolvidas") ));
+            acidentes.add(acidente);
+        }
+        statement.close();
+        conexao.close();
+        return acidentes;
     }
 
     

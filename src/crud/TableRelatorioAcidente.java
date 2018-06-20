@@ -5,10 +5,16 @@
  */
 package crud;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import model.Contribuidor;
 import model.RelatorioAcidente;
 /**
  *
@@ -37,7 +43,7 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
             "FOREIGN KEY (FK_Contribuidor_id)" +
             "REFERENCES Contribuidor (id)" +
             ")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
     @Override
@@ -52,14 +58,55 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
                 +"'" + informacao.getNumCnh() + "',"
                 + informacao.getNumOcupantes()+","
                 + "'" + informacao.getDescricao() + "',"
-                + informacao.getLocalizacao()[0]+","
-                + informacao.getLocalizacao()[1]+","
+                + informacao.getLatitude()+","
+                + informacao.getLongitude()+","
                 + "'" + this.dataToString( informacao.getData() ) + "')";
-                
-                
-        SqlExecution.executeSQL(sql);
-        
-        
+        Utilitarios.executeSQL(sql);
+    }
+    
+    public ArrayList<RelatorioAcidente> recuperarRelatorios() throws SQLException, ClassNotFoundException{
+        ArrayList<RelatorioAcidente> relatorios = new ArrayList();
+        String sql = "SELECT ra.placa AS 'placa', ra.nome_condutor AS 'nome_condutor', ra.cnh_condutor as 'cnh_condutor', ra.numero_ocupantes as 'numero_ocupantes',"
+                + "ra.info_acidente as 'info_acidente', ra.latitude as 'latitude', ra.longitude as 'longitude', ra.data as 'data',"
+                + " ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',"
+                + " ct.Orgao_associado AS 'orgao_associado' "
+                + "FROM Relatorio_acidente ra "
+                + "INNER JOIN contribuidor ct ON ct.id = ra.FK_Contribuidor_id "
+                + "INNER JOIN cadastro ca ON ca.id = ct.FK_Cadastro_id";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Contribuidor contribuidor = new Contribuidor();
+            //setando informacoes referente ao contribuidor que enviou o relatorio
+            contribuidor.setNome(resultado.getString("nome"));
+            contribuidor.setCpf(resultado.getString("cpf"));
+            contribuidor.setNumeroRg(resultado.getString("rg"));
+            contribuidor.setEstadorg(resultado.getString("estado_rg"));
+            contribuidor.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate( resultado.getString("data_nasc") );
+            contribuidor.setDataNascimento(dataNasc);
+            contribuidor.setOrgaoAssociado(resultado.getString("orgao_associado"));
+            //
+            RelatorioAcidente relatorio = new RelatorioAcidente();
+            relatorio.setAuxiliador(contribuidor); //adicionando o contribuidor ao relatorio
+            relatorio.setPlaca(resultado.getString("placa"));
+            relatorio.setNomeCondutor(resultado.getString("nome_condutor"));
+            relatorio.setNumCnh(resultado.getString("cnh_condutor"));
+            relatorio.setNumOcupantes(Integer.parseInt( resultado.getString("numero_ocupantes") ));
+            relatorio.setDescricao(resultado.getString("info_acidente"));
+            relatorio.setLatitude(Double.parseDouble( resultado.getString("latitude") ));
+            relatorio.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+            Date dataHora = Utilitarios.strDateTime(resultado.getString("data") );
+            relatorio.setData(dataHora);
+            relatorios.add(relatorio);
+        }
+        statement.close();
+        conexao.close();
+        return relatorios;
     }
 
 

@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import model.Contribuidor;
 import model.Pessoa;
 /**
@@ -72,7 +73,7 @@ public class TableContribuidor implements OperacoesBaseDados<Contribuidor> {
             "FOREIGN KEY (FK_Cadastro_id)" +
             "REFERENCES Cadastro (id) " +
             ")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
     @Override
@@ -83,7 +84,39 @@ public class TableContribuidor implements OperacoesBaseDados<Contribuidor> {
         String sql = "INSERT INTO Contribuidor (FK_Cadastro_id, orgao_associado) VALUES("
                 + idCadastro+","
                 + "'"+informacao.getOrgaoAssociado()+"')"; //getOrgaoAssociado retorna o nome do orgao no qual o contribuidor possui vinculo.
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
+    }
+    
+    /**
+     * Metodo no qual retorna todos os contribuidores(objeto) disponiveis no sistema
+     * @return
+     */
+    public ArrayList<Contribuidor> recuperarContribuidores() throws SQLException, ClassNotFoundException{
+        ArrayList<Contribuidor> contribuidores = new ArrayList();
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',ct.Orgao_associado AS 'orgao_associado' "
+                + "FROM Contribuidor ct " +
+                "INNER JOIN Cadastro ca ON ct.FK_Cadastro_id = ca.id";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Contribuidor contribuidor = new Contribuidor();
+            contribuidor.setNome(resultado.getString("nome"));
+            contribuidor.setCpf(resultado.getString("cpf"));
+            contribuidor.setNumeroRg(resultado.getString("rg"));
+            contribuidor.setEstadorg(resultado.getString("estado_rg"));
+            contribuidor.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate( resultado.getString("data_nasc") );
+            contribuidor.setDataNascimento(dataNasc);
+            contribuidor.setOrgaoAssociado(resultado.getString("orgao_associado"));
+            contribuidores.add(contribuidor);
+        }
+        statement.close();
+        conexao.close();
+        return contribuidores;
     }
  
 }

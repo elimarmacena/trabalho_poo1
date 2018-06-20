@@ -5,9 +5,17 @@
  */
 package crud;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
+import model.Cnh;
+import model.Condutor;
 import model.OcorrenciaAcidente;
+import model.Veiculo;
 
 /*OS TESTE REFERENTES A INSERCAO DE UMA OCORRENCIA NO BANCO DE DADOS ACONTECE NO ARQUIVO
 TableAcidenteTest.java UMA VEZ QUE PARA A CONSOLIDACAO DE UM ACIDENTE NO SISTEMA
@@ -36,7 +44,7 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
             "	FOREIGN KEY (FK_Condutor_id)" +
             "    REFERENCES Condutor (id)" +
             ")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
     
 
@@ -56,9 +64,70 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
                 + idAcidente+","
                 + idVeiculo+","
                 + idCondutor+")";
-        SqlExecution.executeSQL(sql);
+        Utilitarios.executeSQL(sql);
     }
 
+    /**
+     * O metodo recebe um id referente a um acidente no banco de dados e retorna as ocorrencias relacionadasao acidente.
+     * @param idAcidente inteiro que represente o id do acidente na tabela do banco de dados.
+     * @return array contendo objetos ocorrencia acidente relacionados aquele acidente. 
+     */
+    public ArrayList<OcorrenciaAcidente> getOcorrenciaByAcidenteId(int idAcidente) throws ClassNotFoundException, SQLException{
+        ArrayList <OcorrenciaAcidente> ocorrencias = new ArrayList();
+        String sql = "SELECT oa.condutor_titular AS 'condutor_titular', oa.velocidade AS 'velocidade', " +
+                "ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria', " +
+                "vi.renavam AS 'renavam', vi.placa AS 'placa', vi.modelo AS 'modelo', vi.cor AS 'cor', vi.marca AS 'marca', vi.ano AS 'ano' " +
+                " FROM ocorrencia_acidente oa  " +
+                "INNER JOIN Condutor cd ON cd.id = oa.FK_Condutor_id " +
+                "INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id " +
+                "INNER JOIN Veiculo vi ON vi.id = oa.FK_Veiculo_id " +
+                "INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id " +
+                "WHERE oa.FK_Acidente_id =1 /*mudar de acordo com necessidade*/";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+           OcorrenciaAcidente ocorrencia = new OcorrenciaAcidente();
+            Condutor condutor = new Condutor(); //objeto que compoe a classe ocorrencia acidente
+            Veiculo veiculo = new Veiculo(); //objeto que compoe a classe ocorrencia acidente
+            
+            //setando informacoes para o objeto veiculo
+            veiculo.setRenavam(resultado.getString("renavam"));
+            veiculo.setPlaca(resultado.getString("placa"));
+            veiculo.setModelo(resultado.getString("modelo"));
+            veiculo.setCor(resultado.getString("cor"));
+            veiculo.setMarca(resultado.getString("marca"));
+            veiculo.setAno( Integer.parseInt( resultado.getString("ano") ) );
+            
+            //setando informacoes para o objeto condutor
+            Cnh cnh = new Cnh();
+            cnh.setCategoria(resultado.getString("categoria"));
+            cnh.setNumCnh(resultado.getString("cnh"));
+            condutor.setNome(resultado.getString("nome"));
+            condutor.setCpf(resultado.getString("cpf"));
+            condutor.setNumeroRg(resultado.getString("rg"));
+            condutor.setEstadorg(resultado.getString("estado_rg"));
+            condutor.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
+            condutor.setDataNascimento(dataNasc);
+            condutor.setCnh(cnh);
+            
+            //atribuindo objetos gerados para ocorrencia
+            ocorrencia.setCondutor(condutor);
+            ocorrencia.setVeiculo(veiculo);
+            //atribuindo dados para ocorrencia
+            boolean titular = (resultado.getString("condutor_titular").equals('1'));
+            ocorrencia.setCondutor_titular(titular);
+            ocorrencia.setVelocidade(Integer.parseInt(resultado.getString("velocidade")));
+            ocorrencias.add(ocorrencia); 
+        }
+        statement.close();
+        conexao.close();
+        return ocorrencias;
+    }
 
     
 }

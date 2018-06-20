@@ -87,17 +87,17 @@ public class TableRelatorioAcidenteTest {
         //
         
         //instanciando o relatorio
-        double[] localizacaoAcidente = new double [2]; //variavel que sera enviada como parametro para localizacao do acidente
-        localizacaoAcidente[0]=36.6780334;
-        localizacaoAcidente[1]=-121.7442384;
+        
+        
         RelatorioAcidente informacao = new RelatorioAcidente();
+        informacao.setLatitude(36.6780334);
+        informacao.setLongitude(-121.7442384);
         informacao.setAuxiliador(contribuidor);
         informacao.setNomeCondutor("Patrícia Evelyn Eliane Baptista");
         informacao.setNumCnh("39770613360");
         informacao.setNumOcupantes(2);
         informacao.setPlaca("MQX-6834");
         informacao.setDescricao("derrapagem seguido de capotagem");
-        informacao.setLocalizacao(localizacaoAcidente);
         //setando dia e hora do acidente
         Calendar horarioAcidente = Calendar.getInstance();
         horarioAcidente.set(2018,6,19);
