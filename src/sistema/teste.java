@@ -43,12 +43,13 @@ public class teste {
             }
             */
         
-            String login = "855937020-88";
+            String login = "155937020-88";
             String senha = "sys123";
             Funcionario fn = new Funcionario();
             TableFuncionario tbF = new TableFuncionario();
         try {
-            fn= tbF.checkLogin(login, senha);
+            //fn= tbF.checkLogin(login, senha);
+            tbF.updateStatus(1, 0);
             System.out.println("BEM VINDO "+fn.getNome());
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);

@@ -20,14 +20,7 @@ import model.Pessoa;
  */
 
 //ESSA TABLE SERA USADA PARA QUARDAR OS DADOS DA CLASSE PESSOA
-public class TableCadastro implements OperacoesBaseDados<Pessoa> {
-    
-    public static String dataToString(Date data) {
-        DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd");
-        System.out.println(formatoData.format(data));
-        return formatoData.format(data);
-    }
-    
+public class TableCadastro implements OperacoesBaseDados<Pessoa> {    
      public int lastId(){
         int id = 0;
         String sql = "SELECT id FROM cadastro ORDER BY id DESC LIMIT 1";
@@ -67,7 +60,7 @@ public class TableCadastro implements OperacoesBaseDados<Pessoa> {
 
     @Override
     public void cadastar(Pessoa informacao) throws SQLException, ClassNotFoundException {
-        String nascimento = dataToString(informacao.getDataNascimento());
+        String nascimento = Utilitarios.dataToString(informacao.getDataNascimento());
         String sql = "INSERT INTO cadastro(nome,data_nasc,numero_cpf,sexo,numero_rg,estado_rg)"
                 + " VALUES("
                 +"'"+informacao.getNome()+"',"

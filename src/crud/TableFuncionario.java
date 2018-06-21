@@ -80,6 +80,72 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         return funcionarios;
     }
     
+    public ArrayList<Funcionario> recuperarLike(String like) throws SQLException, ClassNotFoundException{
+        ArrayList<Funcionario> funcionarios = new ArrayList();
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', fn.senha AS 'senha', fn.ativo AS 'ativo' "
+                + "FROM Cadastro ca " +
+                "INNER JOIN Funcionario fn ON fn.FK_Cadastro_id = ca.id " +
+                "WHERE ca.nome LIKE 'r%'";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Funcionario funcionario = new Funcionario();
+            funcionario.setNome(resultado.getString("nome"));
+            funcionario.setCpf(resultado.getString("cpf"));
+            funcionario.setNumeroRg(resultado.getString("rg"));
+            funcionario.setEstadorg(resultado.getString("estado_rg"));
+            funcionario.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
+            funcionario.setDataNascimento(dataNasc);
+            funcionario.setSenha(resultado.getString("senha"));
+            boolean ativo = resultado.getString("ativo").equals("1");
+            funcionario.setAtivo(ativo);
+            funcionarios.add(funcionario);
+        }
+        statement.close();
+        conexao.close();
+        return funcionarios;
+    }
+    
+    /**
+     * Metodo com intuito de agir como um delete, uma vez que apagar o funcionario do sistema poderia causar impactos.
+     * Visto isto ao inves de apagar eh feita uma atualizacao de permicoes de um funcionario.
+     * @param idFuncionario
+     * @param status
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public void updateStatus(String funcionariocpf,int status) throws SQLException, ClassNotFoundException{
+        String sql = "UPDATE Funcionario " +
+                "SET senha = "+ status +
+                " WHERE EXISTS (SELECT id FROM Cadastro WHERE numero_cpf = '" + funcionariocpf + "' AND id = Funcionario.FK_Cadastro_id )";
+        Utilitarios.executeSQL(sql);
+    }
+    
+    /**
+     * Meto no qual faz uso do cpf do funcionario para que seja possuivel atualizar suas informacoes.
+     * Por questao de agilidade deve-se passar um Objeto funcionario, no qual 
+     * o mesmo sera utilizado para atualizar todas as colunas ligada ao funcionario daquele cpf, mesmo que nao haja alteracao em uma determinada coluna
+     * @param funcionarioCpf
+     * @param funcionario
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
+    public void updateDados(String funcionarioCpf, Funcionario funcionario) throws SQLException, ClassNotFoundException{
+        String sql = "UPDATE Funcionario " +
+            "SET senha = "+ funcionario.getSenha() +
+            "WHERE EXISTS (SELECT id FROM Cadastro WHERE numero_cpf = '"+ funcionarioCpf +"' AND id = Funcionario.FK_Cadastro_id );" +
+            "UPDATE Cadastro" +
+            "Set nome= '"+funcionario.getNome()+"', data_nasc='"+Utilitarios.dataToString(funcionario.getDataNascimento())+"', "+
+            "numero_rg='"+funcionario.getNumeroRg() +"', estado_rg= '"+funcionario.getEstadorg()+"', sexo='"+funcionario.getSexo()+"' "+
+            "WHERE numero_cpf= '"+ funcionarioCpf +"';";
+        Utilitarios.executeSQL(sql);
+                
+    }
     /**
      *Metodo respostavel pela verificacao do login do funcionario no sistema, caso seja bem sucedido eh retornado as informacoes referente ao funcionario conectado.
      * @param login
@@ -101,7 +167,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
         statement = conexao.createStatement();
         ResultSet resultado = statement.executeQuery(sql);
-        if ( !resultado.getString("senha").equals(senha)  && !resultado.getString("numero_cpf").equals(login) ) {
+        if ( !resultado.getString("senha").equals(senha)  || !resultado.getString("numero_cpf").equals(login) ) {
             statement.close();
             conexao.close();
             throw new IllegalArgumentException("Login ou senha incorretos");  //lancado caso um dos parametros passados nao sejam iguais ao do banco de dados

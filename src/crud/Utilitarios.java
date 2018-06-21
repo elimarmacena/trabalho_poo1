@@ -54,4 +54,10 @@ public  class Utilitarios {
         }
         return data;
     }
+
+    public static String dataToString(Date data) {
+        DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd");
+        System.out.println(formatoData.format(data));
+        return formatoData.format(data);
+    }
 }
