@@ -20,17 +20,17 @@ import org.sqlite.SQLiteConfig.Pragma;
 public class teste {
     public static void main (String[] args) {
         
-            /*DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            ArrayList<RelatorioAcidente> orcorrencias = new ArrayList();
-            TableRelatorioAcidente tbOA = new TableRelatorioAcidente();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            ArrayList<Funcionario> orcorrencias = new ArrayList();
+            TableFuncionario tbOA = new TableFuncionario();
             try {
-            orcorrencias =tbOA.recuperarRelatorios();
+            orcorrencias =tbOA.recuperarLike("r");
             } catch (Exception ex) {
             Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
             }
-            for (RelatorioAcidente teste : orcorrencias){
-            System.out.println( teste.getPlaca());
-            }*/
+            for (Funcionario teste : orcorrencias){
+            System.out.println( teste.getNome());
+            }
             /*DadosRotina dr = new DadosRotina();
             TableDadosRotina tbDr = new TableDadosRotina();
             try {
@@ -43,23 +43,6 @@ public class teste {
             }
             */
         
-            String login = "155937020-88";
-            String senha = "sys123";
-            Funcionario fn = new Funcionario();
-            TableFuncionario tbF = new TableFuncionario();
-        try {
-            //fn= tbF.checkLogin(login, senha);
-            tbF.updateStatus(1, 0);
-            System.out.println("BEM VINDO "+fn.getNome());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedOperationException ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
-        }
             
         
         

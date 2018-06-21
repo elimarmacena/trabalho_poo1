@@ -3,15 +3,23 @@ package model;
 import java.util.Date;
 
 public class DadosRotina {
+    private int campoIdentificacao;
     private int velocidade;
     private double latitude;
     private double longitude;
     private Date dataColeta;
     private Veiculo veiculo;
+
     
 
     /* GETS E SETS */
-    
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+    public void setCampoIdentificacao(int campoIdentificacao) {
+        this.campoIdentificacao = campoIdentificacao;
+    }
+
     /*
     Em especial os sets aqui nao carregam regras pois quem trata desses eventuais
     problemas é o sistema embarcado.

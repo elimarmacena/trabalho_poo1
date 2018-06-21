@@ -3,12 +3,21 @@ package model;
 import java.util.Scanner;
 
 public class Cnh {
+    private int campoIdentificacao;
     private String numCnh;
     private String categoria;
 
     
+  
+
     /* Gets e Sets */
-    
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+    public void setCampoIdentificacao(int campoIdentificacao) {    
+        this.campoIdentificacao = campoIdentificacao;
+    }
+
     public String getNumCnh() {
         return numCnh;
     }

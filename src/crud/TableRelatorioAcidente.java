@@ -100,6 +100,7 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
             relatorio.setDescricao(resultado.getString("info_acidente"));
             relatorio.setLatitude(Double.parseDouble( resultado.getString("latitude") ));
             relatorio.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+            relatorio.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             Date dataHora = Utilitarios.strDateTime(resultado.getString("data") );
             relatorio.setData(dataHora);
             relatorios.add(relatorio);
@@ -108,6 +109,7 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
         conexao.close();
         return relatorios;
     }
+    
 
 
     

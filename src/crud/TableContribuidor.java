@@ -104,6 +104,7 @@ public class TableContribuidor implements OperacoesBaseDados<Contribuidor> {
         ResultSet resultado = statement.executeQuery(sql);
         while (resultado.next()){
             Contribuidor contribuidor = new Contribuidor();
+            contribuidor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             contribuidor.setNome(resultado.getString("nome"));
             contribuidor.setCpf(resultado.getString("cpf"));
             contribuidor.setNumeroRg(resultado.getString("rg"));

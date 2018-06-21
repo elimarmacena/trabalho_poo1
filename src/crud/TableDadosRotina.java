@@ -76,6 +76,7 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
         dados.setVelocidade(Integer.parseInt( resultado.getString("velocidade") ));
         Date dataHora = Utilitarios.strDateTime(resultado.getString("data"));
         dados.setDataColeta(dataHora);
+        dados.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
         statement.close();
         conexao.close();
         return dados;

@@ -84,6 +84,7 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
         veiculo.setCor(resultado.getString("cor"));
         veiculo.setMarca(resultado.getString("marca"));
         veiculo.setAno( Integer.parseInt( resultado.getString("ano") ) );
+        veiculo.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
         statement.close();
         conexao.close();
         return veiculo;

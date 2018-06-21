@@ -10,12 +10,22 @@ package model;
  * @author 20161bsi0314
  */
 public class OcorrenciaAcidente {
-    
-    Veiculo veiculo;
-    Condutor condutor;
-    boolean condutor_titular;
-    int velocidade;
+    private int campoIdentificacao;
+    private Veiculo veiculo;
+    private Condutor condutor;
+    private boolean condutor_titular;
+    private int velocidade;
 
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+
+    public void setCampoIdentificacao(int campoIdentificacao) {
+        this.campoIdentificacao = campoIdentificacao;
+    }
+
+    
+    
     public Veiculo getVeiculo() {
         return veiculo;
     }

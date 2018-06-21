@@ -107,6 +107,7 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
         ResultSet resultado = statement.executeQuery(sql);
         while(resultado.next()){
             resultadoCondutor = new Condutor();
+            resultadoCondutor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             resultadoCondutor.setNome(resultado.getString("nome"));
             resultadoCondutor.setNumeroRg(resultado.getString("numero_cpf"));
             resultadoCondutor.setNumeroRg(resultado.getString("numero_rg"));

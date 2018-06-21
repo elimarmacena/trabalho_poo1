@@ -119,6 +119,7 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
             ocorrencia.setCondutor(condutor);
             ocorrencia.setVeiculo(veiculo);
             //atribuindo dados para ocorrencia
+            ocorrencia.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             boolean titular = (resultado.getString("condutor_titular").equals('1'));
             ocorrencia.setCondutor_titular(titular);
             ocorrencia.setVelocidade(Integer.parseInt(resultado.getString("velocidade")));

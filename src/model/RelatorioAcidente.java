@@ -4,6 +4,7 @@ package model;
 import java.util.Date;
 
 public class RelatorioAcidente {
+    private int campoIdentificacao;
     private String placa;
     private String nomeCondutor; ////nome do condutor
     private String numCnh;
@@ -15,10 +16,20 @@ public class RelatorioAcidente {
     private double longitude;
     private Date data;
 //fim
+ 
     
     
-    /* Gets e Sets */ 
     
+
+    /* Gets e Sets */
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+    
+    public void setCampoIdentificacao(int campoIdentificacao) {
+        this.campoIdentificacao = campoIdentificacao;
+    }
+
     public String getPlaca() {
         return placa;
     }

@@ -94,6 +94,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         ResultSet resultado = statement.executeQuery(sql);
         while (resultado.next()){
             Funcionario funcionario = new Funcionario();
+            funcionario.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             funcionario.setNome(resultado.getString("nome"));
             funcionario.setCpf(resultado.getString("cpf"));
             funcionario.setNumeroRg(resultado.getString("rg"));
@@ -178,6 +179,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
             throw new UnsupportedOperationException("O funcionario nao possui mais acesso ao sistema"); //lancado caso o funcionario nao seja mais ativo no sistema
         }
         else{
+        funcionario.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
         funcionario.setNome(resultado.getString("nome"));
         funcionario.setCpf(resultado.getString("numero_cpf"));
         funcionario.setNumeroRg(resultado.getString("numero_rg"));

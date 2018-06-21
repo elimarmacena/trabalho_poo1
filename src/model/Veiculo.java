@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Veiculo {
+    private int campoIdentificacao;
     private String renavam;
     private String placa;
     private String marca;
@@ -25,6 +26,17 @@ public class Veiculo {
 
     
     /* Gets e Sets*/
+
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+
+    public void setCampoIdentificacao(int campoIdentificacao) {
+        this.campoIdentificacao = campoIdentificacao;
+    }
+    
+    
+    
     public String getRenavam() {
         return this.renavam;
     }

@@ -5,12 +5,21 @@ import java.util.Scanner;
 
 
 public class Funcionario extends Pessoa {
+    private int campoIdentificacao;
     //private String login; login representado pelo numeroCpf do funcionario
     private String senha; //ESSA NAO EH A TIPAGEM FINAL, APENAS USADA PARA A FORMACAO DO TRABALHO.
     private boolean ativo; //indica se o funcionario ainda esta ativo no sistema  possui acesso as funcoes.
     
     
     /* Gets e Sets*/
+
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+
+    public void setCampoIdentificacao(int campoIdentificacao) {
+        this.campoIdentificacao = campoIdentificacao;
+    }
     
 
 

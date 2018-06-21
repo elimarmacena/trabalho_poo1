@@ -97,6 +97,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
             ArrayList<OcorrenciaAcidente> ocorrencias = new ArrayList();
             ocorrencias = tbOA.getOcorrenciaByAcidenteId(Integer.parseInt( resultado.getString("id") ));
             acidente.setVeiculosEnvolvidos(ocorrencias);
+            acidente.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             acidente.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
             acidente.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
             acidente.setDescricao(resultado.getString("descricao"));

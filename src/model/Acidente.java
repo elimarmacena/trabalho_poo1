@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Acidente {
+    private int campoIdentificacao;
     private int pessoasEnvolvidas;
     private double latitude;
     private double longitude;
@@ -11,6 +12,15 @@ public class Acidente {
     private Date data;
     ArrayList<OcorrenciaAcidente> veiculosEnvolvidos;
 
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+
+    public void setCampoIdentificacao(int campoIdentificacao) {
+        this.campoIdentificacao = campoIdentificacao;
+    }
+
+    
     public int getPessoasEnvolvidas() {
         return pessoasEnvolvidas;
     }

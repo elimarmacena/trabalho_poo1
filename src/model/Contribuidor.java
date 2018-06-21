@@ -10,8 +10,17 @@ import javax.swing.JOptionPane;
 
 public class Contribuidor extends Pessoa {
     private String orgaoAssociado;
-
+    private int campoIdentificacao;
+   
     /* Gets e Sets */
+
+    public int getCampoIdentificacao() {
+        return campoIdentificacao;
+    }
+
+    public void setCampoIdentificacao(int campoIdentificacao) {
+        this.campoIdentificacao = campoIdentificacao;
+    }
     
     public String getOrgaoAssociado() {
         return orgaoAssociado;
