@@ -21,6 +21,14 @@ import java.util.logging.Logger;
  * @author 20161bsi0314
  */
 public  class Utilitarios {
+
+    /**
+     *Metodo criado para diminuir repeticao de codigo.
+     * utilizado para executar um sql, fechando e abrindo a conexao com o banco de dados
+     * @param sql sql que metodo deve executar
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public static void executeSQL(String sql) throws SQLException, ClassNotFoundException {
 		Connection conexao = null;
 		Statement stament = null;
@@ -33,6 +41,11 @@ public  class Utilitarios {
 		
 	}
 
+    /**
+     *O metodo recebe uma string representando uma data no formato yyyy-mm-dd e retorna o objeto Date
+     * @param strData string com a data no formato yyyy-mm-dd
+     * @return data objeto Date
+     */
     public static Date strDate(String strData) {
         DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         Date data = null;
@@ -44,6 +57,11 @@ public  class Utilitarios {
         return data;
     }
     
+    /**
+     *O metodo recebe uma string repreentando uma data e um horario o formato yyyy-MM-dd HH:mm:ss e retorna um objeto Date
+     * @param strData string com a data no formato yyyy-MM-dd HH:mm:ss
+     * @return data objeto date
+     */
     public static Date strDateTime(String strData) {
         DateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date data = null;
@@ -55,14 +73,25 @@ public  class Utilitarios {
         return data;
     }
 
+    /**
+     *O metodo recebe um objeto date e retorna uma string da data no formato yyyy-mm-dd
+     * @param data objeto date
+     * @return stringData string com data no formato yyyy-mm-dd
+     */
     public static String dataToString(Date data) {
         DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd");
-        System.out.println(formatoData.format(data));
-        return formatoData.format(data);
+        String stringData = formatoData.format(data);
+        return stringData;
     }
+
+    /**
+     *O metodo recebe um objeto date e retorna uma string data no formato yyyy-MM-dd HH:mm:ss
+     * @param data objeto data
+     * @return stringDataHora string com a data no formato yyyy-MM-dd HH:mm:ss
+     */
     public static String dataHoraToString(Date data) {
-    DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-    System.out.println(formatoData.format(data));
-    return formatoData.format(data);
+        DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        String stringDataHora = formatoData.format(data);
+        return stringDataHora;
     }
 }

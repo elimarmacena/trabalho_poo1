@@ -17,6 +17,9 @@ import model.Cnh;
  * @author elmr
  */
 public class TableCnh implements OperacoesBaseDados<Cnh>{
+    /**
+     *O metodo retorna um inteiro referente a ultima cnh cadastrada no banco de dados
+     */
     public int lastId(){
         int id = 0;
         String sql = "SELECT id FROM cnh ORDER BY id DESC LIMIT 1";
@@ -39,6 +42,12 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
         }
         return id;
     }
+
+    /**
+     * O metodo cria uma tabela no banco de dados referente a CNH
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS cnh"+
@@ -48,6 +57,12 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
         Utilitarios.executeSQL(sql);
     }
 
+    /**
+     *O metodo registra no banco de dados um objeto CNH
+     * @param informacao objeto CNH.
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void cadastar(Cnh informacao)throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO cnh (numero_cnh,categoria)"+

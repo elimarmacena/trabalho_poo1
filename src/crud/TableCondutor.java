@@ -26,30 +26,34 @@ import model.Pessoa;
  */
 public class TableCondutor implements OperacoesBaseDados<Condutor> {
     
-    
-    public int idByNumCnh(String numCnh){
+    /**
+     * O metodo retorna o Id de um condutor com base na cnh passada.
+     * @param numCnh
+     * @return
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
+     */
+    public int idByNumCnh(String numCnh) throws SQLException, ClassNotFoundException{
         int id = 0;
         String sql = "SELECT condutor.id FROM Condutor INNER JOIN Cnh ON cnh.numero_cnh='"+numCnh+"' AND Condutor.FK_Cnh_id = Cnh.id";
         Connection conexao = null;
-        Statement statement = null;
-        try{
-            Class.forName("org.sqlite.JDBC");
-            conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
-            statement = conexao.createStatement();
-            ResultSet resultado = statement.executeQuery(sql);
-            id = Integer.parseInt(resultado.getString("id") );
-            statement.close();
-            conexao.close();
-        }
-        catch(SQLException sqler){
-            sqler.printStackTrace();
-        }
-        catch(ClassNotFoundException clser){
-           clser.printStackTrace();
-        }
+        Statement statement = null;        
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        id = Integer.parseInt(resultado.getString("id") );
+        statement.close();
+        conexao.close();
+        
         return id;
     }
     
+    /**
+     * O metodo cria uma tabela condutor no banco de dados caso nao tenha sido criada
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS Condutor (" +
@@ -89,13 +93,14 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
      /**
      *O metodo retorna todos os Condutor(classe java) possiveis de restaurar no banco de dados.
      * @return lista com os condutores registrados no sistema
-     * 
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
-
     public ArrayList<Condutor> recuperarCondutoes() throws SQLException,ClassNotFoundException{
         ArrayList<Condutor> condutores = new ArrayList();
         Condutor resultadoCondutor;
-        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'numero_cpf', ca.numero_rg AS 'numero_rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' "+
+        String sql = "SELECT cd.id as 'id', ca.nome AS 'nome', ca.numero_cpf AS 'numero_cpf', ca.numero_rg AS 'numero_rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' "+
                 "FROM Condutor cd" +
                 " INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id" +
                 " INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id";
@@ -116,6 +121,7 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
             Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
             resultadoCondutor.setDataNascimento(dataNasc);
             Cnh cnhCondutor = new Cnh();
+            cnhCondutor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_cnh") ));
             cnhCondutor.setNumCnh(resultado.getString("cnh"));
             cnhCondutor.setCategoria(resultado.getString("categoria"));
             resultadoCondutor.setCnh(cnhCondutor);
@@ -126,9 +132,17 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
         return condutores;
     }
     
+    /**
+     *O metodo retorna um objeto condutor com base no inteiro passado como parametro.
+     * @param idCondutor
+     * @return
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Condutor restaurarById(int idCondutor)throws SQLException,ClassNotFoundException{
         Condutor condutor = new Condutor();
-        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' "+
+        String sql = "SELECT co.id AS 'id_condutor', ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' "+
                 "FROM Condutor co "+
                 "INNER JOIN Cadastro ca ON co.FK_Cadastro_id = ca.id "+
                 "INNER JOIN Cnh cnh ON co.FK_Cnh_id = cnh.id "+

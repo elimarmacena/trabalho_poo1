@@ -28,6 +28,11 @@ ENVOLVIDOS*/
  */
 public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAcidente>{
 
+    /**
+     *O metodo cria a tabela ocorrencia acidente no banco de dados caso nao exista
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS Ocorrencia_acidente (" +
@@ -47,7 +52,12 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
         Utilitarios.executeSQL(sql);
     }
     
-
+    /**
+     *O metodo registra o objeto ocorrencia acidente no banco de dados
+     * @param informacao objeto ocorrencia acidente
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void cadastar(OcorrenciaAcidente informacao) throws SQLException, ClassNotFoundException {
         TableVeiculo tbVeiculo = new TableVeiculo();
@@ -71,11 +81,14 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
      * O metodo recebe um id referente a um acidente no banco de dados e retorna as ocorrencias relacionadasao acidente.
      * @param idAcidente inteiro que represente o id do acidente na tabela do banco de dados.
      * @return array contendo objetos ocorrencia acidente relacionados aquele acidente. 
+     * @throws java.lang.ClassNotFoundException 
+     * @throws java.sql.SQLException 
      */
     public ArrayList<OcorrenciaAcidente> getOcorrenciaByAcidenteId(int idAcidente) throws ClassNotFoundException, SQLException{
         ArrayList <OcorrenciaAcidente> ocorrencias = new ArrayList();
         String sql = "SELECT oa.id AS 'id_ocorrencia', oa.condutor_titular AS 'condutor_titular', oa.velocidade AS 'velocidade', " +
-                "ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria', " +
+                "ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "+ 
+                "cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria', " +
                 "vi.id AS 'id_veiculo', vi.renavam AS 'renavam', vi.placa AS 'placa', vi.modelo AS 'modelo', vi.cor AS 'cor', vi.marca AS 'marca', vi.ano AS 'ano', cd.id AS 'id_condutor' " +
                 " FROM ocorrencia_acidente oa  " +
                 "INNER JOIN Condutor cd ON cd.id = oa.FK_Condutor_id " +

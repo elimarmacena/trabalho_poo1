@@ -18,6 +18,12 @@ import model.Veiculo;
  * @author 20161bsi0314
  */
 public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
+
+    /**
+     *O metodo retorna um inteiro representando o id do veiculo com base na placa informada
+     * @param placa
+     * @return id inteiro representando o id do veiculo no banco de dados
+     */
     public int idByPlaca(String placa){
         int id = 0;
         String sql = "SELECT id FROM veiculo WHERE placa='" + placa + "'";
@@ -41,6 +47,11 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
         return id;
     }
     
+    /**
+     * O metodo cria a tabela veiculo no banco de dados caso ainda nao exista
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS Veiculo (" +
@@ -55,6 +66,12 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
         Utilitarios.executeSQL(sql);
     }
 
+    /**
+     *O metodo cadastra um objeto veiculo no banco de dados
+     * @param informacao objeto veiculo
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void cadastar(Veiculo informacao) throws SQLException, ClassNotFoundException {
         String sql = "INSERT INTO veiculo(renavam,placa,modelo,cor,marca,ano) "
@@ -68,6 +85,13 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
         Utilitarios.executeSQL(sql);
     }
     
+    /**
+     *O metodo recebe um inteiro representando o id do veiculo e recria o objeto do mesmo
+     * @param idVeiculo inteiro representando id do veiculo
+     * @return veiculo objeto veiculo
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Veiculo recuperarById(int idVeiculo)throws SQLException, ClassNotFoundException{
         Veiculo veiculo = new Veiculo();
         String sql = "SELECT * FROM Veiculo vi WHERE vi.id = "+idVeiculo;

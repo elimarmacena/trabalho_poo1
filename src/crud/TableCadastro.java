@@ -9,10 +9,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import model.Pessoa;
 /**
  *
@@ -21,7 +17,12 @@ import model.Pessoa;
 
 //ESSA TABLE SERA USADA PARA QUARDAR OS DADOS DA CLASSE PESSOA
 public class TableCadastro implements OperacoesBaseDados<Pessoa> {    
-     public int lastId(){
+
+    /**
+     * O metodo retorna um inteiro que representa o id do ultimo cadastro feito no banco de dados.
+     * @return
+     */
+    public int lastId(){
         int id = 0;
         String sql = "SELECT id FROM cadastro ORDER BY id DESC LIMIT 1";
         Connection conexao = null;
@@ -44,6 +45,11 @@ public class TableCadastro implements OperacoesBaseDados<Pessoa> {
         return id;
     }
     
+    /**
+     *O metodo cria a tabela de cadastros no banco de dados caso nao exista.
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS Cadastro (" +
@@ -58,6 +64,12 @@ public class TableCadastro implements OperacoesBaseDados<Pessoa> {
         Utilitarios.executeSQL(sql);
     }
 
+    /**
+     *O metodo registra as informacoes referente a classe pessoa no banco de dados
+     * @param informacao objeto pessoa
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void cadastar(Pessoa informacao) throws SQLException, ClassNotFoundException {
         String nascimento = Utilitarios.dataToString(informacao.getDataNascimento());

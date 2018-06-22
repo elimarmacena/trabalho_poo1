@@ -10,8 +10,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import model.Contribuidor;
@@ -22,11 +20,11 @@ import model.RelatorioAcidente;
  */
 public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcidente>{
 
-    public static String dataToString(Date data) {
-        DateFormat formatoData = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        System.out.println(formatoData.format(data));
-        return formatoData.format(data);
-    }
+    /**
+     *O metodo cria a tabela relatorio acidente no banco de dados caso ainda nao exista
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException{
         String sql= "CREATE TABLE IF NOT EXISTS Relatorio_acidente (" +
@@ -46,6 +44,12 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
         Utilitarios.executeSQL(sql);
     }
 
+    /**
+     *O metodo registra um objeto relatorio acidente no banco de dados
+     * @param informacao objeto relatorio acidente
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void cadastar(RelatorioAcidente informacao) throws SQLException, ClassNotFoundException {
         TableContribuidor tbContribuidor = new TableContribuidor();
@@ -60,16 +64,22 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
                 + "'" + informacao.getDescricao() + "',"
                 + informacao.getLatitude()+","
                 + informacao.getLongitude()+","
-                + "'" + this.dataToString( informacao.getData() ) + "')";
+                + "'" + Utilitarios.dataHoraToString(informacao.getData() ) + "')";
         Utilitarios.executeSQL(sql);
     }
     
+    /**
+     *O metodo retorna um arraylist com todos os objetos relatorio acidente disponiveis no banco de dados
+     * @return relatorios arraylist de relatorio acidente
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ArrayList<RelatorioAcidente> recuperarRelatorios() throws SQLException, ClassNotFoundException{
         ArrayList<RelatorioAcidente> relatorios = new ArrayList();
-        String sql = "SELECT ra.placa AS 'placa', ra.nome_condutor AS 'nome_condutor', ra.cnh_condutor as 'cnh_condutor', ra.numero_ocupantes as 'numero_ocupantes',"
+        String sql = "SELECT ra.id as 'id', ra.placa AS 'placa', ra.nome_condutor AS 'nome_condutor', ra.cnh_condutor as 'cnh_condutor', ra.numero_ocupantes as 'numero_ocupantes',"
                 + "ra.info_acidente as 'info_acidente', ra.latitude as 'latitude', ra.longitude as 'longitude', ra.data as 'data',"
                 + " ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',"
-                + " ct.Orgao_associado AS 'orgao_associado' "
+                + " ct.id AS 'id_contribuidor',ct.Orgao_associado AS 'orgao_associado' "
                 + "FROM Relatorio_acidente ra "
                 + "INNER JOIN contribuidor ct ON ct.id = ra.FK_Contribuidor_id "
                 + "INNER JOIN cadastro ca ON ca.id = ct.FK_Cadastro_id";
@@ -82,6 +92,7 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
         while (resultado.next()){
             Contribuidor contribuidor = new Contribuidor();
             //setando informacoes referente ao contribuidor que enviou o relatorio
+            contribuidor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_contribuidor") ));
             contribuidor.setNome(resultado.getString("nome"));
             contribuidor.setCpf(resultado.getString("cpf"));
             contribuidor.setNumeroRg(resultado.getString("rg"));
@@ -92,6 +103,7 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
             contribuidor.setOrgaoAssociado(resultado.getString("orgao_associado"));
             //
             RelatorioAcidente relatorio = new RelatorioAcidente();
+            relatorio.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             relatorio.setAuxiliador(contribuidor); //adicionando o contribuidor ao relatorio
             relatorio.setPlaca(resultado.getString("placa"));
             relatorio.setNomeCondutor(resultado.getString("nome_condutor"));
@@ -100,7 +112,6 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
             relatorio.setDescricao(resultado.getString("info_acidente"));
             relatorio.setLatitude(Double.parseDouble( resultado.getString("latitude") ));
             relatorio.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
-            relatorio.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             Date dataHora = Utilitarios.strDateTime(resultado.getString("data") );
             relatorio.setData(dataHora);
             relatorios.add(relatorio);
@@ -110,6 +121,12 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
         return relatorios;
     }
         
+    /**
+     * Apaga um relatorio do sistema com base no seu id
+     * @param idRelatorio inteiro representando o id do relatorio acidente no banco de dados
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void deletarRelatorio (int idRelatorio) throws SQLException, ClassNotFoundException{
         String sql = "DELETE FROM Relatorio_acidente" +
                 "WHERE id ="+idRelatorio;

@@ -20,6 +20,11 @@ import model.OcorrenciaAcidente;
  * @author elmr
  */
 public class TableAcidente implements OperacoesBaseDados<Acidente>{
+
+    /**
+     *O metodo retorna o id do ultimo acidente registrado.
+     * @return
+     */
     public int lastId(){
         int id = 0;
         String sql = "SELECT id FROM Acidente ORDER BY id DESC LIMIT 1";
@@ -43,6 +48,11 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         return id;
     }
     
+    /**
+     *O metodo cria a tabela de acidentes no banco de dados
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS Acidente ("+
@@ -56,10 +66,16 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         Utilitarios.executeSQL(sql);
     }
 
+    /**
+     *O metodo cadastra um objeto acidente no banco de dados.
+     * como o objeto acidente possui um arraylist de ocorrencia tambem eh feito o cadastramento das suas ocorrencias.
+     * @param informacao
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void cadastar(Acidente informacao) throws SQLException, ClassNotFoundException {
-        TableCondutor tbCondutor = new TableCondutor();
-        TableVeiculo tbVeiculo = new TableVeiculo();
+        TableOcorrenciaAcidente tbOcorrencia = new TableOcorrenciaAcidente();
         String sql = "INSERT INTO acidente (pessoas_envolvidas,latitude,longitude,data,descricao) "+
                 "VALUES ("+
                 informacao.getPessoasEnvolvidas()+","+
@@ -68,11 +84,17 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
                 "'"+Utilitarios.dataToString( informacao.getData() )+"',"+
                 "'"+informacao.getDescricao()+"')";
         Utilitarios.executeSQL(sql);
+        //loop de cadastro das ocorrencias relacionadas ao acidente
+        for (OcorrenciaAcidente item : informacao.getVeiculosEnvolvidos()){
+            tbOcorrencia.cadastar(item);
+        }
     }
     
     /**
      *O metodo retorna todos os Acidentes(classe java) possiveis de restaurar no banco de dados.
-     * @return array de Acidentes.
+     * @return acidentes.
+     * @throws SQLException
+     * @throws ClassNotFoundException
      */
     public ArrayList<Acidente> recuperarAcidentes() throws ClassNotFoundException, SQLException{
         TableOcorrenciaAcidente tbOA = new TableOcorrenciaAcidente(); //instanciando classe para poder ter acesso aos metodos da mesma
@@ -108,7 +130,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
      *Metodo responsavel por consultada personalizada de acidentes, pode receber tanto um intervalo de data, quanto apenas um limite superior ou um limite inferior
      * @param dataInf
      * @param dataSup
-     * @return
+     * @return acidentes
      * @throws ClassNotFoundException
      * @throws SQLException
      */
@@ -119,12 +141,12 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         if (dataInf==null){
             sql= "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', " +
                     "ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' " +
-                    "FROM Acidente ac WHERE ac.data<='"+dataSup+"'";
+                    "FROM Acidente ac WHERE ac.data<='"+Utilitarios.dataToString(dataSup)+"'";
         }
         else if(dataSup == null){
             sql= "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', " +
                     "ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' " +
-                    "FROM Acidente ac WHERE ac.data>='"+dataInf+"'";
+                    "FROM Acidente ac WHERE ac.data>='"+Utilitarios.dataToString(dataInf)+"'";
         }
         else{ //caso os dois campos sejam preenchidos
             sql = "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' "
@@ -138,8 +160,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         ResultSet resultado = statement.executeQuery(sql);
         while (resultado.next()){
             Acidente acidente = new Acidente();
-            ArrayList<OcorrenciaAcidente> ocorrencias = new ArrayList();
-            ocorrencias = tbOcorrencia.getOcorrenciaByAcidenteId(Integer.parseInt( resultado.getString("id") ));
+            ArrayList<OcorrenciaAcidente> ocorrencias = tbOcorrencia.getOcorrenciaByAcidenteId(Integer.parseInt( resultado.getString("id") ));
             acidente.setVeiculosEnvolvidos(ocorrencias);
             acidente.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             acidente.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
@@ -161,14 +182,13 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
      * sendo possivel efetuar uma busca procurando acidentes no qual o modelo do veiculo se inicia com A.
      * os objetos gerados no metodo possuem apenas as informacoes basicas do acidente (id, data, descricao, pessoas envolvidas, latitude e longitude). Com apenas esses dados basicos eh possivel recuperar,
      * caso necessario as informacoes referente aos veiculos e condutores envolvidos em tal acidente.
-     * @param dataInf
-     * @param dataSup
-     * @return
+     * @param marca string com os parametros de busca
+     * @return acidentes array de acidente
      * @throws ClassNotFoundException
      * @throws SQLException
      */
     public ArrayList<Acidente> infosAcidenteMarca(String marca) throws ClassNotFoundException, SQLException{
-        ArrayList<Acidente> acidentes = new ArrayList<Acidente>();
+        ArrayList<Acidente> acidentes = new ArrayList<>();
         String sql = "SELECT ac.id AS'id_acidente', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' "
                 + "FROM ocorrencia_acidente oa "
                 + "INNER JOIN Veiculo vi on vi.marca LIKE '"+marca+"%' AND vi.id = oa.FK_Veiculo_id "
@@ -181,7 +201,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         ResultSet resultado = statement.executeQuery(sql);
         while (resultado.next()){
             Acidente acidente = new Acidente();
-            acidente.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            acidente.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_acidente") ));
             acidente.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
             acidente.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
             acidente.setDescricao(resultado.getString("descricao"));

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package crud;
-import java.security.InvalidParameterException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,6 +19,11 @@ import model.Pessoa;
  */
 public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
     
+    /**
+     *O metodo cria a tabela funcionario no banco de dados caso nao exista
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void createTable() throws SQLException, ClassNotFoundException {
         String sql = "CREATE TABLE IF NOT EXISTS Funcionario (" +
@@ -32,6 +36,13 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
             ")";
         Utilitarios.executeSQL(sql);
     }
+    
+    /**
+     *O metodo recebe um objeto funcionario e efetua o cadastro do mesmo nao banco de dados
+     * @param informacao objeto funcionario
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void cadastar(Funcionario informacao) throws SQLException, ClassNotFoundException {
         TableCadastro tbCadastro = new TableCadastro();
@@ -46,13 +57,14 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
     
     /**
      * Metodo responsavel por retornar todos os objetos Funcionarios disponiveis no banco 
-     * @return
+     * @return funcionarios arraylist de funcionarios
      * @throws SQLException
      * @throws ClassNotFoundException
      */
     public ArrayList<Funcionario> recuperarFuncionarios() throws SQLException, ClassNotFoundException{
         ArrayList<Funcionario> funcionarios = new ArrayList();
-        String sql= "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', fn.senha AS 'senha', fn.ativo AS 'ativo' "
+        String sql= "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "fn.id as 'id' ,fn.senha AS 'senha', fn.ativo AS 'ativo' "
                 + "FROM Funcionario fn "
                 + "INNER JOIN Cadastro ca ON fn.FK_Cadastro_id = ca.id";
         Connection conexao = null;
@@ -63,6 +75,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         ResultSet resultado = statement.executeQuery(sql);
         while (resultado.next()){
             Funcionario funcionario = new Funcionario();
+            funcionario.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             funcionario.setNome(resultado.getString("nome"));
             funcionario.setCpf(resultado.getString("cpf"));
             funcionario.setNumeroRg(resultado.getString("rg"));
@@ -80,12 +93,21 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         return funcionarios;
     }
     
+    /**
+     *Metodo utilizado para efetuar pesquisas na tabela funcionario utilizando o nome ou apenas letras do nome de um funcionario
+     * e entao retorna todos os objetos referentes a pesquisa
+     * @param like string com o parametro de busca
+     * @return funcionarios arraylist de objetos.
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public ArrayList<Funcionario> recuperarLike(String like) throws SQLException, ClassNotFoundException{
         ArrayList<Funcionario> funcionarios = new ArrayList();
-        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', fn.senha AS 'senha', fn.ativo AS 'ativo' "
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "fn.id AS 'id', fn.senha AS 'senha', fn.ativo AS 'ativo' "
                 + "FROM Cadastro ca " +
                 "INNER JOIN Funcionario fn ON fn.FK_Cadastro_id = ca.id " +
-                "WHERE ca.nome LIKE 'r%'";
+                "WHERE ca.nome LIKE '"+like+"%'";
         Connection conexao = null;
         Statement statement = null;
         Class.forName("org.sqlite.JDBC");
@@ -115,8 +137,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
     /**
      * Metodo com intuito de agir como um delete, uma vez que apagar o funcionario do sistema poderia causar impactos.
      * Visto isto ao inves de apagar eh feita uma atualizacao de permicoes de um funcionario.
-     * @param idFuncionario
-     * @param status
+     * @param funcionario objeto funcionario que se encontra no banco de dados
      * @throws SQLException
      * @throws ClassNotFoundException
      */
@@ -126,6 +147,13 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
                 " WHERE id = "+funcionario.getCampoIdentificacao();
         Utilitarios.executeSQL(sql);
     }
+    
+    /**
+     *Metodo utilizado para reestabelecer as permicoes do funcionario no sistema
+     * @param funcionario objeto funcionario que se encontra no banco de dados do sistema
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void AtivarFuncionario(Funcionario funcionario) throws SQLException, ClassNotFoundException{
         String sql = "UPDATE Funcionario " +
                 "SET ativo = 1 "+
@@ -155,7 +183,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
      *Metodo respostavel pela verificacao do login do funcionario no sistema, caso seja bem sucedido eh retornado as informacoes referente ao funcionario conectado.
      * @param login
      * @param senha
-     * @return
+     * @return funcionario objeto funcionario referente ao login informado
      * @throws ClassNotFoundException
      * @throws SQLException
      * @throws IllegalArgumentException lancado caso um dos parametros passados nao sejam iguais ao do banco de dados
