@@ -56,6 +56,36 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
         Utilitarios.executeSQL(sql);
     }
     
+    public ArrayList<DadosRotina> recuperarDadosRotina() throws ClassNotFoundException, SQLException{
+        ArrayList<DadosRotina> rotinas = new ArrayList<DadosRotina>();
+        TableVeiculo tbVeiculo = new TableVeiculo();
+        String sql = "SELECT * FROM Dados_rotina " +
+                "INNER JOIN Veiculo vi ON vi.id = Dados_rotina.FK_Veiculo_id";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            DadosRotina dados = new DadosRotina();
+            //por se tratar de uma unica linha os dados sao restaurados sem a necessidade de um laco
+            Veiculo veiculo = new Veiculo();
+            veiculo = tbVeiculo.recuperarById(Integer.parseInt( resultado.getString("FK_Veiculo_id") ));
+            dados.setVeiculo(veiculo);
+            dados.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
+            dados.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+            dados.setVelocidade(Integer.parseInt( resultado.getString("velocidade") ));
+            Date dataHora = Utilitarios.strDateTime(resultado.getString("data"));
+            dados.setDataColeta(dataHora);
+            dados.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            rotinas.add(dados);
+        }
+        statement.close();
+        conexao.close();
+        return rotinas;
+    }
+    
     public DadosRotina recuperarByPlaca(String placa) throws ClassNotFoundException, SQLException{
         TableVeiculo tbVeiculo = new TableVeiculo();
         DadosRotina dados = new DadosRotina();
@@ -82,4 +112,10 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
         return dados;
     }
 
+    public void updateDados (DadosRotina dados) throws SQLException, ClassNotFoundException{
+        String sql = "UPDATE Dados_rotina " +
+                "SET velocidade= "+dados.getVelocidade()+", latitude = "+dados.getLatitude()+", longitude =  "+dados.getLongitude()+", data = '"+Utilitarios.dataHoraToString(dados.getDataColeta())+"' " +
+                "WHERE FK_Veiculo_id = "+dados.getVeiculo().getCampoIdentificacao();
+        Utilitarios.executeSQL(sql);
+    }
 }

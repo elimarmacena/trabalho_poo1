@@ -120,4 +120,27 @@ public class TableContribuidor implements OperacoesBaseDados<Contribuidor> {
         return contribuidores;
     }
  
+    public Contribuidor restaurarById(int idContribuidor)throws SQLException, ClassNotFoundException {
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',ct.Orgao_associado AS 'orgao_associado' "
+                + "FROM Contribuidor ct " +
+                "INNER JOIN Cadastro ca ON ct.FK_Cadastro_id = ca.id";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        Contribuidor contribuidor = new Contribuidor();
+        contribuidor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+        contribuidor.setNome(resultado.getString("nome"));
+        contribuidor.setCpf(resultado.getString("cpf"));
+        contribuidor.setNumeroRg(resultado.getString("rg"));
+        contribuidor.setEstadorg(resultado.getString("estado_rg"));
+        contribuidor.setSexo(resultado.getString("sexo"));
+        Date dataNasc = Utilitarios.strDate( resultado.getString("data_nasc") );
+        contribuidor.setDataNascimento(dataNasc);
+        contribuidor.setOrgaoAssociado(resultado.getString("orgao_associado"));
+        return contribuidor;
+        
+    }
 }

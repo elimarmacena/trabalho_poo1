@@ -74,15 +74,15 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
      */
     public ArrayList<OcorrenciaAcidente> getOcorrenciaByAcidenteId(int idAcidente) throws ClassNotFoundException, SQLException{
         ArrayList <OcorrenciaAcidente> ocorrencias = new ArrayList();
-        String sql = "SELECT oa.condutor_titular AS 'condutor_titular', oa.velocidade AS 'velocidade', " +
-                "ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria', " +
-                "vi.renavam AS 'renavam', vi.placa AS 'placa', vi.modelo AS 'modelo', vi.cor AS 'cor', vi.marca AS 'marca', vi.ano AS 'ano' " +
+        String sql = "SELECT oa.id AS 'id_ocorrencia', oa.condutor_titular AS 'condutor_titular', oa.velocidade AS 'velocidade', " +
+                "ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria', " +
+                "vi.id AS 'id_veiculo', vi.renavam AS 'renavam', vi.placa AS 'placa', vi.modelo AS 'modelo', vi.cor AS 'cor', vi.marca AS 'marca', vi.ano AS 'ano', cd.id AS 'id_condutor' " +
                 " FROM ocorrencia_acidente oa  " +
                 "INNER JOIN Condutor cd ON cd.id = oa.FK_Condutor_id " +
                 "INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id " +
                 "INNER JOIN Veiculo vi ON vi.id = oa.FK_Veiculo_id " +
                 "INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id " +
-                "WHERE oa.FK_Acidente_id =1 /*mudar de acordo com necessidade*/";
+                "WHERE oa.FK_Acidente_id ="+idAcidente;
         Connection conexao = null;
         Statement statement = null;
         Class.forName("org.sqlite.JDBC");
@@ -95,6 +95,7 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
             Veiculo veiculo = new Veiculo(); //objeto que compoe a classe ocorrencia acidente
             
             //setando informacoes para o objeto veiculo
+            veiculo.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_veiculo") ));
             veiculo.setRenavam(resultado.getString("renavam"));
             veiculo.setPlaca(resultado.getString("placa"));
             veiculo.setModelo(resultado.getString("modelo"));
@@ -104,8 +105,11 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
             
             //setando informacoes para o objeto condutor
             Cnh cnh = new Cnh();
+            cnh.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_cnh") ));
             cnh.setCategoria(resultado.getString("categoria"));
             cnh.setNumCnh(resultado.getString("cnh"));
+            
+            condutor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_condutor") ));
             condutor.setNome(resultado.getString("nome"));
             condutor.setCpf(resultado.getString("cpf"));
             condutor.setNumeroRg(resultado.getString("rg"));
@@ -119,7 +123,7 @@ public class TableOcorrenciaAcidente implements OperacoesBaseDados<OcorrenciaAci
             ocorrencia.setCondutor(condutor);
             ocorrencia.setVeiculo(veiculo);
             //atribuindo dados para ocorrencia
-            ocorrencia.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            ocorrencia.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_ocorrencia") ));
             boolean titular = (resultado.getString("condutor_titular").equals('1'));
             ocorrencia.setCondutor_titular(titular);
             ocorrencia.setVelocidade(Integer.parseInt(resultado.getString("velocidade")));

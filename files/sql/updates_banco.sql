@@ -27,3 +27,11 @@ WHERE EXISTS (SELECT FK_Cadastro_id FROM Condutor cd WHERE cd.id = 10 AND cd.FK_
 UPDATE Dados_rotina
 SET velocidade= 100, latitude = -33.523274, longitude =  -54.123588, data = '2018-02-04'
 WHERE FK_Veiculo_id = 10/*mudar de acordo com a necessidade*/;
+
+---ATUALIZACAO INFORMACOES DE FUNCIONARIO.
+UPDATE Funcionario 
+SET senha = '1234567'
+WHERE EXISTS (SELECT id FROM Cadastro WHERE Funcionario.id = 1 AND id = Funcionario.FK_Cadastro_id );
+UPDATE Cadastro
+Set nome= 'Brenda Jahring' 
+WHERE EXISTS (SELECT FK_Cadastro_id FROM Funcionario WHERE Funcionario.id =1  AND Cadastro.id = Funcionario.FK_Cadastro_id )

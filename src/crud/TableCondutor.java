@@ -125,6 +125,37 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
             conexao.close();         
         return condutores;
     }
+    
+    public Condutor restaurarById(int idCondutor)throws SQLException,ClassNotFoundException{
+        Condutor condutor = new Condutor();
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' "+
+                "FROM Condutor co "+
+                "INNER JOIN Cadastro ca ON co.FK_Cadastro_id = ca.id "+
+                "INNER JOIN Cnh cnh ON co.FK_Cnh_id = cnh.id "+
+                "WHERE co.id="+idCondutor;
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        Cnh cnh = new Cnh();
+        cnh.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_cnh") ));
+        cnh.setCategoria(resultado.getString("categoria"));
+        cnh.setNumCnh(resultado.getString("cnh"));
+        condutor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_condutor") ));
+        condutor.setNome(resultado.getString("nome"));
+        condutor.setCpf(resultado.getString("cpf"));
+        condutor.setNumeroRg(resultado.getString("rg"));
+        condutor.setEstadorg(resultado.getString("estado_rg"));
+        condutor.setSexo(resultado.getString("sexo"));
+        Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
+        condutor.setDataNascimento(dataNasc);
+        condutor.setCnh(cnh);
+        statement.close();
+        conexao.close();     
+        return condutor;
+    }
 
 
     

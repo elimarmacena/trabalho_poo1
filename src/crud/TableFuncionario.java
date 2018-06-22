@@ -120,30 +120,34 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public void updateStatus(String funcionariocpf,int status) throws SQLException, ClassNotFoundException{
+    public void removerFuncionario(Funcionario funcionario) throws SQLException, ClassNotFoundException{
         String sql = "UPDATE Funcionario " +
-                "SET senha = "+ status +
-                " WHERE EXISTS (SELECT id FROM Cadastro WHERE numero_cpf = '" + funcionariocpf + "' AND id = Funcionario.FK_Cadastro_id )";
+                "SET ativo = 0 "+
+                " WHERE id = "+funcionario.getCampoIdentificacao();
+        Utilitarios.executeSQL(sql);
+    }
+    public void AtivarFuncionario(Funcionario funcionario) throws SQLException, ClassNotFoundException{
+        String sql = "UPDATE Funcionario " +
+                "SET ativo = 1 "+
+                " WHERE id = "+funcionario.getCampoIdentificacao();
         Utilitarios.executeSQL(sql);
     }
     
     /**
-     * Meto no qual faz uso do cpf do funcionario para que seja possuivel atualizar suas informacoes.
-     * Por questao de agilidade deve-se passar um Objeto funcionario, no qual 
-     * o mesmo sera utilizado para atualizar todas as colunas ligada ao funcionario daquele cpf, mesmo que nao haja alteracao em uma determinada coluna
-     * @param funcionarioCpf
-     * @param funcionario
+     * O medoto recebe o objeto condento o campo de identificacao do item na sua respectiva tabela.
+     * Por de se passar um objeto torna o update mais facil, podendo ser aplicado genericamente e sua chamada pode ser aplicado em diferentes cenarios.
+     * @param funcionario objeto funcionario contendo todas as informacoes do mesmo, sendo assim possivel o update generio.
      * @throws SQLException
      * @throws ClassNotFoundException
      */
-    public void updateDados(String funcionarioCpf, Funcionario funcionario) throws SQLException, ClassNotFoundException{
+    public void updateDados(Funcionario funcionario) throws SQLException, ClassNotFoundException{
         String sql = "UPDATE Funcionario " +
-            "SET senha = "+ funcionario.getSenha() +
-            "WHERE EXISTS (SELECT id FROM Cadastro WHERE numero_cpf = '"+ funcionarioCpf +"' AND id = Funcionario.FK_Cadastro_id );" +
-            "UPDATE Cadastro" +
-            "Set nome= '"+funcionario.getNome()+"', data_nasc='"+Utilitarios.dataToString(funcionario.getDataNascimento())+"', "+
-            "numero_rg='"+funcionario.getNumeroRg() +"', estado_rg= '"+funcionario.getEstadorg()+"', sexo='"+funcionario.getSexo()+"' "+
-            "WHERE numero_cpf= '"+ funcionarioCpf +"';";
+                "SET senha = '" + funcionario.getSenha()+"'"+
+                "WHERE id = "+funcionario.getCampoIdentificacao()+";"+
+                "UPDATE Cadastro " +
+                "Set nome = '" + funcionario.getNome() +"', numero_cpf = '"+funcionario.getCpf()+"',numero_rg = '"+funcionario.getNumeroRg()+"', estado_rg = '"+funcionario.getEstadorg()+"',"+
+                "sexo = '"+funcionario.getSexo()+"', data_nasc = '"+Utilitarios.dataToString(funcionario.getDataNascimento())+"'"+
+                "WHERE EXISTS (SELECT FK_Cadastro_id FROM Funcionario WHERE Funcionario.id ="+funcionario.getCampoIdentificacao()+"  AND Cadastro.id = Funcionario.FK_Cadastro_id )";
         Utilitarios.executeSQL(sql);
                 
     }

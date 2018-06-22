@@ -20,13 +20,6 @@ import model.OcorrenciaAcidente;
  * @author elmr
  */
 public class TableAcidente implements OperacoesBaseDados<Acidente>{
-
-    public static String dataToString(Date data) {
-        DateFormat formatoData = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
-        System.out.println(formatoData.format(data));
-        return formatoData.format(data);
-    }
-    
     public int lastId(){
         int id = 0;
         String sql = "SELECT id FROM Acidente ORDER BY id DESC LIMIT 1";
@@ -72,7 +65,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
                 informacao.getPessoasEnvolvidas()+","+
                 informacao.getLatitude()+","+
                 informacao.getLongitude()+","+
-                "'"+this.dataToString(informacao.getData() )+"',"+
+                "'"+Utilitarios.dataToString( informacao.getData() )+"',"+
                 "'"+informacao.getDescricao()+"')";
         Utilitarios.executeSQL(sql);
     }
@@ -97,6 +90,97 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
             ArrayList<OcorrenciaAcidente> ocorrencias = new ArrayList();
             ocorrencias = tbOA.getOcorrenciaByAcidenteId(Integer.parseInt( resultado.getString("id") ));
             acidente.setVeiculosEnvolvidos(ocorrencias);
+            acidente.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            acidente.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
+            acidente.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+            acidente.setDescricao(resultado.getString("descricao"));
+            Date dataHora = Utilitarios.strDateTime(resultado.getString("data"));
+            acidente.setData(dataHora);
+            acidente.setPessoasEnvolvidas(Integer.parseInt( resultado.getString("pessoas_envolvidas") ));
+            acidentes.add(acidente);
+        }
+        statement.close();
+        conexao.close();
+        return acidentes;
+    }
+    
+    /**
+     *Metodo responsavel por consultada personalizada de acidentes, pode receber tanto um intervalo de data, quanto apenas um limite superior ou um limite inferior
+     * @param dataInf
+     * @param dataSup
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public ArrayList<Acidente> acidentesByDate(Date dataInf,Date dataSup) throws ClassNotFoundException, SQLException{
+        TableOcorrenciaAcidente tbOcorrencia = new TableOcorrenciaAcidente();
+        ArrayList<Acidente> acidentes = new ArrayList<Acidente>();
+        String sql=null;
+        if (dataInf==null){
+            sql= "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', " +
+                    "ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' " +
+                    "FROM Acidente ac WHERE ac.data<='"+dataSup+"'";
+        }
+        else if(dataSup == null){
+            sql= "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', " +
+                    "ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' " +
+                    "FROM Acidente ac WHERE ac.data>='"+dataInf+"'";
+        }
+        else{ //caso os dois campos sejam preenchidos
+            sql = "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' "
+                + "FROM Acidente ac WHERE data>='"+Utilitarios.dataToString(dataInf)+"' AND date<='"+Utilitarios.dataToString(dataSup)+"'";
+        }
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Acidente acidente = new Acidente();
+            ArrayList<OcorrenciaAcidente> ocorrencias = new ArrayList();
+            ocorrencias = tbOcorrencia.getOcorrenciaByAcidenteId(Integer.parseInt( resultado.getString("id") ));
+            acidente.setVeiculosEnvolvidos(ocorrencias);
+            acidente.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            acidente.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
+            acidente.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+            acidente.setDescricao(resultado.getString("descricao"));
+            Date dataHora = Utilitarios.strDateTime(resultado.getString("data"));
+            acidente.setData(dataHora);
+            acidente.setPessoasEnvolvidas(Integer.parseInt( resultado.getString("pessoas_envolvidas") ));
+            acidentes.add(acidente);
+        }
+        statement.close();
+        conexao.close();
+        return acidentes;
+    }
+    
+    
+    /**
+     *Metodo efetua uma busca no banco de dados refente aos acidentes ligados a uma marca de veiculo especifica ou apenas por letras que compoe a mesma
+     * sendo possivel efetuar uma busca procurando acidentes no qual o modelo do veiculo se inicia com A.
+     * os objetos gerados no metodo possuem apenas as informacoes basicas do acidente (id, data, descricao, pessoas envolvidas, latitude e longitude). Com apenas esses dados basicos eh possivel recuperar,
+     * caso necessario as informacoes referente aos veiculos e condutores envolvidos em tal acidente.
+     * @param dataInf
+     * @param dataSup
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    public ArrayList<Acidente> infosAcidenteMarca(String marca) throws ClassNotFoundException, SQLException{
+        ArrayList<Acidente> acidentes = new ArrayList<Acidente>();
+        String sql = "SELECT ac.id AS'id_acidente', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' "
+                + "FROM ocorrencia_acidente oa "
+                + "INNER JOIN Veiculo vi on vi.marca LIKE '"+marca+"%' AND vi.id = oa.FK_Veiculo_id "
+                + "INNER JOIN Acidente ac ON oa.FK_Acidente_id = ac.id";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Acidente acidente = new Acidente();
             acidente.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
             acidente.setLatitude(Double.parseDouble(resultado.getString("latitude") ));
             acidente.setLongitude(Double.parseDouble( resultado.getString("longitude") ));

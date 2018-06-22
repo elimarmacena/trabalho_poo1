@@ -72,3 +72,14 @@ INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id
 INNER JOIN Veiculo vi ON vi.id = oa.FK_Veiculo_id
 INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id
 WHERE oa.FK_Acidente_id =1 /*mudar de acordo com necessidade*/
+
+---CONSULTA ACIDENTES POR INTERVALO DE DATA
+SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', 
+ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas'
+FROM Acidente ac WHERE data>=/*data inferior*/ AND date<=/*data superior*/
+
+---CONSULTA ACIDENTES POR MARCAR VEICULO
+SELECT ac.id AS'id_acidente', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas'
+FROM ocorrencia_acidente oa
+INNER JOIN Veiculo vi on vi.marca LIKE 'f%' AND vi.id = oa.FK_Veiculo_id
+INNER JOIN Acidente ac ON oa.FK_Acidente_id = ac.id

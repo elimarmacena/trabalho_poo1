@@ -21,15 +21,15 @@ public class teste {
     public static void main (String[] args) {
         
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            ArrayList<Funcionario> orcorrencias = new ArrayList();
-            TableFuncionario tbOA = new TableFuncionario();
+            ArrayList<DadosRotina> orcorrencias = new ArrayList();
+            TableDadosRotina tbOA = new TableDadosRotina();
             try {
-            orcorrencias =tbOA.recuperarLike("r");
+            orcorrencias =tbOA.recuperarDadosRotina();
             } catch (Exception ex) {
             Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
             }
-            for (Funcionario teste : orcorrencias){
-            System.out.println( teste.getNome());
+            for (DadosRotina teste : orcorrencias){
+            System.out.println( teste.getVeiculo().getCampoIdentificacao());
             }
             /*DadosRotina dr = new DadosRotina();
             TableDadosRotina tbDr = new TableDadosRotina();

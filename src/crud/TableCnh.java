@@ -44,7 +44,7 @@ public class TableCnh implements OperacoesBaseDados<Cnh>{
         String sql = "CREATE TABLE IF NOT EXISTS cnh"+
                 "(id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "num_cnh CHAR(12),"+
-                "categoria CHAR(3))";
+                "categoria CHAR(13))"; //tamanho da categoria aumentou para que seja possivel fazer a concatenacao de todas as categorias possiveis
         Utilitarios.executeSQL(sql);
     }
 

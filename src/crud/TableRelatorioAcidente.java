@@ -109,8 +109,10 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
         conexao.close();
         return relatorios;
     }
-    
-
-
-    
+        
+    public void deletarRelatorio (int idRelatorio) throws SQLException, ClassNotFoundException{
+        String sql = "DELETE FROM Relatorio_acidente" +
+                "WHERE id ="+idRelatorio;
+        Utilitarios.executeSQL(sql);
+    }
 }

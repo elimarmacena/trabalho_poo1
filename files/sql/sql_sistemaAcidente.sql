@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS Acidente (
 CREATE TABLE IF NOT EXISTS Cnh (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     numero_cnh CHAR(12),
-    categoria CHAR(3)
+    categoria CHAR(13)
 );
 
 CREATE TABLE IF NOT EXISTS Ocorrencia_acidente (

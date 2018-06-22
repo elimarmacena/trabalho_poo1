@@ -60,4 +60,9 @@ public  class Utilitarios {
         System.out.println(formatoData.format(data));
         return formatoData.format(data);
     }
+    public static String dataHoraToString(Date data) {
+    DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+    System.out.println(formatoData.format(data));
+    return formatoData.format(data);
+    }
 }
