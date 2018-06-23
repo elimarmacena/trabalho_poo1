@@ -8,4 +8,13 @@ INSERT INTO veiculo(renavam,placa,modelo,cor,marca,ano) VALUES
 ('33382969797','MRQ-1161','Jipe Montez 4x4 CD Teto R','Azul','JPX',1994),
 ('35866599919','KDH-8960','Land Cruiser 4WD 4.5 24V','Verde','Toyota',1993),
 ('96945680060','KAF-8367','Camper 4x4 2.5 Diesel','Branco','Envemo',1991),
-('51356625545','HHC-4453','fortwo BRABUS cabrio 1.0 72kw','Dourado','smart',2010)
+('51356625545','HHC-4453','fortwo BRABUS cabrio 1.0 72kw','Dourado','smart',2010),
+('44219605612','MYZ-1459','Trans-AM 5.7 V8','Vermelho','Pontiac',1991),
+('21849849619','MUD-2680','Fox PEPPER 1.6 Flex 16V 5p','Verde','VW - VolksWagen',2015),
+('40021764629','HUG-6060','Gol SELE','Marrom','VW - VolksWagen',2014),
+('22074136373','JYK-8044','SPACEFOX COMFORTLINE 1.6 Mi T.Flex 8V 5p','Dourado','VW - VolksWagen',2006),
+('76720441781','DMN-5552','Strada Working HARD 1.4 Fire Flex 8V CD','Branco','Fiat',2015),
+('95753697277','KDS-4247','UNO VIVACE/RUA 1.0 EVO Fire Flex 8V 5p','Branco','Fiat',2011),
+('77445864778','MID-9808','Uno Mille 1.0/ i.e./ Electronic/  Brio','Branco','Fiat',1990),
+('88170841719','HBN-1764','Escort XR3 1.8 / 1.6 Convers','Vermelho','Ford',1985),
+('89612134760','IIP-8694','F12 Berlinetta 740cv','Dourado','Ferrari',2013)
