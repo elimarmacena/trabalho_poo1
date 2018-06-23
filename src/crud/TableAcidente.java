@@ -150,7 +150,7 @@ public class TableAcidente implements OperacoesBaseDados<Acidente>{
         }
         else{ //caso os dois campos sejam preenchidos
             sql = "SELECT ac.id AS'id', ac.latitude AS 'latitude', ac.longitude AS 'longitude', ac.descricao AS 'descricao', ac.data AS 'data', ac.pessoas_envolvidas as 'pessoas_envolvidas' "
-                + "FROM Acidente ac WHERE data>='"+Utilitarios.dataToString(dataInf)+"' AND date<='"+Utilitarios.dataToString(dataSup)+"'";
+                + "FROM Acidente ac WHERE data>='"+Utilitarios.dataToString(dataInf)+"' AND data<='"+Utilitarios.dataToString(dataSup)+"'";
         }
         Connection conexao = null;
         Statement statement = null;

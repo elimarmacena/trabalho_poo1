@@ -49,7 +49,7 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
     @Override
     public void cadastar(DadosRotina informacao)throws SQLException, ClassNotFoundException {
         TableVeiculo tbVeiculo = new TableVeiculo();
-        int idVeiculo =tbVeiculo.idByPlaca (informacao.getVeiculo().getPlaca());
+        int idVeiculo =tbVeiculo.idByPlaca ( informacao.getVeiculo().getPlaca() );
         String sql = "INSERT INTO dados_rotina (velocidade,latitude,longitude,data,FK_Veiculo_id) VALUES("+
                 informacao.getVelocidade()+","+
                 informacao.getLatitude()+","+
@@ -68,7 +68,7 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
     public ArrayList<DadosRotina> recuperarDadosRotina() throws ClassNotFoundException, SQLException{
         ArrayList<DadosRotina> rotinas = new ArrayList<>();
         TableVeiculo tbVeiculo = new TableVeiculo();
-        String sql = "SELECT dr.id AS 'dr.id', dr.velocidade AS 'dr.velocidade', dr.latitude AS 'dr.latitude', dr.longitude AS 'dr.longitude', dr.data AS 'dr.data', dr.FK_Veiculo_id AS 'FK_Veiculo_id'"
+        String sql = "SELECT dr.id AS 'dr.id', dr.velocidade AS 'dr.velocidade', dr.latitude AS 'dr.latitude', dr.longitude AS 'dr.longitude', dr.data AS 'dr.data', dr.FK_Veiculo_id AS 'dr.FK_Veiculo_id'"
                 + "FROM Dados_rotina dr " +
                 "INNER JOIN Veiculo vi ON vi.id = dr.FK_Veiculo_id";
         Connection conexao = null;
@@ -80,7 +80,7 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
         while (resultado.next()){
             DadosRotina dados = new DadosRotina();
             //por se tratar de uma unica linha os dados sao restaurados sem a necessidade de um laco
-            Veiculo veiculo = tbVeiculo.recuperarById(Integer.parseInt( resultado.getString("FK_Veiculo_id") ));
+            Veiculo veiculo = tbVeiculo.recuperarById(Integer.parseInt( resultado.getString("dr.FK_Veiculo_id") ));
             dados.setVeiculo(veiculo);
             dados.setLatitude(Double.parseDouble(resultado.getString("dr.latitude") ));
             dados.setLongitude(Double.parseDouble( resultado.getString("dr.longitude") ));
@@ -105,9 +105,9 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
     public DadosRotina recuperarByPlaca(String placa) throws ClassNotFoundException, SQLException{
         TableVeiculo tbVeiculo = new TableVeiculo();
         DadosRotina dados = new DadosRotina();
-        String sql = "SELECT dr.id AS 'dr.id', dr.velocidade AS 'dr.velocidade', dr.latitude AS 'dr.latitude', dr.longitude AS 'dr.longitude', dr.data AS 'dr.data', dr.FK_Veiculo_id AS 'FK_Veiculo_id'"
+        String sql = "SELECT dr.id AS 'dr.id', dr.velocidade AS 'dr.velocidade', dr.latitude AS 'dr.latitude', dr.longitude AS 'dr.longitude', dr.data AS 'dr.data', dr.FK_Veiculo_id AS 'dr.FK_Veiculo_id' "
                 + "FROM Dados_rotina dr " +
-                "INNER JOIN Veiculo vi ON vi.placa = '"+ placa +"' AND vi.id = Dados_rotina.FK_Veiculo_id";;
+                "INNER JOIN Veiculo vi ON vi.placa = '"+ placa +"' AND vi.id = dr.FK_Veiculo_id";
         Connection conexao = null;
         Statement statement = null;
         Class.forName("org.sqlite.JDBC");
@@ -115,14 +115,15 @@ public class TableDadosRotina implements OperacoesBaseDados<DadosRotina>{
         statement = conexao.createStatement();
         ResultSet resultado = statement.executeQuery(sql);
         //por se tratar de uma unica linha os dados sao restaurados sem a necessidade de um laco
-        Veiculo veiculo = tbVeiculo.recuperarById(Integer.parseInt( resultado.getString("FK_Veiculo_id") ));
-        dados.setVeiculo(veiculo);
+        
         dados.setLatitude(Double.parseDouble(resultado.getString("dr.latitude") ));
         dados.setLongitude(Double.parseDouble( resultado.getString("dr.longitude") ));
         dados.setVelocidade(Integer.parseInt( resultado.getString("dr.velocidade") ));
         Date dataHora = Utilitarios.strDateTime(resultado.getString("dr.data"));
         dados.setDataColeta(dataHora);
         dados.setCampoIdentificacao(Integer.parseInt( resultado.getString("dr.id") ));
+        Veiculo veiculo = tbVeiculo.recuperarById(Integer.parseInt( resultado.getString("dr.FK_Veiculo_id") ));
+        dados.setVeiculo(veiculo);
         statement.close();
         conexao.close();
         return dados;

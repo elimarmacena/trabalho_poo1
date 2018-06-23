@@ -6,9 +6,6 @@
 package crud;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Cnh;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -61,6 +58,8 @@ public class TableCnhTest {
 
     /**
      * Test of cadastar method, of class TableCnh.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar() {
@@ -81,6 +80,19 @@ public class TableCnhTest {
             fail("biblioteca sqlite nao encontrada.");
         }
         
+    }
+
+    /**
+     * Test of lastId method, of class TableCnh.
+     */
+    @Test
+    public void testLastId() {
+        System.out.println("lastId");
+        TableCnh instance = new TableCnh();
+        int result = instance.lastId();
+        if(result == 0){
+            fail("The test case is a prototype.");
+        }
     }
 
 

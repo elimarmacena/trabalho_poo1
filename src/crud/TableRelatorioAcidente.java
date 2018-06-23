@@ -128,7 +128,7 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
      * @throws ClassNotFoundException
      */
     public void deletarRelatorio (int idRelatorio) throws SQLException, ClassNotFoundException{
-        String sql = "DELETE FROM Relatorio_acidente" +
+        String sql = "DELETE FROM Relatorio_acidente " +
                 "WHERE id ="+idRelatorio;
         Utilitarios.executeSQL(sql);
     }

@@ -6,11 +6,6 @@
 package crud;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.*;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -65,6 +60,8 @@ public class TableCadastroTest {
 
     /**
      * Test of cadastar method, of class TableCadastro.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar() {
@@ -77,9 +74,7 @@ public class TableCadastroTest {
         informacao.setSexo("f");
         //
         //setando data de nascimento fazendo uso de calendar e apos solicitando Date
-        Calendar nascimento = Calendar.getInstance();
-        nascimento.set(1990, 5, 25);
-        informacao.setDataNascimento(nascimento.getTime());
+        informacao.setDataNascimento(Utilitarios.strDate("1990-05-25"));
         //
         //instanciando informacoes referentes ao rg
         informacao.setEstadorg("ES");
@@ -101,4 +96,17 @@ public class TableCadastroTest {
         }
         
     }    
+
+    /**
+     * Test of lastId method, of class TableCadastro.
+     */
+    @Test
+    public void testLastId() {
+        System.out.println("lastId");
+        TableCadastro instance = new TableCadastro();
+        int result = instance.lastId();
+        if(result == 0){
+            fail("The test case is a prototype.");
+        }
+    }
 }

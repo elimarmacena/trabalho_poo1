@@ -6,6 +6,7 @@
 package crud;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.OcorrenciaAcidente;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -66,6 +67,22 @@ public class TableOcorrenciaAcidenteTest {
         TableAcidenteTest.java UMA VEZ QUE PARA A CONSOLIDACAO DE UM ACIDENTE NO SISTEMA
         EH NECESSARIO OCORRENCIAS REFERENCIADO OS VEICULOS E CONDUTORES QUE NELE ESTAO 
         ENVOLVIDOS*/
+    }
+
+    /**
+     * Test of getOcorrenciaByAcidenteId method, of class TableOcorrenciaAcidente.
+     */
+    @Test
+    public void testGetOcorrenciaByAcidenteId() throws Exception {
+        System.out.println("getOcorrenciaByAcidenteId");
+        int idAcidente = 1;
+        TableOcorrenciaAcidente instance = new TableOcorrenciaAcidente();
+        ArrayList<OcorrenciaAcidente> result = null;
+        result = instance.getOcorrenciaByAcidenteId(idAcidente);
+        
+        if (result == null ){
+            fail("The test case is a prototype.");
+        }
     }
     
 }

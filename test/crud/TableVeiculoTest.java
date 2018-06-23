@@ -7,8 +7,6 @@ package crud;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Veiculo;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -64,6 +62,8 @@ public class TableVeiculoTest {
 
     /**
      * Test of cadastar method, of class TableVeiculo.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar()  {
@@ -88,6 +88,35 @@ public class TableVeiculoTest {
             fail("biblioteca sqlite nao encontrada.");;
         }
         
+        
+    }
+
+    /**
+     * Test of idByPlaca method, of class TableVeiculo.
+     */
+    @Test
+    public void testIdByPlaca() {
+        System.out.println("idByPlaca");
+        String placa = "PPX-0000";
+        TableVeiculo instance = new TableVeiculo();
+        int result = instance.idByPlaca(placa);
+        if(result == 0){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of recuperarById method, of class TableVeiculo.
+     */
+    @Test
+    public void testRecuperarById() throws Exception {
+        System.out.println("recuperarById");
+        int idVeiculo = 1;
+        TableVeiculo instance = new TableVeiculo();
+        Veiculo result = instance.recuperarById(idVeiculo);
+        if(!result.getPlaca().equals("PPX-0000")){
+            fail("The test case is a prototype.");
+        }
         
     }
 }

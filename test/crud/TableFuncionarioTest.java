@@ -7,11 +7,7 @@ package crud;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Funcionario;
-import model.Pessoa;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -64,6 +60,8 @@ public class TableFuncionarioTest {
 
     /**
      * Test of cadastar method, of class TableFuncionario.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar()  {
@@ -76,10 +74,8 @@ public class TableFuncionarioTest {
         informacao.setNome("Letícia Andrea Teixeira");
         informacao.setSexo("f");
         //
-        //setando data de nascimento fazendo uso de calendar e apos solicitando Date
-        Calendar nascimento = Calendar.getInstance();
-        nascimento.set(1991, 3, 22);
-        informacao.setDataNascimento(nascimento.getTime());
+        
+        informacao.setDataNascimento(Utilitarios.strDate("1991-3-22"));
         //
         //setando informacoes do rg
         informacao.setNumeroRg("27978279-2");
@@ -95,6 +91,110 @@ public class TableFuncionarioTest {
         } 
         catch (ClassNotFoundException ex) {
             fail("biblioteca sqlite nao encontrada.");
+        }
+    }
+
+    /**
+     * Test of recuperarFuncionarios method, of class TableFuncionario.
+     */
+    @Test
+    public void testRecuperarFuncionarios() throws Exception {
+        System.out.println("recuperarFuncionarios");
+        TableFuncionario instance = new TableFuncionario();
+        ArrayList<Funcionario> result = null;
+        result = instance.recuperarFuncionarios();
+        if (result == null){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of recuperarLike method, of class TableFuncionario.
+     */
+    @Test
+    public void testRecuperarLike() throws Exception {
+        System.out.println("recuperarLike");
+        String like = "r";
+        TableFuncionario instance = new TableFuncionario();
+        ArrayList<Funcionario> result = null;
+        result = instance.recuperarLike(like);
+        if (result == null){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of removerFuncionario method, of class TableFuncionario.
+     */
+    @Test
+    public void testRemoverFuncionario() {
+        System.out.println("removerFuncionario");
+        Funcionario funcionario = new Funcionario();
+        funcionario.setCampoIdentificacao(1);
+        TableFuncionario instance = new TableFuncionario();
+        try{
+            instance.removerFuncionario(funcionario);
+        }
+        catch(Exception err){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of AtivarFuncionario method, of class TableFuncionario.
+     */
+    @Test
+    public void testAtivarFuncionario(){
+        System.out.println("AtivarFuncionario");
+        Funcionario funcionario = new Funcionario();
+        funcionario.setCampoIdentificacao(1);
+        TableFuncionario instance = new TableFuncionario();
+        try{
+            instance.AtivarFuncionario(funcionario);
+        }
+        catch(Exception er){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of updateDados method, of class TableFuncionario.
+     */
+    @Test
+    public void testUpdateDados() {
+        System.out.println("updateDados");
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome("Joao Paulo da Silva");
+        funcionario.setNumeroRg("35821731-3");
+        funcionario.setEstadorg("SP");
+        funcionario.setDataNascimento(Utilitarios.strDate("1938-03-18"));
+        funcionario.setSexo("m");
+        funcionario.setCpf("466461086-68");
+        funcionario.setCampoIdentificacao(1);
+        funcionario.setSenha("testeteste");
+        TableFuncionario instance = new TableFuncionario();
+        try{
+            instance.updateDados(funcionario);
+        }
+        catch(Exception err){
+            fail("The test case is a prototype.");
+        }
+        
+    }
+
+    /**
+     * Test of checkLogin method, of class TableFuncionario.
+     */
+    @Test
+    public void testCheckLogin() throws Exception {
+        System.out.println("checkLogin");
+        String login = "855937020-88";
+        String senha = "sys123";
+        TableFuncionario instance = new TableFuncionario();
+        Funcionario result = null;
+        result = instance.checkLogin(login, senha);
+        if(result == null){
+            fail("The test case is a prototype.");
         }
     }
 

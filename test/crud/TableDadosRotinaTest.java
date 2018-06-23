@@ -8,8 +8,6 @@ package crud;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.DadosRotina;
 import model.Veiculo;
 import org.junit.After;
@@ -64,6 +62,8 @@ public class TableDadosRotinaTest {
 
     /**
      * Test of cadastar method, of class TableDadosRotina.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar()  {
@@ -92,6 +92,7 @@ public class TableDadosRotinaTest {
         informacao.setDataColeta(data);
         //
         try {
+            tbVeiculo.cadastar(car); //pois o veiculo deve ser cadastrado para que possa ser feita o link entre os dados
             instance.cadastar(informacao);
         } 
         catch (SQLException ex) {
@@ -100,6 +101,60 @@ public class TableDadosRotinaTest {
         } 
         catch (ClassNotFoundException ex) {
             fail("biblioteca sqlite nao encontrada.");
+        }
+    }
+
+    /**
+     * Test of recuperarDadosRotina method, of class TableDadosRotina.
+     */
+    @Test
+    public void testRecuperarDadosRotina() throws Exception {
+        System.out.println("recuperarDadosRotina");
+        TableDadosRotina instance = new TableDadosRotina();
+        ArrayList<DadosRotina> result = null;
+        result = instance.recuperarDadosRotina();
+        if (result == null){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of recuperarByPlaca method, of class TableDadosRotina.
+     */
+    @Test
+    public void testRecuperarByPlaca() throws Exception {
+        System.out.println("recuperarByPlaca");
+        String placa = "PPX-0000";
+        TableDadosRotina instance = new TableDadosRotina();
+        DadosRotina result = instance.recuperarByPlaca(placa);
+        if (result.getCampoIdentificacao() !=  4){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of updateDados method, of class TableDadosRotina.
+     */
+    @Test
+    public void testUpdateDados(){
+        System.out.println("updateDados");
+        DadosRotina dados = new DadosRotina();
+        dados.setDataColeta(Utilitarios.strDate("1999-9-9"));
+        dados.setLatitude(1);
+        dados.setLongitude(1);
+        dados.setVelocidade(1000);
+        Veiculo vi = new Veiculo();
+        vi.setCampoIdentificacao(1); //so eh necessario o id do veiculo para que possa ser feito o updade.
+        dados.setVeiculo(vi);
+        TableDadosRotina instance = new TableDadosRotina();
+        try{
+            instance.updateDados(dados);
+        }
+        catch(SQLException sErr){
+            fail("falha nos dados passados");
+        }
+        catch(ClassNotFoundException cErr){
+            fail ("biblioteca sqlite nao encontrada");
         }
     }
 }

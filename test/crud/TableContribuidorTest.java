@@ -7,12 +7,7 @@ package crud;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Contribuidor;
-import model.Funcionario;
-import model.Pessoa;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -68,6 +63,8 @@ public class TableContribuidorTest {
 
     /**
      * Test of cadastar method, of class TableContribuidor.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar(){
@@ -85,9 +82,7 @@ public class TableContribuidorTest {
        informacao.setEstadorg("RJ");
         //
         //setando data de nascimento fazendo uso de calendar e apos solicitando Date
-        Calendar nascimento = Calendar.getInstance();
-        nascimento.set(1968, 10, 19); //ANO, MES, DIA
-        informacao.setDataNascimento(nascimento.getTime());
+        informacao.setDataNascimento(Utilitarios.strDate("1968-10-19"));
         //
         
         try {
@@ -98,6 +93,62 @@ public class TableContribuidorTest {
         } 
         catch (ClassNotFoundException ex) {
             fail("biblioteca sqlite nao encontrada.");
+        }
+    }
+
+    /**
+     * Test of idByNameAndOrgao method, of class TableContribuidor.
+     */
+    @Test
+    public void testIdByNameAndOrgao() throws Exception {
+        System.out.println("idByNameAndOrgao");
+        String name = "Mateus Fernandes Melo";
+        String orgao = "POLICIA FEDERAL";
+        TableContribuidor instance = new TableContribuidor();
+        int result = instance.idByNameAndOrgao(name, orgao);
+        if (result != 1 ){ //id esperado da funcao
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of lastId method, of class TableContribuidor.
+     */
+    @Test
+    public void testLastId() {
+        System.out.println("lastId");
+        TableContribuidor instance = new TableContribuidor();
+        int result = instance.lastId();
+        if (result == 0){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of recuperarContribuidores method, of class TableContribuidor.
+     */
+    @Test
+    public void testRecuperarContribuidores() throws Exception {
+        System.out.println("recuperarContribuidores");
+        TableContribuidor instance = new TableContribuidor();
+        ArrayList<Contribuidor> result = null;
+        result = instance.recuperarContribuidores();
+        if (result == null){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of restaurarById method, of class TableContribuidor.
+     */
+    @Test
+    public void testRestaurarById() throws Exception {
+        System.out.println("restaurarById");
+        int idContribuidor = 1;
+        TableContribuidor instance = new TableContribuidor();
+        Contribuidor result = instance.restaurarById(idContribuidor);
+        if ( !result.getNome().equals("Mateus Fernandes Melo") ){
+            fail("The test case is a prototype.");
         }
     }
     

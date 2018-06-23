@@ -34,7 +34,7 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
             conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
             statement = conexao.createStatement();
             ResultSet resultado = statement.executeQuery(sql);
-            id = Integer.parseInt(resultado.getString("id") );
+            id = Integer.parseInt( resultado.getString("id") );
             statement.close();
             conexao.close();
         }

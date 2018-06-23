@@ -41,7 +41,9 @@ public class Cnh {
 
     /*CATEGORIAS DETRAN: http://www.detran.pr.gov.br/modules/catasg/servicos-detalhes.php?tema=motorista&id=130 */
     public void setCategoria(String categoria) {
-        if(categoria.length() == 1 &&
+        this.categoria = categoria;
+        /*a categoria de uma CNH pode ser composta por varias subcategorias
+            if(categoria.length() == 1 &&
                 (categoria.equalsIgnoreCase("a") ||
                  categoria.equalsIgnoreCase("b") ||
                  categoria.equalsIgnoreCase("c") ||
@@ -60,6 +62,6 @@ public class Cnh {
             Scanner scan = new Scanner(System.in);
             String tentativaCat = scan.nextLine();
             setCategoria(tentativaCat);
-        }
+        }*/
     }
 }

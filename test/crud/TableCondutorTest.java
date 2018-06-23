@@ -7,9 +7,6 @@ package crud;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Cnh;
 import model.Condutor;
 import org.junit.After;
@@ -66,6 +63,8 @@ public class TableCondutorTest {
 
     /**
      * Test of cadastar method, of class TableCondutor.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar()  {
@@ -88,10 +87,8 @@ public class TableCondutorTest {
        informacao.setNumeroRg("30246102-4");
        informacao.setEstadorg("ES");
         //
-        //setando data de nascimento fazendo uso de calendar e apos solicitando Date
-        Calendar nascimento = Calendar.getInstance();
-        nascimento.set(1985, 11, 21); //ANO, MES, DIA
-        informacao.setDataNascimento(nascimento.getTime());
+        //setando data de nascimento fazendo uso de calendar e apos solicitando Date       
+        informacao.setDataNascimento(Utilitarios.strDate("1985-11-21"));
         //
         try {
             instance.cadastar(informacao);
@@ -104,6 +101,49 @@ public class TableCondutorTest {
         }
         // TODO review the generated test code and remove the default call to fail.
         
+    }
+
+    /**
+     * Test of idByNumCnh method, of class TableCondutor.
+     */
+    @Test
+    public void testIdByNumCnh() throws Exception {
+        System.out.println("idByNumCnh");
+        String numCnh = "35113468463";
+        TableCondutor instance = new TableCondutor();
+        int result = instance.idByNumCnh(numCnh);
+        if(result != 1){ //id referente a cnh passada
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of recuperarCondutoes method, of class TableCondutor.
+     */
+    @Test
+    public void testRecuperarCondutoes() throws Exception {
+        System.out.println("recuperarCondutoes");
+        TableCondutor instance = new TableCondutor();
+        ArrayList<Condutor> result = null;
+        result = instance.recuperarCondutoes();
+        if (result == null){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of restaurarById method, of class TableCondutor.
+     */
+    @Test
+    public void testRestaurarById() throws Exception {
+        System.out.println("restaurarById");
+        int idCondutor = 1;
+        TableCondutor instance = new TableCondutor();
+        String expResult = "Haydee Harlin"; //nome referente ao id passado para teste
+        Condutor result = instance.restaurarById(idCondutor);
+        if (!result.getNome().equals(expResult)){
+            fail("The test case is a prototype.");
+        }
     }
 
 

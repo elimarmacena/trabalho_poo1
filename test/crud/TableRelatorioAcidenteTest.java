@@ -8,8 +8,6 @@ package crud;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Contribuidor;
 import model.RelatorioAcidente;
 import org.junit.After;
@@ -63,6 +61,8 @@ public class TableRelatorioAcidenteTest {
 
     /**
      * Test of cadastar method, of class TableRelatorioAcidente.
+     * TODA VEZ QUE TESTAR ESSE METODO INFORMAR DADOS QUE AINDA NAO FAZEM PARTE DO BANCO DE DADOS POIS ELE FOI MOLDADO DESSA FORMA,
+     * CASO NAO SEJA SEGUIDO ESSE PADRAO O TESTE IRÁ DISPARAR ERRO
      */
     @Test
     public void testCadastar() {
@@ -119,6 +119,36 @@ public class TableRelatorioAcidenteTest {
         }
         // TODO review the generated test code and remove the default call to fail.
         
+    }
+
+    /**
+     * Test of recuperarRelatorios method, of class TableRelatorioAcidente.
+     */
+    @Test
+    public void testRecuperarRelatorios() throws Exception {
+        System.out.println("recuperarRelatorios");
+        TableRelatorioAcidente instance = new TableRelatorioAcidente();
+        ArrayList<RelatorioAcidente> result = null;
+        result = instance.recuperarRelatorios();
+        if(result == null){
+            fail("The test case is a prototype.");
+        }
+    }
+
+    /**
+     * Test of deletarRelatorio method, of class TableRelatorioAcidente.
+     */
+    @Test
+    public void testDeletarRelatorio()  {
+        System.out.println("deletarRelatorio");
+        int idRelatorio = 1;
+        TableRelatorioAcidente instance = new TableRelatorioAcidente();
+        try{
+            instance.deletarRelatorio(idRelatorio);
+        }
+        catch(Exception err){
+            fail("The test case is a prototype.");
+        }
     }
 
    

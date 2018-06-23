@@ -191,7 +191,8 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
      */
     public Funcionario checkLogin(String login, String senha)throws ClassNotFoundException,SQLException, IllegalArgumentException,UnsupportedOperationException{
         Funcionario funcionario = new Funcionario();
-        String sql = "SELECT ca.nome as 'nome', ca.numero_cpf as 'numero_cpf',ca.numero_rg AS 'numero_rg',ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', fu.senha as 'senha', fu.ativo as 'ativo' "
+        String sql = "SELECT ca.nome as 'nome', ca.numero_cpf as 'numero_cpf',ca.numero_rg AS 'numero_rg',ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc',"
+                + "fu.id AS 'id', fu.senha AS 'senha', fu.ativo AS 'ativo' "
                 + "FROM Funcionario fu "
                 + "INNER JOIN Cadastro ca ON ca.numero_cpf = '"+login+"' AND ca.id = fu.FK_Cadastro_id";
         Connection conexao = null;

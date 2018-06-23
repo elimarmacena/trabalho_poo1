@@ -47,7 +47,7 @@ public  class Utilitarios {
      * @return data objeto Date
      */
     public static Date strDate(String strData) {
-        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
         Date data = null;
         try {
             data = (Date) formato.parse(strData);
@@ -90,7 +90,7 @@ public  class Utilitarios {
      * @return stringDataHora string com a data no formato yyyy-MM-dd HH:mm:ss
      */
     public static String dataHoraToString(Date data) {
-        DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        DateFormat formatoData = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String stringDataHora = formatoData.format(data);
         return stringDataHora;
     }
