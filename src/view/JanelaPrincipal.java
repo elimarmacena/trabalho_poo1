@@ -5,14 +5,19 @@
  */
 package view;
 
+import crud.TableFuncionario;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import model.Funcionario;
 
 /**
  *
@@ -64,6 +69,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jButtonCadVoltar = new javax.swing.JButton();
         jCampoProcurarCad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jButtonAtualizarTabela = new javax.swing.JButton();
         painelRelatorios = new javax.swing.JPanel();
         jPanelRelCentro = new javax.swing.JPanel();
         jPanelRelCentroBranco = new javax.swing.JPanel();
@@ -298,10 +304,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome", "CPF", "RG"
             }
         ));
         jScrollPane1.setViewportView(jTableCadastros);
+        if (jTableCadastros.getColumnModel().getColumnCount() > 0) {
+            jTableCadastros.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         jButtonCadNovo.setText("Novo");
         jButtonCadNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -328,17 +337,26 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setText("Procurar:");
 
+        jButtonAtualizarTabela.setText("Atualizar");
+        jButtonAtualizarTabela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarTabelaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelCadastrosLayout = new javax.swing.GroupLayout(painelCadastros);
         painelCadastros.setLayout(painelCadastrosLayout);
         painelCadastrosLayout.setHorizontalGroup(
             painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCadastrosLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonCadEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonCadNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonCadVoltar))
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButtonCadEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAtualizarTabela, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonCadVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonCadNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastrosLayout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -359,6 +377,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastrosLayout.createSequentialGroup()
                         .addComponent(jButtonCadEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonAtualizarTabela)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonCadVoltar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -778,6 +798,17 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		//TODO terminar
     }//GEN-LAST:event_jCampoProcurarCadActionPerformed
 
+    private void jButtonAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarTabelaActionPerformed
+            try {
+                // TODO add your handling code here:
+                atualizarTabelaFuncionario();
+            } catch (SQLException ex) {
+                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButtonAtualizarTabelaActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -814,6 +845,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAtualizarTabela;
     private javax.swing.JButton jButtonCadEditar;
     private javax.swing.JButton jButtonCadNovo;
     private javax.swing.JButton jButtonCadVoltar;
@@ -933,4 +965,22 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 
+    private void atualizarTabelaFuncionario() throws SQLException, ClassNotFoundException {
+        
+        DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        TableFuncionario tabFuncionario1 = new TableFuncionario();
+        List<Funcionario> funcionarios = tabFuncionario1.recuperarFuncionarios();
+        for(Funcionario funcionario : funcionarios) {
+            model.addRow(new Object[] {
+                funcionario.getNome(),
+                funcionario.getCpf(),
+                funcionario.getNumeroRg()
+            });
+        }
+    }
+        
+        
+        
 }

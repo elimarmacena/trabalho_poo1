@@ -5,8 +5,20 @@
  */
 package view;
 
+import static crud.Utilitarios.strDate;
 import java.awt.event.WindowEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
+import model.Funcionario;
+import crud.TableFuncionario;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.accessibility.AccessibleContext;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -44,7 +56,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
         jCampoCpf = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jComboBoxSexo = new javax.swing.JComboBox<>();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jCampoDataNascimento = new javax.swing.JFormattedTextField();
         jButtonFuncCancelar = new javax.swing.JButton();
         jButtonFuncFinalizar = new javax.swing.JButton();
 
@@ -92,12 +104,22 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
         jLabel25.setText("Sexo:");
 
         jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< selecionar >", "Masculino", "Feminino" }));
+        jComboBoxSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxSexoActionPerformed(evt);
+            }
+        });
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            jCampoDataNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jCampoDataNascimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCampoDataNascimentoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -112,7 +134,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                             .addComponent(jLabel25))
                         .addGap(32, 32, 32)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCampoDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
@@ -125,7 +147,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                             .addComponent(jCampoNome)
                             .addComponent(jCampoRg)
                             .addComponent(jCampoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,12 +167,12 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCampoDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
                     .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         jButtonFuncCancelar.setText("Cancelar");
@@ -199,7 +221,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonFuncFinalizar)
                     .addComponent(jButtonFuncCancelar))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -207,14 +229,31 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 
     private void jButtonFuncCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFuncCancelarActionPerformed
         this.limparCampos();
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_jButtonFuncCancelarActionPerformed
 
     private void jButtonFuncFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFuncFinalizarActionPerformed
-        this.salvarDados();
-		this.limparCampos();
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            try {
+                this.salvarDados(); //JOptionpane
+            } catch (SQLException ex) {
+                Logger.getLogger(JanelaCadFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JanelaCadFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
+        
+	this.limparCampos();
+	this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }//GEN-LAST:event_jButtonFuncFinalizarActionPerformed
+
+    private void jComboBoxSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSexoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxSexoActionPerformed
+
+    private void jCampoDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCampoDataNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCampoDataNascimentoActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -255,11 +294,11 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
     private javax.swing.JButton jButtonFuncCancelar;
     private javax.swing.JButton jButtonFuncFinalizar;
     private javax.swing.JTextField jCampoCpf;
+    private javax.swing.JFormattedTextField jCampoDataNascimento;
     private javax.swing.JTextField jCampoNome;
     private javax.swing.JTextField jCampoRg;
     private javax.swing.JTextField jCampoSenha;
     private javax.swing.JComboBox<String> jComboBoxSexo;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -276,14 +315,41 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 		this.jCampoNome.setText("");
 		this.jCampoRg.setText("");
 		this.jCampoCpf.setText("");
-		this.jFormattedTextField1.setValue(null);
+		this.jCampoDataNascimento.setValue(null);
 		this.jComboBoxSexo.setSelectedIndex(0);
 	}
 
-	private void salvarDados() {
+	private void salvarDados() throws SQLException, ClassNotFoundException {
 		if(true){ //TODO Checar se campos essenciais foram preenchidos
 			//TODO adicionar função que pega dados do banco
-			JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
+                        Funcionario cadFuncionario1 = new Funcionario();
+                        cadFuncionario1.setNome(jCampoNome.getText());
+                        cadFuncionario1.setNumeroRg(jCampoRg.getText());
+                        cadFuncionario1.setCpf(jCampoCpf.getText());
+                        
+                        String text = jCampoDataNascimento.getText();
+                        cadFuncionario1.setDataNascimento(strDate(text));
+                        String itemAt = jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex());
+                        
+                        //cadFuncionario1.setEstadorg(jCampoEstadorg.getText());
+                        cadFuncionario1.setSexo(traduzSexo(itemAt));
+                        
+                        //considerando tabela ja criada já é feita insercao
+                        TableFuncionario tabelaFuncionario = new TableFuncionario();
+                        tabelaFuncionario.cadastar(cadFuncionario1);
+			
+                        JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
 		}
 	}
+
+    private String traduzSexo(String itemAt) {
+        if(itemAt == "Masculino") {
+            itemAt = "M";
+        }
+        else {
+            itemAt = "F";
+        }
+        
+        return itemAt;
+    }
 }

@@ -2,6 +2,7 @@ package model;
 
 import java.util.Date;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public abstract class Pessoa {
     private String nome;
@@ -39,9 +40,11 @@ public abstract class Pessoa {
             this.sexo = sexo;
         }
         else {
-            System.out.println("Entrada invalida\nInforme (M)asculino ou (F)eminino: ");
+            
+            String tentativaSexo = JOptionPane.showInputDialog("Entrada invalida\\nInforme (M)asculino ou (F)eminino: " );
+            /*System.out.println("Entrada invalida\nInforme (M)asculino ou (F)eminino: ");
             Scanner scan = new Scanner(System.in);
-            String tentativaSexo = scan.nextLine();
+            String tentativaSexo = scan.nextLine();*/
             setSexo(tentativaSexo);
         }
     }
@@ -68,9 +71,12 @@ public abstract class Pessoa {
 
     public void setCpf(String cpf) { //EXEMPLO CPF: 123456789-10 (length 12)
         if(cpf.length() != 12) {
-            System.out.println("Entrada invalida\nO campo CPF deve conter 12 caracteres\nInsira novamente o CPF: ");
+            
+            String tentativaCPF = JOptionPane.showInputDialog("Entrada invalida\nO campo CPF deve conter 12 caracteres\nInsira novamente o CPF: " );
+            
+            /*System.out.println("Entrada invalida\nO campo CPF deve conter 12 caracteres\nInsira novamente o CPF: ");
             Scanner scan = new Scanner(System.in);
-            String tentativaCPF = scan.nextLine();
+            String tentativaCPF = scan.nextLine();*/
             setCpf(tentativaCPF);
         }
         else {
