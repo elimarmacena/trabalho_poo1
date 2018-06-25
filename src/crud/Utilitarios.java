@@ -47,7 +47,18 @@ public  class Utilitarios {
      * @return data objeto Date
      */
     public static Date strDate(String strData) {
-        DateFormat formato = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+        Date data = null;
+        try {
+            data = (Date) formato.parse(strData);
+        } catch (ParseException ex) {
+            Logger.getLogger(TableCondutor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+    
+    public static Date strBrDate(String strData) {
+        DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = null;
         try {
             data = (Date) formato.parse(strData);
@@ -79,7 +90,7 @@ public  class Utilitarios {
      * @return stringData string com data no formato yyyy-mm-dd
      */
     public static String dataToString(Date data) {
-        DateFormat formatoData = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat formatoData = new SimpleDateFormat("yyyy-MM-dd");
         String stringData = formatoData.format(data);
         return stringData;
     }
@@ -91,6 +102,12 @@ public  class Utilitarios {
      */
     public static String dataHoraToString(Date data) {
         DateFormat formatoData = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String stringDataHora = formatoData.format(data);
+        return stringDataHora;
+    }
+    
+    public static String dataToStringBR(Date data) {
+        DateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         String stringDataHora = formatoData.format(data);
         return stringDataHora;
     }

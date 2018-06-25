@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import model.Funcionario;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,28 +21,11 @@ import org.sqlite.SQLiteConfig.Pragma;
 public class teste {
     public static void main (String[] args) {
         
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            ArrayList<DadosRotina> orcorrencias = new ArrayList();
-            TableDadosRotina tbOA = new TableDadosRotina();
-            try {
-            orcorrencias =tbOA.recuperarDadosRotina();
-            } catch (Exception ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            for (DadosRotina teste : orcorrencias){
-            System.out.println( teste.getVeiculo().getCampoIdentificacao());
-            }
-            /*DadosRotina dr = new DadosRotina();
-            TableDadosRotina tbDr = new TableDadosRotina();
-            try {
-            dr= tbDr.recuperarByPlaca("MRA-7540");
-            System.out.println(dr.getVelocidade());
-            } catch (ClassNotFoundException ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-            Logger.getLogger(teste.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            */
+            String data = "1952-05-12";
+            System.out.println(data);
+            Date dataOb = Utilitarios.strDate(data);
+            System.out.println(Utilitarios.dataToStringBR(dataOb));
+            
         
             
         
