@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 
 public class Funcionario extends Pessoa {
@@ -29,9 +30,11 @@ public class Funcionario extends Pessoa {
 
     public void setSenha(String senha) {
         if(senha.length() < 6 || senha.contains(" ")) {
-            System.out.println("A senha deve conter no mínimo 6 caracteres\nInsira senha válida: ");
+            
+            String tentativaSenha = JOptionPane.showInputDialog("A senha deve conter no mínimo 6 caracteres\\nInsira senha válida: " );
+            /*System.out.println("A senha deve conter no mínimo 6 caracteres\nInsira senha válida: ");
             Scanner scan = new Scanner(System.in);
-            String tentativaSenha = scan.nextLine();
+            String tentativaSenha = scan.nextLine();*/
             setSenha(tentativaSenha);  
         }
         else {

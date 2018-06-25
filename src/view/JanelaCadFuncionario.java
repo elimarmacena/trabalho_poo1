@@ -326,7 +326,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                         cadFuncionario1.setNome(jCampoNome.getText());
                         cadFuncionario1.setNumeroRg(jCampoRg.getText());
                         cadFuncionario1.setCpf(jCampoCpf.getText());
-                        
+                        cadFuncionario1.setSenha(jCampoSenha.getText());
                         String text = jCampoDataNascimento.getText();
                         cadFuncionario1.setDataNascimento(strDate(text));
                         String itemAt = jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex());
@@ -344,10 +344,10 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 
     private String traduzSexo(String itemAt) {
         if(itemAt == "Masculino") {
-            itemAt = "M";
+            itemAt = "m";
         }
         else {
-            itemAt = "F";
+            itemAt = "f";
         }
         
         return itemAt;
