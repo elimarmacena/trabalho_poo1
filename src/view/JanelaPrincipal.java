@@ -442,11 +442,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
-        ){
-			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return false;
-			}
-			});
+        ));
         jScrollPane2.setViewportView(jTableAcidentes);
 
         javax.swing.GroupLayout jPanelRelTabelaLayout = new javax.swing.GroupLayout(jPanelRelTabela);
