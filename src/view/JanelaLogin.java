@@ -5,6 +5,13 @@
  */
 package view;
 
+import crud.TableFuncionario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Funcionario;
+
 /**
  *
  * @author 20161bsi0390
@@ -59,19 +66,21 @@ public class JanelaLogin extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(259, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonEntrarLogin)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelLogin, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jCampoSenhaLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-                            .addComponent(jCampoLoginLogin))))
-                .addGap(274, 274, 274))
+                            .addComponent(jCampoLoginLogin))
+                        .addGap(274, 274, 274))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonEntrarLogin)
+                        .addGap(298, 298, 298))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,9 +93,9 @@ public class JanelaLogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCampoSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonEntrarLogin)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -108,7 +117,22 @@ public class JanelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jCampoSenhaLoginActionPerformed
 
     private void jButtonEntrarLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEntrarLoginActionPerformed
-        // TODO add your handling code here:
+        String login  = jCampoLoginLogin.getText();
+        String senha = jCampoSenhaLogin.getText();
+        TableFuncionario tbFuncionario = new TableFuncionario();
+        Funcionario usuario = null;
+        try {
+            usuario = tbFuncionario.checkLogin(login, senha);
+            JOptionPane.showMessageDialog(null, "BEM VINDO "+usuario.getNome()+"!");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JanelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "DADOS INVALIDOS.");
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, "SENHA OU LOGIN INCORRETO.");
+        } catch (UnsupportedOperationException ex) {
+            JOptionPane.showMessageDialog(null, "USUARIO NAO ESTA MAIS ATIVO.");
+        }
     }//GEN-LAST:event_jButtonEntrarLoginActionPerformed
 
     /**

@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS Relatorio_acidente (
 	longitude REAL,
     data DATE,
     FK_Contribuidor_id INTEGER,
+	cadastrado INTEGER,
 	FOREIGN KEY (FK_Contribuidor_id)
     REFERENCES Contribuidor (id)
 );
