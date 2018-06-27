@@ -20,15 +20,11 @@ import org.sqlite.SQLiteConfig.Pragma;
 
 public class teste {
     public static void main (String[] args) {
-        
-            String data = "1952-05-12";
-            System.out.println(data);
-            Date dataOb = Utilitarios.strDate(data);
-            System.out.println(Utilitarios.dataToStringBR(dataOb));
-            
-        
-            
-        
-        
+		
+		String data = "1952-05-12";
+		System.out.println(data);
+		Date dataOb = Utilitarios.strDate(data);
+		System.out.println(Utilitarios.dataToStringBR(dataOb));
+		
     }
 }

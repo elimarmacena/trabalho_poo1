@@ -70,17 +70,9 @@ public abstract class Pessoa {
     }
 
     public void setCpf(String cpf) { //EXEMPLO CPF: 123456789-10 (length 12)
-        if(cpf.length() != 12) {
-            
-            String tentativaCPF = JOptionPane.showInputDialog("Entrada invalida\nO campo CPF deve conter 12 caracteres\nInsira novamente o CPF: " );
-            
-            /*System.out.println("Entrada invalida\nO campo CPF deve conter 12 caracteres\nInsira novamente o CPF: ");
-            Scanner scan = new Scanner(System.in);
-            String tentativaCPF = scan.nextLine();*/
-            setCpf(tentativaCPF);
+        while(cpf.length() != 12) {
+            cpf = JOptionPane.showInputDialog("Entrada invalida\nO campo CPF deve conter 12 caracteres\nInsira novamente o CPF: " );
         }
-        else {
-            this.numCpf = cpf;
-        }
+		this.numCpf = cpf;
     }  
 }

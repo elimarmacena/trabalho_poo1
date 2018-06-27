@@ -46,7 +46,7 @@ public  class Utilitarios {
      * @param strData string com a data no formato yyyy-mm-dd
      * @return data objeto Date
      */
-    public static Date strDate(String strData) {
+	public static Date strDate(String strData) {
         DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
         Date data = null;
         try {
@@ -56,7 +56,23 @@ public  class Utilitarios {
         }
         return data;
     }
+	
+	/**
+	 * Formata a string para poder ser convertida antes de retornar o bojeto Date
+	 * @param strData
+	 * @return 
+	 */
+	public static Date strDateFromField(String strData) {
+        String[] strDataSeparada = strData.split("/");
+		strData = strDataSeparada[2] + "-" + strDataSeparada[1] + "-" + strDataSeparada[0];
+		return Utilitarios.strDate(strData);
+    }
     
+	/**
+	 * 
+	 * @param strData
+	 * @return 
+	 */
     public static Date strBrDate(String strData) {
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date data = null;
