@@ -410,7 +410,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 			func.setCpf(jCampoCpf.getText());  //cpf ja esta sendo coletado com - divisor dos 2 ultimos digitos
                         //func.setSenha(jCampoSenha.getPassword().toString()); OLD
 			func.setSenha( String.valueOf(jCampoSenha.getPassword()) ); //transforma o array q eh retornado em getpassword para string   
-			func.setDataNascimento(Utilitarios.strBrDate(jCampoDataNascimento.getText()));
+			func.setDataNascimento(Utilitarios.strBrDate( jCampoDataNascimento.getText() ));
 			func.setSexo(Utilitarios.converteSexo(jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex())));
                         func.setEstadorg(jCampoRg.getText());
                         String escolhaComboBox= String.valueOf(jComboBoxSexo.getSelectedItem().toString().charAt(0));
@@ -422,6 +422,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 			func.setSexo(text);
                         */
 			//considerando tabela ja criada já é feita insercao
+                        
 			TableFuncionario bancoFuncionario = new TableFuncionario();
 			try {
 				bancoFuncionario.cadastar(func);
@@ -433,6 +434,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 				this.limparCampos();
 				this.fecharJanela();
 			}
+                        
 		}else{
 			JOptionPane.showMessageDialog(null, "Erro: Preencha todos os dados!");
 		}

@@ -75,11 +75,14 @@ public  class Utilitarios {
 	 */
     public static Date strBrDate(String strData) {
         DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        if (strData == null){
+            return null;
+        }
         Date data = null;
         try {
             data = (Date) formato.parse(strData);
         } catch (ParseException ex) {
-            Logger.getLogger(TableCondutor.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
         return data;
     }
@@ -91,6 +94,9 @@ public  class Utilitarios {
      */
     public static Date strDateTime(String strData) {
         DateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (strData == null){
+            return null;
+        }
         Date data = null;
         try {
             data = (Date) formato.parse(strData);
