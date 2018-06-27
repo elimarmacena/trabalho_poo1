@@ -39,19 +39,19 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
     
     /**
      *O metodo recebe um objeto funcionario e efetua o cadastro do mesmo nao banco de dados
-     * @param informacao objeto funcionario
+     * @param dadosDaPessoa objeto funcionario
      * @throws SQLException
      * @throws ClassNotFoundException
      */
     @Override
-    public void cadastar(Funcionario informacao) throws SQLException, ClassNotFoundException {
-        TableCadastro tbCadastro = new TableCadastro();
-        tbCadastro.cadastar((Pessoa)informacao);
-        int idCadastro = tbCadastro.lastId();
+    public void cadastar(Funcionario dadosDaPessoa) throws SQLException, ClassNotFoundException {
+        TableCadastro bancoCadastro = new TableCadastro();
+        bancoCadastro.cadastar((Pessoa)dadosDaPessoa);
+        int idCadastro = bancoCadastro.lastId();
         String sql = "INSERT INTO Funcionario(FK_Cadastro_id, senha, ativo) VALUES("+
-                idCadastro+","+
-                "'"+informacao.getSenha()+"',"+
-                "1)";//UM POIS TODO FUNCIONARIO CADASTRADO ESTA ATIVO NO SISTEMA
+                idCadastro+","
+                +"'"+dadosDaPessoa.getSenha()+"',"
+                +"1)";//UM POIS TODO FUNCIONARIO CADASTRADO ESTA ATIVO NO SISTEMA
         Utilitarios.executeSQL(sql);   
     }
     
@@ -63,7 +63,7 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
      */
     public ArrayList<Funcionario> recuperarFuncionarios() throws SQLException, ClassNotFoundException{
         ArrayList<Funcionario> funcionarios = new ArrayList();
-        String sql= "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
                 + "fn.id as 'id' ,fn.senha AS 'senha', fn.ativo AS 'ativo' "
                 + "FROM Funcionario fn "
                 + "INNER JOIN Cadastro ca ON fn.FK_Cadastro_id = ca.id";
@@ -132,6 +132,37 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         statement.close();
         conexao.close();
         return funcionarios;
+    }
+	
+	public Funcionario recuperarPorRg(String rg) throws SQLException, ClassNotFoundException{
+        Funcionario funcionario = new Funcionario();
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "fn.id AS 'id', fn.senha AS 'senha', fn.ativo AS 'ativo' "
+                + "FROM Cadastro ca " +
+                "INNER JOIN Funcionario fn ON fn.FK_Cadastro_id = ca.id " +
+                "WHERE ca.numero_rg = '"+rg+"'";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        if (resultado.next()){ //TODO checar se precisa
+            funcionario.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            funcionario.setNome(resultado.getString("nome"));
+            funcionario.setCpf(resultado.getString("cpf"));
+            funcionario.setNumeroRg(resultado.getString("rg"));
+            funcionario.setEstadorg(resultado.getString("estado_rg"));
+            funcionario.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
+            funcionario.setDataNascimento(dataNasc);
+            funcionario.setSenha(resultado.getString("senha"));
+            boolean ativo = resultado.getString("ativo").equals("1");
+            funcionario.setAtivo(ativo);;
+        }
+        statement.close();
+        conexao.close();
+        return funcionario;
     }
     
     /**

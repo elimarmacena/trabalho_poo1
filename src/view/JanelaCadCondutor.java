@@ -7,6 +7,7 @@ package view;
 
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
+import model.Condutor;
 
 /**
  *
@@ -14,6 +15,8 @@ import javax.swing.JOptionPane;
  */
 public class JanelaCadCondutor extends javax.swing.JFrame {
 
+	private boolean modoEditar = false;
+	
 	/**
 	 * Creates new form JanelaCadCondutor
 	 */
@@ -36,11 +39,11 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
         labelCPF = new javax.swing.JLabel();
         jCampoNome = new javax.swing.JTextField();
         jCampoRg = new javax.swing.JTextField();
-        jCampoCpf = new javax.swing.JTextField();
         labelDataNasc = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jCampoDataNasc = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxSexo = new javax.swing.JComboBox<>();
+        jCampoCpf = new javax.swing.JFormattedTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -67,7 +70,7 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
         labelDataNasc.setText("Data de Nascimento:");
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            jCampoDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -75,6 +78,12 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
         jLabel2.setText("Sexo:");
 
         jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "< selecionar >", "Masculino", "Feminino" }));
+
+        try {
+            jCampoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -86,7 +95,7 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(labelDataNasc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField1))
+                        .addComponent(jCampoDataNasc))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -94,11 +103,10 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
                                 .addComponent(labelNome)
                                 .addComponent(labelRG))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jCampoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jCampoNome)
-                                    .addComponent(jCampoRg, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jCampoNome)
+                                .addComponent(jCampoRg, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addComponent(jCampoCpf)))
                         .addGroup(jPanel4Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -123,7 +131,7 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelDataNasc)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCampoDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -245,13 +253,15 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
 
     private void jButtonCondCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCondCancelarActionPerformed
         this.limparCampos();
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		this.fecharJanela();
     }//GEN-LAST:event_jButtonCondCancelarActionPerformed
 
     private void jButtonCondFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCondFinalizarActionPerformed
-		this.salvarDados();
-		this.limparCampos();
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		if(this.modoEditar){
+			this.editarDados();
+		}else{
+			this.salvarDados();
+		}
     }//GEN-LAST:event_jButtonCondFinalizarActionPerformed
 
 	/**
@@ -292,7 +302,8 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCondCancelar;
     private javax.swing.JButton jButtonCondFinalizar;
-    private javax.swing.JTextField jCampoCpf;
+    private javax.swing.JFormattedTextField jCampoCpf;
+    private javax.swing.JFormattedTextField jCampoDataNasc;
     private javax.swing.JTextField jCampoNome;
     private javax.swing.JTextField jCampoNumReg;
     private javax.swing.JTextField jCampoRg;
@@ -302,7 +313,6 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxD;
     private javax.swing.JCheckBox jCheckBoxE;
     private javax.swing.JComboBox<String> jComboBoxSexo;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -326,13 +336,70 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
 		this.jCampoNome.setText("");
 		this.jCampoCpf.setText("");
 		this.jCampoRg.setText("");
-		this.jFormattedTextField1.setValue(null);
+		this.jCampoDataNasc.setValue(null);
+	}
+	
+	public void bloquearCamposEssenciais(boolean decisao){
+		this.modoEditar = decisao;
+		decisao = !decisao; //Se bloquear eh true, então enabled tem que ser falso
+		this.jCampoCpf.setEnabled(decisao);
+		this.jCampoNumReg.setEnabled(decisao);
+	}
+	
+	public void setCampos(Condutor cond) {
+		this.jCheckBoxA.setSelected(false); //TODO
+		this.jCheckBoxB.setSelected(false);
+		this.jCheckBoxC.setSelected(false);
+		this.jCheckBoxD.setSelected(false);
+		this.jCheckBoxE.setSelected(false);
+		this.jCampoNumReg.setText(cond.getNumeroRg());
+		this.jCampoNome.setText(cond.getNome());
+		this.jCampoCpf.setText(cond.getCpf());
+		this.jCampoRg.setText(cond.getNumeroRg());
+		this.jCampoDataNasc.setValue(null); //TODO cond.getDataNascimento()
+		if(cond.getSexo().equalsIgnoreCase("m")){
+			this.jComboBoxSexo.setSelectedIndex(1);
+		} else {
+			this.jComboBoxSexo.setSelectedIndex(2);
+		}
+	}
+	
+	private void fecharJanela() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 	
 	private void salvarDados() {
-		if(true){ //TODO Checar se campos essenciais foram preenchidos
-			//TODO adicionar função que pega dados do banco
+		if(estaoTodosPreenchidos()){
+			//TODO stuff
 			JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
+			this.limparCampos();
+			this.fecharJanela();
+		}else{
+			JOptionPane.showMessageDialog(null, "Erro: Preencha todos os dados!");
 		}
+	}
+
+	private void editarDados() {
+		if(estaoTodosPreenchidos()){
+			//TODO stuff
+			JOptionPane.showMessageDialog(null, "Cadastro editado com sucesso");
+			this.limparCampos();
+			this.fecharJanela();
+		}else{
+			JOptionPane.showMessageDialog(null, "Erro: Preencha todos os dados!");
+		}
+	}
+	
+	/**
+	 * Checa se todos os campos obrigatorios estao preenchidos
+	 * @return 
+	 */
+	private boolean estaoTodosPreenchidos() {
+		return !jCampoNome.getText().equals("")
+		&& !jCampoRg.getText().equals("")
+		&& !jCampoCpf.getValue().equals("")
+		&& !jCampoNumReg.getText().equals("")
+		&& !jCampoDataNasc.getValue().equals("")
+		&& jComboBoxSexo.getSelectedIndex() != 0;
 	}
 }

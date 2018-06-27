@@ -5,6 +5,7 @@
  */
 package view;
 
+import crud.TableCondutor;
 import crud.TableFuncionario;
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import model.Condutor;
 import model.Funcionario;
 
 /**
@@ -25,7 +29,8 @@ import model.Funcionario;
  */
 public class JanelaPrincipal extends javax.swing.JFrame {
 	
-	private byte cadastroSelecionado = 1;
+	private int cadastroSelecionado = -1; //WIP TODO
+	private byte cadastroTipo = 1;
 	JanelaCadFuncionario telaCadFunc = null;
 	JanelaCadCondutor telaCadCond = null;
 
@@ -69,7 +74,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jButtonCadVoltar = new javax.swing.JButton();
         jCampoProcurarCad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButtonAtualizarTabela = new javax.swing.JButton();
+        jButtonCadRemover = new javax.swing.JButton();
         painelRelatorios = new javax.swing.JPanel();
         jPanelRelCentro = new javax.swing.JPanel();
         jPanelRelCentroBranco = new javax.swing.JPanel();
@@ -307,6 +312,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 "Nome", "CPF", "RG"
             }
         ));
+        jTableCadastros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCadastrosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableCadastros);
         if (jTableCadastros.getColumnModel().getColumnCount() > 0) {
             jTableCadastros.getColumnModel().getColumn(2).setResizable(false);
@@ -321,6 +331,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jButtonCadEditar.setText("Editar");
         jButtonCadEditar.setEnabled(false);
+        jButtonCadEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadEditarActionPerformed(evt);
+            }
+        });
 
         jButtonCadVoltar.setText("Voltar");
         jButtonCadVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -337,10 +352,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setText("Procurar:");
 
-        jButtonAtualizarTabela.setText("Atualizar");
-        jButtonAtualizarTabela.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCadRemover.setText("Apagar");
+        jButtonCadRemover.setToolTipText("");
+        jButtonCadRemover.setEnabled(false);
+        jButtonCadRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAtualizarTabelaActionPerformed(evt);
+                jButtonCadRemoverActionPerformed(evt);
             }
         });
 
@@ -351,11 +368,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(painelCadastrosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButtonCadNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonCadEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButtonCadEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonAtualizarTabela, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonCadVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButtonCadNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonCadRemover, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                        .addComponent(jButtonCadVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(16, 16, 16)
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastrosLayout.createSequentialGroup()
@@ -378,7 +396,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                     .addGroup(painelCadastrosLayout.createSequentialGroup()
                         .addComponent(jButtonCadEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonAtualizarTabela)
+                        .addComponent(jButtonCadRemover)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonCadVoltar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -718,8 +736,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonMainCondActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainCondActionPerformed
-        this.cadastroSelecionado = 1;
+        this.cadastroTipo = 1;
 		mudarPainel(painelExibicao, painelCadastros);
+		this.recarregarTelaCadastro();
     }//GEN-LAST:event_jButtonMainCondActionPerformed
 
     private void jLabelTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTituloMouseClicked
@@ -727,8 +746,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelTituloMouseClicked
 
     private void jButtonMainFuncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainFuncActionPerformed
-        this.cadastroSelecionado = 2;
+        this.cadastroTipo = 2;
 		mudarPainel(painelExibicao, painelCadastros);
+		this.recarregarTelaCadastro();
     }//GEN-LAST:event_jButtonMainFuncActionPerformed
 
     private void jButtonMainMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainMapaActionPerformed
@@ -748,7 +768,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRelQtdAcidActionPerformed
 
     private void jButtonCadNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadNovoActionPerformed
-		switch (this.cadastroSelecionado) {
+		this.limparSelecao();
+		switch (this.cadastroTipo) {
 			case 1:
 				popupCadCondutor();
 				break;
@@ -798,16 +819,53 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		//TODO terminar
     }//GEN-LAST:event_jCampoProcurarCadActionPerformed
 
-    private void jButtonAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarTabelaActionPerformed
-            try {
-                // TODO add your handling code here:
-                atualizarTabelaFuncionario();
-            } catch (SQLException ex) {
-                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }//GEN-LAST:event_jButtonAtualizarTabelaActionPerformed
+    private void jButtonCadRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadRemoverActionPerformed
+		this.removerCadastro();
+		// TODO add your handling code here
+    }//GEN-LAST:event_jButtonCadRemoverActionPerformed
+
+    private void jTableCadastrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCadastrosMouseClicked
+        cadastroSelecionado  = this.jTableCadastros.rowAtPoint(evt.getPoint());
+        String rg = this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,1).toString();
+        this.jButtonCadEditar.setEnabled(true);
+		this.jButtonCadRemover.setEnabled(true);
+    }//GEN-LAST:event_jTableCadastrosMouseClicked
+
+    private void jButtonCadEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadEditarActionPerformed
+        if(cadastroSelecionado != -1){
+			try {
+				//WIP TODO
+				String identificador;
+				Condutor cond = null;
+				Funcionario func = null;
+				TableFuncionario tabFunc = new TableFuncionario();
+				TableCondutor tabCond = new TableCondutor();;
+				
+				switch (this.cadastroTipo) {
+					case 1:
+						this.popupCadCondutor();
+						identificador = this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString();
+						cond = tabCond.recuperarPorRg(identificador);
+						this.telaCadCond.setCampos(cond);
+						this.telaCadCond.bloquearCamposEssenciais(true);
+						break;
+					case 2:
+						this.popupCadFuncionario();
+						identificador = this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString();
+						func = tabFunc.recuperarPorRg(identificador);
+						this.telaCadFunc.setCampos(func);
+						this.telaCadFunc.bloquearCamposEssenciais(true);
+						break;
+					default:
+						break;
+				}
+			} catch (SQLException | ClassNotFoundException ex) {
+				Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}else{
+			System.out.println("Nenhuma linha selecionada para edição.");
+		}
+    }//GEN-LAST:event_jButtonCadEditarActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -845,9 +903,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAtualizarTabela;
     private javax.swing.JButton jButtonCadEditar;
     private javax.swing.JButton jButtonCadNovo;
+    private javax.swing.JButton jButtonCadRemover;
     private javax.swing.JButton jButtonCadVoltar;
     private javax.swing.JButton jButtonMainCond;
     private javax.swing.JButton jButtonMainFunc;
@@ -912,6 +970,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 			telaCadFunc.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		}
         telaCadFunc.setVisible(true);
+		telaCadFunc.bloquearCamposEssenciais(false);
 	}
 	
 	private void popupCadCondutor() {
@@ -920,6 +979,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 			telaCadCond.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		}
         telaCadCond.setVisible(true);
+		telaCadCond.bloquearCamposEssenciais(false);
 	}
 	
 	public void goToMenu(){
@@ -965,22 +1025,93 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 
-    private void atualizarTabelaFuncionario() throws SQLException, ClassNotFoundException {
-        
+    private void atualizarTabelaFuncionario() {
         DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-        TableFuncionario tabFuncionario1 = new TableFuncionario();
-        List<Funcionario> funcionarios = tabFuncionario1.recuperarFuncionarios();
-        for(Funcionario funcionario : funcionarios) {
-            model.addRow(new Object[] {
-                funcionario.getNome(),
-                funcionario.getCpf(),
-                funcionario.getNumeroRg()
-            });
-        }
+		this.mudarNomeDasColunas("RG", "Nome", "CPF");
+		
+        TableFuncionario tabela = new TableFuncionario();
+        List<Funcionario> funcionarios;
+		try {
+			funcionarios = tabela.recuperarFuncionarios();
+			for(Funcionario funcionario : funcionarios) {
+				model.addRow(new Object[] {
+					funcionario.getNumeroRg(),
+					funcionario.getNome(),
+					funcionario.getCpf()
+				});
+			}
+		} catch (SQLException | ClassNotFoundException ex) {
+			Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }
-        
-        
-        
+	
+	private void atualizarTabelaCondutor() {
+        DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+		this.mudarNomeDasColunas("RG", "Nome", "CNH");
+		
+        TableCondutor tabela = new TableCondutor();
+        List<Condutor> condutores;
+		try {
+			condutores = tabela.recuperarCondutoes();
+			for(Condutor condutor : condutores) {
+				model.addRow(new Object[] {
+					condutor.getNumeroRg(),
+					condutor.getNome(),
+					condutor.getCnh().getNumCnh()
+				});
+			}
+		} catch (SQLException | ClassNotFoundException ex) {
+			Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    }
+	
+	/**
+	 * Renomeia as colunas ja existentes da tabela de cadastro.
+	 * @param rotulo 
+	 */
+	private void mudarNomeDasColunas(String... rotulo) {
+		TableColumnModel modelo = jTableCadastros.getTableHeader().getColumnModel();
+		for(int i = 0; i < rotulo.length; i++){
+			TableColumn tc = modelo.getColumn(i);
+			tc.setHeaderValue(rotulo[i]);
+		}
+		jTableCadastros.getTableHeader().repaint();
+	}
+
+	/**
+	 * Refaz tabela de cadastro...
+	 */
+	private void recarregarTelaCadastro() {
+		this.limparSelecao();
+		switch (this.cadastroTipo) {
+			case 1:
+				this.atualizarTabelaCondutor();
+				break;
+			case 2:
+				this.atualizarTabelaFuncionario();
+				break;
+			default:
+				break;
+		}
+	}
+
+	/**
+	 * Desseleciona qualquer linha selecionada na tabela de cadastros,
+	 * e bloqueia os botoes de editar e remover
+	 */
+	private void limparSelecao() {
+		this.cadastroSelecionado = -1;
+		this.jTableCadastros.clearSelection();
+		this.jButtonCadEditar.setEnabled(false);
+		this.jButtonCadRemover.setEnabled(false);
+	}
+	
+	private void removerCadastro() {
+		//TODO stuff
+	}
+    
 }

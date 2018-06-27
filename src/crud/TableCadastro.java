@@ -36,11 +36,8 @@ public class TableCadastro implements OperacoesBaseDados<Pessoa> {
             statement.close();
             conexao.close();
         }
-        catch(SQLException sqler){
+        catch(SQLException | ClassNotFoundException sqler){
             sqler.printStackTrace();
-        }
-        catch(ClassNotFoundException clser){
-           clser.printStackTrace();
         }
         return id;
     }

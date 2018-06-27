@@ -351,12 +351,14 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jButtonCadEditar" max="32767" attributes="0"/>
-                              <Component id="jButtonAtualizarTabela" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jButtonCadNovo" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="jButtonCadEditar" alignment="0" min="-2" pref="73" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jButtonCadRemover" alignment="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jButtonCadVoltar" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jButtonCadNovo" alignment="1" min="-2" pref="75" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -385,7 +387,7 @@
                           <Group type="102" attributes="0">
                               <Component id="jButtonCadEditar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jButtonAtualizarTabela" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonCadRemover" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jButtonCadVoltar" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -436,6 +438,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableCadastrosMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -452,6 +457,9 @@
                 <Property name="text" type="java.lang.String" value="Editar"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCadEditarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonCadVoltar">
               <Properties>
@@ -471,12 +479,14 @@
                 <Property name="text" type="java.lang.String" value="Procurar:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonAtualizarTabela">
+            <Component class="javax.swing.JButton" name="jButtonCadRemover">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Atualizar"/>
+                <Property name="text" type="java.lang.String" value="Apagar"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAtualizarTabelaActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCadRemoverActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
