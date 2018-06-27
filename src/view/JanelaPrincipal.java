@@ -12,6 +12,7 @@ import crud.Utilitarios;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -111,8 +112,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jFormatAreaY = new javax.swing.JFormattedTextField();
         jFormatHor1 = new javax.swing.JFormattedTextField();
         jFormatAreaX = new javax.swing.JFormattedTextField();
-        jFormatData1 = new javax.swing.JFormattedTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jDataInf = new javax.swing.JFormattedTextField();
+        jDataSup = new javax.swing.JFormattedTextField();
         jButtonRelTabelaConsultaFiltro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -433,6 +434,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jPanelRelCentro.add(jPanelRelMapa, "card3");
 
+        
         jTableAcidentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null}
@@ -440,7 +442,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
-        ));
+        ){
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return false;
+			}
+			});
         jScrollPane2.setViewportView(jTableAcidentes);
 
         javax.swing.GroupLayout jPanelRelTabelaLayout = new javax.swing.GroupLayout(jPanelRelTabela);
@@ -570,13 +576,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         }
 
         try {
-            jFormatData1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            jDataInf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            jDataSup.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -619,25 +625,24 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                                                 .addComponent(jLabel3)
                                                 .addComponent(jLabel5))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jFormatData1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jDataInf, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jDataSup, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(jPanelRelLateralLayout.createSequentialGroup()
                                         .addGap(39, 39, 39)
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jFormatHor1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                                            .addComponent(jFormatAreaX))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                                                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jFormatHor1, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                                                    .addComponent(jFormatAreaX))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jFormatHor2)
-                                                    .addComponent(jFormatAreaY, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jFormatHor2)
+                                            .addComponent(jFormatAreaY, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(jLabel11))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jButtonRelLinhas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -653,11 +658,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jFormatData1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDataInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDataSup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelRelLateralLayout.createSequentialGroup()
@@ -849,7 +854,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCadEditarActionPerformed
 
     private void jButtonRelTabelaConsultaFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelTabelaConsultaFiltroActionPerformed
-        // TODO add your handling code here:
+        Date dataInf = Utilitarios.strBrDate(jDataInf.getText());
+        Date dataSup = Utilitarios.strBrDate(jDataSup.getText());
+        this.acidentesFiltro(dataInf, dataSup);
     }//GEN-LAST:event_jButtonRelTabelaConsultaFiltroActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -909,12 +916,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRelTabelaConsultaFiltro;
     private javax.swing.JButton jButtonRelTabelaSemFiltro;
     private javax.swing.JTextField jCampoProcurarCad;
+    private javax.swing.JFormattedTextField jDataInf;
+    private javax.swing.JFormattedTextField jDataSup;
     private javax.swing.JFormattedTextField jFormatAreaX;
     private javax.swing.JFormattedTextField jFormatAreaY;
-    private javax.swing.JFormattedTextField jFormatData1;
     private javax.swing.JFormattedTextField jFormatHor1;
     private javax.swing.JFormattedTextField jFormatHor2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1108,6 +1115,33 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                             Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                     }
         }
+        
+        private void acidentesFiltro(Date dataInf, Date dataSup){
+            this.limparSelecao();
+            DefaultTableModel model = (DefaultTableModel)jTableAcidentes.getModel();
+            model.getDataVector().removeAllElements();
+            model.fireTableDataChanged();
+                    this.mudarNomeDasColunasAcidente("COD", "DESCRICAO", "PESSOAS ENVOLVIDAS", "LATITUDE", "LONGITUDE", "DATA");
+
+            TableAcidente tabela = new TableAcidente();
+            List<Acidente> acidentes;
+                    try {
+                            acidentes = tabela.acidentesByDate(dataInf, dataSup);
+                            for(Acidente acidente : acidentes) {
+                                    model.addRow(new Object[] {
+                                        acidente.getCampoIdentificacao(),
+                                        acidente.getDescricao(),
+                                        acidente.getPessoasEnvolvidas(),
+                                        acidente.getLatitude(),
+                                        acidente.getLongitude(),
+                                        Utilitarios.dataToStringBR(acidente.getData())
+                                    });
+                            }
+                    } catch (SQLException | ClassNotFoundException ex) {
+                            Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+        }
+        
 	/**
 	 * Renomeia as colunas ja existentes da tabela de cadastro.
 	 * @param rotulo 
