@@ -47,6 +47,8 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
     private void initComponents() {
 
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         labelTituloFuncionario = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -67,6 +69,10 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
         jButtonFuncCancelar = new javax.swing.JButton();
         jButtonFuncFinalizar = new javax.swing.JButton();
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(0, 0));
 
@@ -76,6 +82,12 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Informações de Login", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 14))); // NOI18N
 
         jLabel18.setText("Senha:");
+
+        jCampoSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCampoSenhaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -134,15 +146,25 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        jCampoRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##############"))));
+        try {
+            jCampoRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("*************")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jCampoRg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCampoRgActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Estado:");
 
         try {
-            jCampoEstadoRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
+            jCampoEstadoRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UU")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jCampoEstadoRg.setText("");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -278,6 +300,14 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCampoDataNascimentoActionPerformed
 
+    private void jCampoSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCampoSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCampoSenhaActionPerformed
+
+    private void jCampoRgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCampoRgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCampoRgActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -333,6 +363,8 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelTituloFuncionario;
     // End of variables declaration//GEN-END:variables
 
@@ -375,21 +407,20 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 			Funcionario func = new Funcionario();
 			func.setNome(jCampoNome.getText());
 			func.setNumeroRg(jCampoRg.getText());
-			func.setCpf(jCampoCpf.getText());
-			func.setSenha(jCampoSenha.getPassword().toString());
+			func.setCpf(jCampoCpf.getText());  //cpf ja esta sendo coletado com - divisor dos 2 ultimos digitos
+                        //func.setSenha(jCampoSenha.getPassword().toString()); OLD
+			func.setSenha( String.valueOf(jCampoSenha.getPassword()) ); //transforma o array q eh retornado em getpassword para string   
 			func.setDataNascimento(Utilitarios.strBrDate(jCampoDataNascimento.getText()));
 			func.setSexo(Utilitarios.converteSexo(jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex())));
-                        
-                        /*func.setEstadoRg*/
-                        
+                        func.setEstadorg(jCampoRg.getText());
+                        String escolhaComboBox= String.valueOf(jComboBoxSexo.getSelectedItem().toString().charAt(0));
+                        func.setSexo(Utilitarios.converteSexo(escolhaComboBox));
                         /*String text;
 			text = jCampoDataNascimento.getText();
-			
                         func.setDataNascimento(strDateFromField(text));
 			text = "" + jComboBoxSexo.getSelectedItem().toString().charAt(0);
 			func.setSexo(text);
                         */
-                        
 			//considerando tabela ja criada já é feita insercao
 			TableFuncionario bancoFuncionario = new TableFuncionario();
 			try {
