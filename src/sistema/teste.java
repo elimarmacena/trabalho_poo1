@@ -13,8 +13,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
-import org.sqlite.SQLiteConfig;
-import org.sqlite.SQLiteConfig.Pragma;
+/*import org.sqlite.SQLiteConfig;
+import org.sqlite.SQLiteConfig.Pragma;*/
 
 
 
