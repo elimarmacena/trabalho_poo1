@@ -73,6 +73,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jCampoProcurarCad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButtonCadRemover = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         painelRelatorios = new javax.swing.JPanel();
         jPanelRelCentro = new javax.swing.JPanel();
         jPanelRelCentroBranco = new javax.swing.JPanel();
@@ -337,6 +338,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelCadastrosLayout = new javax.swing.GroupLayout(painelCadastros);
         painelCadastros.setLayout(painelCadastrosLayout);
         painelCadastrosLayout.setHorizontalGroup(
@@ -348,14 +356,16 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jButtonCadNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonCadEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButtonCadRemover, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonCadVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButtonCadVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonCadRemover, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)))
                 .addGap(16, 16, 16)
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastrosLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCampoProcurarCad, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jCampoProcurarCad, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -366,7 +376,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCadNovo)
                     .addComponent(jCampoProcurarCad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastrosLayout.createSequentialGroup()
@@ -837,6 +848,12 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRelTabelaConsultaFiltroActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       if (this.cadastroTipo == 2){
+           this.ProcurarFuncionario(jCampoProcurarCad.getText());
+       }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -873,6 +890,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCadEditar;
     private javax.swing.JButton jButtonCadNovo;
     private javax.swing.JButton jButtonCadRemover;
@@ -994,11 +1012,33 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		this.setExtendedState( this.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 	}
 
+    private void ProcurarFuncionario(String procura) {
+        this.limparSelecao();
+        DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+		this.mudarNomeDasColunas("COD", "Nome", "CPF");
+		
+        TableFuncionario tabela = new TableFuncionario();
+        List<Funcionario> funcionarios;
+		try {
+			funcionarios = tabela.recuperarLike(procura);
+			for(Funcionario funcionario : funcionarios) {
+				model.addRow(new Object[] {
+					funcionario.getCampoIdentificacao(),
+					funcionario.getNome(),
+					funcionario.getCpf()
+				});
+			}
+		} catch (SQLException | ClassNotFoundException ex) {
+			Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+		}
+    }
     private void atualizarTabelaFuncionario() {
         DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-		this.mudarNomeDasColunas("RG", "Nome", "CPF");
+		this.mudarNomeDasColunas("COD", "Nome", "CPF");
 		
         TableFuncionario tabela = new TableFuncionario();
         List<Funcionario> funcionarios;
@@ -1006,7 +1046,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 			funcionarios = tabela.recuperarFuncionarios();
 			for(Funcionario funcionario : funcionarios) {
 				model.addRow(new Object[] {
-					funcionario.getNumeroRg(),
+					funcionario.getCampoIdentificacao(),
 					funcionario.getNome(),
 					funcionario.getCpf()
 				});
