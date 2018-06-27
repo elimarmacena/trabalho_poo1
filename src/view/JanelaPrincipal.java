@@ -5,8 +5,10 @@
  */
 package view;
 
+import crud.TableAcidente;
 import crud.TableCondutor;
 import crud.TableFuncionario;
+import crud.Utilitarios;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import model.Acidente;
 import model.Condutor;
 import model.Funcionario;
 
@@ -81,7 +84,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jLabelMapa = new javax.swing.JLabel();
         jPanelRelTabela = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAcidentes = new javax.swing.JTable();
         jPanelRelGrafico = new javax.swing.JPanel();
         jLabelGrafico = new javax.swing.JLabel();
         jPanelRelLateral = new javax.swing.JPanel();
@@ -430,15 +433,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jPanelRelCentro.add(jPanelRelMapa, "card3");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAcidentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null}
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jTableAcidentes);
 
         javax.swing.GroupLayout jPanelRelTabelaLayout = new javax.swing.GroupLayout(jPanelRelTabela);
         jPanelRelTabela.setLayout(jPanelRelTabelaLayout);
@@ -777,6 +780,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void jButtonRelTabelaSemFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelTabelaSemFiltroActionPerformed
         //goToRelatorioTabela();
 		mudarPainel(jPanelRelCentro, jPanelRelTabela);
+                this.todosAcidentes();
     }//GEN-LAST:event_jButtonRelTabelaSemFiltroActionPerformed
 
     private void jButtonRelBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelBarrasActionPerformed
@@ -941,7 +945,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAcidentes;
     private javax.swing.JTable jTableCadastros;
     private javax.swing.JPanel painelCadastros;
     private javax.swing.JPanel painelEmBranco;
@@ -1017,7 +1021,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-		this.mudarNomeDasColunas("COD", "Nome", "CPF");
+		this.mudarNomeDasColunasCadastro("COD", "Nome", "CPF");
 		
         TableFuncionario tabela = new TableFuncionario();
         List<Funcionario> funcionarios;
@@ -1038,7 +1042,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-		this.mudarNomeDasColunas("COD", "Nome", "CPF");
+		this.mudarNomeDasColunasCadastro("COD", "Nome", "CPF");
 		
         TableFuncionario tabela = new TableFuncionario();
         List<Funcionario> funcionarios;
@@ -1060,7 +1064,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-		this.mudarNomeDasColunas("RG", "Nome", "CNH");
+		this.mudarNomeDasColunasCadastro("RG", "Nome", "CNH");
 		
         TableCondutor tabela = new TableCondutor();
         List<Condutor> condutores;
@@ -1077,12 +1081,38 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 			Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
 		}
     }
-	
+
+        
+        private void todosAcidentes(){
+            this.limparSelecao();
+            DefaultTableModel model = (DefaultTableModel)jTableAcidentes.getModel();
+            model.getDataVector().removeAllElements();
+            model.fireTableDataChanged();
+                    this.mudarNomeDasColunasAcidente("COD", "DESCRICAO", "PESSOAS ENVOLVIDAS", "LATITUDE", "LONGITUDE", "DATA");
+
+            TableAcidente tabela = new TableAcidente();
+            List<Acidente> acidentes;
+                    try {
+                            acidentes = tabela.recuperarAcidentes();
+                            for(Acidente acidente : acidentes) {
+                                    model.addRow(new Object[] {
+                                        acidente.getCampoIdentificacao(),
+                                        acidente.getDescricao(),
+                                        acidente.getPessoasEnvolvidas(),
+                                        acidente.getLatitude(),
+                                        acidente.getLongitude(),
+                                        Utilitarios.dataToStringBR(acidente.getData())
+                                    });
+                            }
+                    } catch (SQLException | ClassNotFoundException ex) {
+                            Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+        }
 	/**
 	 * Renomeia as colunas ja existentes da tabela de cadastro.
 	 * @param rotulo 
 	 */
-	private void mudarNomeDasColunas(String... rotulo) {
+	private void mudarNomeDasColunasCadastro(String... rotulo) {
 		TableColumnModel modelo = jTableCadastros.getTableHeader().getColumnModel();
 		for(int i = 0; i < rotulo.length; i++){
 			TableColumn tc = modelo.getColumn(i);
@@ -1091,6 +1121,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		jTableCadastros.getTableHeader().repaint();
 	}
 
+        private void mudarNomeDasColunasAcidente(String... rotulo) {
+		TableColumnModel modelo = jTableAcidentes.getTableHeader().getColumnModel();
+		for(int i = 0; i < rotulo.length; i++){
+			TableColumn tc = modelo.getColumn(i);
+			tc.setHeaderValue(rotulo[i]);
+		}
+		jTableCadastros.getTableHeader().repaint();
+	}
 	/**
 	 * Refaz tabela de cadastro...
 	 */
