@@ -58,12 +58,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         painelExibicao = new javax.swing.JPanel();
         painelPrincipal = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButtonMainCond = new javax.swing.JButton();
+        jButtonMainAcidente = new javax.swing.JButton();
         jButtonMainFunc = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButtonMainMapa = new javax.swing.JButton();
-        jButtonMainTab = new javax.swing.JButton();
-        jButtonMainGrap = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         painelEmBranco = new javax.swing.JPanel();
         painelCadastros = new javax.swing.JPanel();
@@ -99,7 +97,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jButtonRelQtdAcid = new javax.swing.JButton();
         jButtonRelGravAcid = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jButtonRelTabela = new javax.swing.JButton();
+        jButtonRelTabelaSemFiltro = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jButtonRelBarras = new javax.swing.JButton();
         jButtonRelLinhas = new javax.swing.JButton();
@@ -111,6 +109,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jFormatAreaX = new javax.swing.JFormattedTextField();
         jFormatData1 = new javax.swing.JFormattedTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jButtonRelTabelaConsultaFiltro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(896, 504));
@@ -162,11 +161,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Cadastros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
-        jButtonMainCond.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonMainCond.setText("Condutor");
-        jButtonMainCond.addActionListener(new java.awt.event.ActionListener() {
+        jButtonMainAcidente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButtonMainAcidente.setText("Acidente");
+        jButtonMainAcidente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonMainCondActionPerformed(evt);
+                jButtonMainAcidenteActionPerformed(evt);
             }
         });
 
@@ -184,17 +183,17 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonMainCond, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonMainAcidente, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonMainFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonMainCond, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMainAcidente, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonMainFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -202,27 +201,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Relatorios", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
 
         jButtonMainMapa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonMainMapa.setText("Mapa de Calor");
+        jButtonMainMapa.setText("Relatorios");
         jButtonMainMapa.setActionCommand("MapaDeCalor");
         jButtonMainMapa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonMainMapaActionPerformed(evt);
-            }
-        });
-
-        jButtonMainTab.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonMainTab.setText("Tabelas");
-        jButtonMainTab.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonMainTabActionPerformed(evt);
-            }
-        });
-
-        jButtonMainGrap.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButtonMainGrap.setText("Graficos");
-        jButtonMainGrap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonMainGrapActionPerformed(evt);
             }
         });
 
@@ -233,20 +216,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonMainMapa, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonMainTab, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonMainGrap, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonMainMapa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonMainTab, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonMainGrap, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jButtonMainMapa, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -372,7 +348,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jButtonCadNovo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonCadEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButtonCadRemover, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                        .addComponent(jButtonCadRemover, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(jButtonCadVoltar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(16, 16, 16)
                 .addGroup(painelCadastrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -416,7 +392,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         );
         jPanelRelCentroBrancoLayout.setVerticalGroup(
             jPanelRelCentroBrancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addGap(0, 496, Short.MAX_VALUE)
         );
 
         jPanelRelCentro.add(jPanelRelCentroBranco, "card2");
@@ -437,7 +413,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jPanelRelMapaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelMapaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelMapa, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                .addComponent(jLabelMapa, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -466,7 +442,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jPanelRelTabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelTabelaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -488,7 +464,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             jPanelRelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelRelGraficoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                .addComponent(jLabelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -531,10 +507,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jLabel10.setText("Tabelas");
 
-        jButtonRelTabela.setText("Todos Os Dados");
-        jButtonRelTabela.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRelTabelaSemFiltro.setText("Consultar todos");
+        jButtonRelTabelaSemFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRelTabelaActionPerformed(evt);
+                jButtonRelTabelaSemFiltroActionPerformed(evt);
             }
         });
 
@@ -591,19 +567,29 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        jButtonRelTabelaConsultaFiltro.setText("Consulta com filtro");
+        jButtonRelTabelaConsultaFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRelTabelaConsultaFiltroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelRelLateralLayout = new javax.swing.GroupLayout(jPanelRelLateral);
         jPanelRelLateral.setLayout(jPanelRelLateralLayout);
         jPanelRelLateralLayout.setHorizontalGroup(
             jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelRelLateralLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelRelLateralLayout.createSequentialGroup()
+                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3)
+                    .addComponent(jSeparator4)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelRelLateralLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonRelBarras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonRelTabelaSemFiltro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator1)
+                            .addComponent(jButtonRelTabelaConsultaFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanelRelLateralLayout.createSequentialGroup()
                                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -612,7 +598,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel9)
                                         .addComponent(jLabel10)
-                                        .addComponent(jButtonRelTabela, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(jPanelRelLateralLayout.createSequentialGroup()
                                             .addGap(6, 6, 6)
                                             .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -638,16 +623,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                                                 .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                     .addComponent(jFormatHor2)
                                                     .addComponent(jFormatAreaY, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel11))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jButtonRelLinhas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addGroup(jPanelRelLateralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel11)
-                    .addComponent(jButtonRelLinhas, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                    .addComponent(jButtonRelBarras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelRelLateralLayout.setVerticalGroup(
             jPanelRelLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -695,16 +675,18 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonRelTabela)
+                .addComponent(jButtonRelTabelaConsultaFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(jButtonRelTabelaSemFiltro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonRelBarras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonRelLinhas)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout painelRelatoriosLayout = new javax.swing.GroupLayout(painelRelatorios);
@@ -735,11 +717,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonMainCondActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainCondActionPerformed
+    private void jButtonMainAcidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainAcidenteActionPerformed
         this.cadastroTipo = 1;
 		mudarPainel(painelExibicao, painelCadastros);
 		this.recarregarTelaCadastro();
-    }//GEN-LAST:event_jButtonMainCondActionPerformed
+    }//GEN-LAST:event_jButtonMainAcidenteActionPerformed
 
     private void jLabelTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTituloMouseClicked
         this.goToMenu();
@@ -781,26 +763,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_jButtonCadNovoActionPerformed
 
-    private void jButtonMainTabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainTabActionPerformed
-        painelExibicao.removeAll();
-		painelExibicao.add(painelRelatorios);
-		goToRelatorioTabela();
-		painelExibicao.repaint();
-		painelExibicao.revalidate();
-    }//GEN-LAST:event_jButtonMainTabActionPerformed
-
-    private void jButtonRelTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelTabelaActionPerformed
+    private void jButtonRelTabelaSemFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelTabelaSemFiltroActionPerformed
         //goToRelatorioTabela();
 		mudarPainel(jPanelRelCentro, jPanelRelTabela);
-    }//GEN-LAST:event_jButtonRelTabelaActionPerformed
-
-    private void jButtonMainGrapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainGrapActionPerformed
-        painelExibicao.removeAll();
-		painelExibicao.add(painelRelatorios);
-		goToRelatorioGrafico();
-		painelExibicao.repaint();
-		painelExibicao.revalidate();
-    }//GEN-LAST:event_jButtonMainGrapActionPerformed
+    }//GEN-LAST:event_jButtonRelTabelaSemFiltroActionPerformed
 
     private void jButtonRelBarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelBarrasActionPerformed
         goToRelatorioGrafico();
@@ -867,6 +833,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_jButtonCadEditarActionPerformed
 
+    private void jButtonRelTabelaConsultaFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelTabelaConsultaFiltroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonRelTabelaConsultaFiltroActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -907,16 +877,15 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCadNovo;
     private javax.swing.JButton jButtonCadRemover;
     private javax.swing.JButton jButtonCadVoltar;
-    private javax.swing.JButton jButtonMainCond;
+    private javax.swing.JButton jButtonMainAcidente;
     private javax.swing.JButton jButtonMainFunc;
-    private javax.swing.JButton jButtonMainGrap;
     private javax.swing.JButton jButtonMainMapa;
-    private javax.swing.JButton jButtonMainTab;
     private javax.swing.JButton jButtonRelBarras;
     private javax.swing.JButton jButtonRelGravAcid;
     private javax.swing.JButton jButtonRelLinhas;
     private javax.swing.JButton jButtonRelQtdAcid;
-    private javax.swing.JButton jButtonRelTabela;
+    private javax.swing.JButton jButtonRelTabelaConsultaFiltro;
+    private javax.swing.JButton jButtonRelTabelaSemFiltro;
     private javax.swing.JTextField jCampoProcurarCad;
     private javax.swing.JFormattedTextField jFormatAreaX;
     private javax.swing.JFormattedTextField jFormatAreaY;

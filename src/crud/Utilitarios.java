@@ -127,4 +127,13 @@ public  class Utilitarios {
         String stringDataHora = formatoData.format(data);
         return stringDataHora;
     }
+    
+    public static String converteSexo(String itemAt) {
+        if(itemAt.equals("Masculino")) {
+            return "m";
+        }
+        else {
+            return "f";
+        }
+    }
 }

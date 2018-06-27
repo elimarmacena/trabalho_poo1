@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import model.Funcionario;
 import crud.TableFuncionario;
+import crud.Utilitarios;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,6 +46,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         labelTituloFuncionario = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -60,6 +62,8 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
         jCampoDataNascimento = new javax.swing.JFormattedTextField();
         jCampoCpf = new javax.swing.JFormattedTextField();
         jCampoRg = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jCampoEstadoRg = new javax.swing.JFormattedTextField();
         jButtonFuncCancelar = new javax.swing.JButton();
         jButtonFuncFinalizar = new javax.swing.JButton();
 
@@ -82,7 +86,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCampoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,13 +129,17 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
         });
 
         try {
-            jCampoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jCampoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
+        jCampoRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##############"))));
+
+        jLabel1.setText("Estado:");
+
         try {
-            jCampoRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####.###-UU")));
+            jCampoEstadoRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -161,8 +169,12 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jCampoNome, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                             .addComponent(jCampoCpf)
-                            .addComponent(jCampoRg))))
-                .addContainerGap(97, Short.MAX_VALUE))
+                            .addComponent(jCampoRg))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCampoEstadoRg, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,7 +186,9 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
-                    .addComponent(jCampoRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCampoRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jCampoEstadoRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
@@ -300,14 +314,17 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonFuncCancelar;
     private javax.swing.JButton jButtonFuncFinalizar;
     private javax.swing.JFormattedTextField jCampoCpf;
     private javax.swing.JFormattedTextField jCampoDataNascimento;
+    private javax.swing.JFormattedTextField jCampoEstadoRg;
     private javax.swing.JTextField jCampoNome;
     private javax.swing.JFormattedTextField jCampoRg;
     private javax.swing.JPasswordField jCampoSenha;
     private javax.swing.JComboBox<String> jComboBoxSexo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -360,13 +377,19 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 			func.setNumeroRg(jCampoRg.getText());
 			func.setCpf(jCampoCpf.getText());
 			func.setSenha(jCampoSenha.getPassword().toString());
-			
-			String text;
+			func.setDataNascimento(Utilitarios.strBrDate(jCampoDataNascimento.getText()));
+			func.setSexo(Utilitarios.converteSexo(jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex())));
+                        
+                        /*func.setEstadoRg*/
+                        
+                        /*String text;
 			text = jCampoDataNascimento.getText();
-			func.setDataNascimento(strDateFromField(text));
+			
+                        func.setDataNascimento(strDateFromField(text));
 			text = "" + jComboBoxSexo.getSelectedItem().toString().charAt(0);
 			func.setSexo(text);
-
+                        */
+                        
 			//considerando tabela ja criada já é feita insercao
 			TableFuncionario bancoFuncionario = new TableFuncionario();
 			try {
@@ -404,8 +427,8 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 		&& jCampoRg.getValue() != null
 		&& jCampoCpf.getValue() != null
 		&& !jCampoDataNascimento.getText().equals("")
-		&& jCampoSenha.getPassword().toString().equals("")
+		&& !jCampoSenha.getPassword().toString().equals("")
 		&& jComboBoxSexo.getSelectedIndex() != 0;
 	}
-	
+
 }
