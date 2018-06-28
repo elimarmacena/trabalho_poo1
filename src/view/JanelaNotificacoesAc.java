@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.OperacaoDelete;
 import crud.TableFuncionario;
 import crud.Utilitarios;
 import crud.TableRelatorioAcidente;
@@ -141,7 +142,8 @@ public class JanelaNotificacoesAc extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaRelatoriosMouseClicked
 
     private void bDeletarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeletarNotificacaoActionPerformed
-        System.out.println((String) tabelaRelatorios.getModel().getValueAt(linhaSelecionada, 0));
+        int idRelatorio = Integer.parseInt(tabelaRelatorios.getModel().getValueAt(linhaSelecionada, 0).toString());
+        OperacaoDelete.apagarRelatorio(idRelatorio);
         this.atualizarTabela();
     }//GEN-LAST:event_bDeletarNotificacaoActionPerformed
 

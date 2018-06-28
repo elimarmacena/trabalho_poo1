@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 public class JanelaCadFuncionario extends javax.swing.JFrame {
 
 	private boolean modoEditar = false;
+        private int idFuncinario = 0;
 	
 	/**
 	 * Creates new form JanelaCadFuncionario
@@ -35,7 +36,10 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 	public JanelaCadFuncionario() {
 		initComponents();
 	}
-
+        public JanelaCadFuncionario(boolean editar, int idFuncinario){
+            this.modoEditar = editar;
+            this.idFuncinario=idFuncinario;
+        }
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -376,12 +380,6 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 		this.jComboBoxSexo.setSelectedIndex(0);
 	}
 	
-	public void bloquearCamposEssenciais(boolean decisao){
-		this.modoEditar = decisao;
-		decisao = !decisao; //Se bloquear eh true, então enabled tem que ser falso
-		this.jCampoCpf.setEnabled(decisao);
-		this.jCampoSenha.setEnabled(decisao);
-	}
 	
 	public void setCampos(Funcionario func) {
 		this.jCampoSenha.setText(func.getSenha());
@@ -403,28 +401,29 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 
 	private void salvarDados() {
 		if(estaoTodosPreenchidos()){
-			Funcionario func = new Funcionario();
-			func.setNome(jCampoNome.getText());
-			func.setNumeroRg(jCampoRg.getText());
-			func.setCpf(jCampoCpf.getText());  //cpf ja esta sendo coletado com - divisor dos 2 ultimos digitos
+			Funcionario funcionarioAtualizar = new Funcionario();
+                        funcionarioAtualizar.setCampoIdentificacao(this.idFuncinario);
+			funcionarioAtualizar.setNome(jCampoNome.getText());
+			funcionarioAtualizar.setNumeroRg(jCampoRg.getText());
+			funcionarioAtualizar.setCpf(jCampoCpf.getText());  //cpf ja esta sendo coletado com - divisor dos 2 ultimos digitos
                         //func.setSenha(jCampoSenha.getPassword().toString()); OLD
-			func.setSenha( String.valueOf(jCampoSenha.getPassword()) ); //transforma o array q eh retornado em getpassword para string   
-			func.setDataNascimento(Utilitarios.strBrDate( jCampoDataNascimento.getText() ));
-			func.setSexo(Utilitarios.converteSexo(jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex())));
-                        func.setEstadorg(jCampoRg.getText());
+			funcionarioAtualizar.setSenha( String.valueOf(jCampoSenha.getPassword()) ); //transforma o array q eh retornado em getpassword para string   
+			funcionarioAtualizar.setDataNascimento(Utilitarios.strBrDate( jCampoDataNascimento.getText() ));
+			funcionarioAtualizar.setSexo(Utilitarios.converteSexo(jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex())));
+                        funcionarioAtualizar.setEstadorg(jCampoRg.getText());
                         String escolhaComboBox= String.valueOf(jComboBoxSexo.getSelectedItem().toString().charAt(0));
-                        func.setSexo(Utilitarios.converteSexo(escolhaComboBox));
+                        funcionarioAtualizar.setSexo(Utilitarios.converteSexo(escolhaComboBox));
                         /*String text;
 			text = jCampoDataNascimento.getText();
-                        func.setDataNascimento(strDateFromField(text));
+                        funcionarioAtualizar.setDataNascimento(strDateFromField(text));
 			text = "" + jComboBoxSexo.getSelectedItem().toString().charAt(0);
-			func.setSexo(text);
+			funcionarioAtualizar.setSexo(text);
                         */
 			//considerando tabela ja criada já é feita insercao
                         
 			TableFuncionario bancoFuncionario = new TableFuncionario();
 			try {
-				bancoFuncionario.cadastar(func);
+				bancoFuncionario.cadastar(funcionarioAtualizar);
 				JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
 			} catch (SQLException | ClassNotFoundException ex) {
 				Logger.getLogger(JanelaCadFuncionario.class.getName()).log(Level.SEVERE, null, ex);
@@ -441,7 +440,7 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 	
 	private void editarDados() {
 		if(estaoTodosPreenchidos()){
-			//TODO stuff
+			
 			JOptionPane.showMessageDialog(null, "Cadastro editado com sucesso");
 			this.limparCampos();
 			this.fecharJanela();
@@ -455,11 +454,12 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 	 * @return 
 	 */
 	private boolean estaoTodosPreenchidos() {
+                String senhaColetada = String.valueOf(jCampoSenha.getPassword());
 		return !jCampoNome.getText().equals("")
 		&& jCampoRg.getValue() != null
 		&& jCampoCpf.getValue() != null
 		&& !jCampoDataNascimento.getText().equals("")
-		&& !jCampoSenha.getPassword().toString().equals("")
+		&& !senhaColetada.equals("")
 		&& jComboBoxSexo.getSelectedIndex() != 0;
 	}
 

@@ -164,6 +164,37 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
         conexao.close();
         return funcionario;
     }
+        
+        public Funcionario recuperarById(int id) throws SQLException, ClassNotFoundException{
+        Funcionario funcionario = new Funcionario();
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "fn.id AS 'id', fn.senha AS 'senha', fn.ativo AS 'ativo' "
+                + "FROM Cadastro ca " +
+                "INNER JOIN Funcionario fn ON fn.FK_Cadastro_id = ca.id " +
+                "WHERE fn.id = "+id;
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        if (resultado.next()){ //TODO checar se precisa
+            funcionario.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            funcionario.setNome(resultado.getString("nome"));
+            funcionario.setCpf(resultado.getString("cpf"));
+            funcionario.setNumeroRg(resultado.getString("rg"));
+            funcionario.setEstadorg(resultado.getString("estado_rg"));
+            funcionario.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
+            funcionario.setDataNascimento(dataNasc);
+            funcionario.setSenha(resultado.getString("senha"));
+            boolean ativo = resultado.getString("ativo").equals("1");
+            funcionario.setAtivo(ativo);;
+        }
+        statement.close();
+        conexao.close();
+        return funcionario;
+    }
     
     /**
      * Metodo com intuito de agir como um delete, uma vez que apagar o funcionario do sistema poderia causar impactos.

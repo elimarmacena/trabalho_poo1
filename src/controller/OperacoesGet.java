@@ -48,4 +48,16 @@ public class OperacoesGet {
         }
         return recuperado;
     }
+    
+    public static Funcionario getFuncinarioById(int id){
+        TableFuncionario tbFuncionario = new TableFuncionario();
+        Funcionario recuperado = null;
+        try{
+            recuperado = tbFuncionario.recuperarById(id);
+        }
+        catch(SQLException | ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(null, "NAO FOI POSSIVEL RECUPERAR O DADO NO MOMENTO");
+        }
+        return recuperado;
+    }
 }

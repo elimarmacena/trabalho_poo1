@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.OperacoesGet;
 import crud.TableAcidente;
 import crud.TableCondutor;
 import crud.TableFuncionario;
@@ -37,6 +38,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 	private byte cadastroTipo = 1;
 	JanelaCadFuncionario telaCadFunc = null;
 	JanelaCadCondutor telaCadCond = null;
+        JanelaCadAcidente telaCadAc = null;
 
 	/**
 	 * Creates new form JanelaPrincipal
@@ -290,18 +292,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "CPF", "RG"
+                "ID", "Nome", "CPF", "RG"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTableCadastros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableCadastrosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTableCadastros);
-        if (jTableCadastros.getColumnModel().getColumnCount() > 0) {
-            jTableCadastros.getColumnModel().getColumn(2).setResizable(false);
-        }
 
         jButtonCadNovo.setText("Novo");
         jButtonCadNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -733,9 +740,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonMainAcidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainAcidenteActionPerformed
-        this.cadastroTipo = 1;
-		mudarPainel(painelExibicao, painelCadastros);
-		this.recarregarTelaCadastro();
+        telaCadAc = new JanelaCadAcidente();
+        telaCadAc.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        telaCadAc.setVisible(true);
     }//GEN-LAST:event_jButtonMainAcidenteActionPerformed
 
     private void jLabelTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTituloMouseClicked
@@ -815,35 +822,30 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     private void jButtonCadEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadEditarActionPerformed
         if(cadastroSelecionado != -1){
-			try {
-				//WIP TODO
-				String identificador;
-				Condutor cond = null;
-				Funcionario func = null;
-				TableFuncionario tabFunc = new TableFuncionario();
-				TableCondutor tabCond = new TableCondutor();;
-				
-				switch (this.cadastroTipo) {
-					case 1:
-						this.popupCadCondutor();
-						identificador = this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString();
-						cond = tabCond.recuperarPorRg(identificador);
-						this.telaCadCond.setCampos(cond);
-						this.telaCadCond.bloquearCamposEssenciais(true);
-						break;
-					case 2:
-						this.popupCadFuncionario();
-						identificador = this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString();
-						func = tabFunc.recuperarPorRg(identificador);
-						this.telaCadFunc.setCampos(func);
-						this.telaCadFunc.bloquearCamposEssenciais(true);
-						break;
-					default:
-						break;
-				}
-			} catch (SQLException | ClassNotFoundException ex) {
-				Logger.getLogger(JanelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-			}
+            //WIP TODO
+            int identificador;
+            Condutor cond = null;
+            Funcionario func = null;
+            TableCondutor tabCond = new TableCondutor();
+            ;
+            switch (this.cadastroTipo) {
+                case 1:
+                    this.popupCadCondutor();
+                    identificador = Integer.parseInt(this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString());
+                    
+                    this.telaCadCond.setCampos(cond);
+                    this.telaCadCond.bloquearCamposEssenciais(true);
+                    break;
+                case 2:
+                    identificador = Integer.parseInt(this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString());
+                    this.popupCadFuncionario();
+                    func = OperacoesGet.getFuncinarioById(identificador);
+                    this.telaCadFunc.setCampos(func);
+                    
+                    break;
+                default:
+                    break;
+            }
 		}else{
 			System.out.println("Nenhuma linha selecionada para edição.");
 		}
@@ -964,9 +966,23 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 			telaCadFunc.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		}
         telaCadFunc.setVisible(true);
-		telaCadFunc.bloquearCamposEssenciais(false);
+	
 	}
 	
+        /*
+        *METODO USADO PARA EDITAR FUNCIONARIO
+        *
+        *
+        */
+        private void popupCadFuncionario(boolean editar,int id) {
+		if(telaCadFunc == null){
+			telaCadFunc = new JanelaCadFuncionario(editar,id);
+			telaCadFunc.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		}
+        telaCadFunc.setVisible(true);
+		
+	}
+        
 	private void popupCadCondutor() {
 		if(telaCadCond == null){
 			telaCadCond = new JanelaCadCondutor();
@@ -975,6 +991,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         telaCadCond.setVisible(true);
 		telaCadCond.bloquearCamposEssenciais(false);
 	}
+        
 	
 	public void goToMenu(){
 		painelExibicao.removeAll();
@@ -1045,7 +1062,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-		this.mudarNomeDasColunasCadastro("COD", "Nome", "CPF");
+		this.mudarNomeDasColunasCadastro("COD", "Nome", "CPF", "RG");
 		
         TableFuncionario tabela = new TableFuncionario();
         List<Funcionario> funcionarios;
@@ -1055,7 +1072,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 				model.addRow(new Object[] {
 					funcionario.getCampoIdentificacao(),
 					funcionario.getNome(),
-					funcionario.getCpf()
+					funcionario.getCpf(),
+                                        funcionario.getNumeroRg()
 				});
 			}
 		} catch (SQLException | ClassNotFoundException ex) {
@@ -1067,7 +1085,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTableCadastros.getModel();
         model.getDataVector().removeAllElements();
         model.fireTableDataChanged();
-		this.mudarNomeDasColunasCadastro("RG", "Nome", "CNH");
+		this.mudarNomeDasColunasCadastro("ID","RG", "Nome", "CNH");
 		
         TableCondutor tabela = new TableCondutor();
         List<Condutor> condutores;
