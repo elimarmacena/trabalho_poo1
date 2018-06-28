@@ -733,9 +733,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonMainAcidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMainAcidenteActionPerformed
-        this.cadastroTipo = 1;
-		mudarPainel(painelExibicao, painelCadastros);
-		this.recarregarTelaCadastro();
+        
+        JanelaCadAcidente trocaJCadAcidente = new JanelaCadAcidente();
+        trocaJCadAcidente.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        //setVisible(false);
+        trocaJCadAcidente.setVisible(true);
+        /*this.cadastroTipo = 1;
+        mudarPainel(painelExibicao, painelCadastros);
+        this.recarregarTelaCadastro();*/
     }//GEN-LAST:event_jButtonMainAcidenteActionPerformed
 
     private void jLabelTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTituloMouseClicked
