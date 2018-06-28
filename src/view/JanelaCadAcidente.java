@@ -14,6 +14,7 @@ import model.OcorrenciaAcidente;
 import model.Veiculo;
 import controller.OperacoesGet;
 import controller.OperacoesPut;
+import java.awt.event.WindowEvent;
 import model.Condutor;
 
 /**
@@ -419,6 +420,7 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
             acidenteCadastro.setVeiculosEnvolvidos(ocorrencias);
             OperacoesPut.salvarAcidente(acidenteCadastro);
             JOptionPane.showMessageDialog(null, "CADASTRO EFETUADO");
+            //modularizar
             jFieldPessoasEnv.setText("");
             jFieldLatitude.setText("");
             jFieldLongitude.setText("");
@@ -428,6 +430,8 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
             jFieldPlaca.setValue(null);
             jFieldVelocidade.setText("");
             jFieldCnhCond.setText("");
+            
+            //this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
         }
         
     }//GEN-LAST:event_finalizarCadastroActionPerformed
