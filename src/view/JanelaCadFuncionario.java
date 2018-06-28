@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.OperacoesUpdate;
 import crud.Utilitarios;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
@@ -36,8 +37,8 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 	public JanelaCadFuncionario() {
 		initComponents();
 	}
-        public JanelaCadFuncionario(boolean editar, int idFuncinario){
-            this.modoEditar = editar;
+        public JanelaCadFuncionario(int idFuncinario){
+            initComponents();
             this.idFuncinario=idFuncinario;
         }
 	/**
@@ -420,18 +421,10 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 			funcionarioAtualizar.setSexo(text);
                         */
 			//considerando tabela ja criada já é feita insercao
-                        
-			TableFuncionario bancoFuncionario = new TableFuncionario();
-			try {
-				bancoFuncionario.cadastar(funcionarioAtualizar);
-				JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
-			} catch (SQLException | ClassNotFoundException ex) {
-				Logger.getLogger(JanelaCadFuncionario.class.getName()).log(Level.SEVERE, null, ex);
-				JOptionPane.showMessageDialog(null, "Erro: Dados NÃO foram salvos!");
-			} finally {
-				this.limparCampos();
-				this.fecharJanela();
-			}
+                        OperacoesUpdate.updateFuncionario(funcionarioAtualizar);
+                        JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
+                        this.limparCampos();
+                        this.fecharJanela();
                         
 		}else{
 			JOptionPane.showMessageDialog(null, "Erro: Preencha todos os dados!");
