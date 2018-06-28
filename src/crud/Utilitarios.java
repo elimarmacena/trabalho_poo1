@@ -58,14 +58,23 @@ public  class Utilitarios {
     }
 	
 	/**
-	 * Formata a string para poder ser convertida antes de retornar o bojeto Date
+	 * recebe o formato brasileiro e retorna um objeto date
 	 * @param strData
 	 * @return 
 	 */
-	public static Date strDateFromField(String strData) {
-        String[] strDataSeparada = strData.split("/");
-		strData = strDataSeparada[2] + "-" + strDataSeparada[1] + "-" + strDataSeparada[0];
-		return Utilitarios.strDate(strData);
+	public static Date strDateBrToDate(String strData) {
+        DateFormat formato =new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        if (strData == null){
+            return null;
+        }
+        Date data = null;
+        try {
+            data = (Date) formato.parse(strData);
+            return data;
+        } catch (ParseException ex) {
+            return null;
+        }
+        
     }
     
 	/**

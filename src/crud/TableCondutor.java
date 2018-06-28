@@ -206,5 +206,41 @@ public class TableCondutor implements OperacoesBaseDados<Condutor> {
         conexao.close();
         return condutor;
     }
+        
+    public Condutor recuperarPorCnh(String numeroCnh) throws SQLException, ClassNotFoundException{
+        Condutor condutor = new Condutor();
+        String sql = "SELECT cd.id as 'id', ca.nome AS 'nome', ca.numero_cpf AS 'numero_cpf', ca.numero_rg AS 'numero_rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "cnh.id AS 'id_cnh', cnh.numero_cnh AS 'cnh', cnh.categoria AS 'categoria' "+
+                "FROM Condutor cd " +
+                "INNER JOIN Cadastro ca ON ca.id = cd.FK_Cadastro_id " +
+                "INNER JOIN Cnh cnh ON cnh.id = cd.FK_cnh_id "+
+                "WHERE cnh.numero_cnh = '"+numeroCnh+"'";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        if (resultado.next()){ //TODO checar se precisa
+            Cnh cnh = new Cnh();
+			cnh.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_cnh") ));
+			cnh.setCategoria(resultado.getString("categoria"));
+			cnh.setNumCnh(resultado.getString("cnh"));
+			condutor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_condutor") ));
+			condutor.setNome(resultado.getString("nome"));
+			condutor.setCpf(resultado.getString("cpf"));
+			condutor.setNumeroRg(resultado.getString("rg"));
+			condutor.setEstadorg(resultado.getString("estado_rg"));
+			condutor.setSexo(resultado.getString("sexo"));
+			Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
+			condutor.setDataNascimento(dataNasc);
+			condutor.setCnh(cnh);
+			statement.close();
+			conexao.close();
+		}
+        statement.close();
+        conexao.close();
+        return condutor;
+    }
     
 }

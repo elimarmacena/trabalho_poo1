@@ -120,7 +120,54 @@ public class TableRelatorioAcidente implements OperacoesBaseDados<RelatorioAcide
         conexao.close();
         return relatorios;
     }
-        
+    
+
+    public ArrayList<RelatorioAcidente> relatoriosPendentes() throws SQLException, ClassNotFoundException{
+         ArrayList<RelatorioAcidente> relatorios = new ArrayList();
+         String sql = "SELECT ra.id as 'id', ra.placa AS 'placa', ra.nome_condutor AS 'nome_condutor', ra.cnh_condutor as 'cnh_condutor', ra.numero_ocupantes as 'numero_ocupantes', " +
+                    "ra.info_acidente as 'info_acidente', ra.latitude as 'latitude', ra.longitude as 'longitude', ra.data as 'data',ra.FK_Contribuidor_id as 'id_contribuidor', " +
+                    "ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', " +
+                    "ct.Orgao_associado AS 'orgao_associado' FROM Relatorio_acidente ra " +
+                    "INNER JOIN contribuidor ct ON ct.id = ra.FK_Contribuidor_id " +
+                    "INNER JOIN cadastro ca ON ca.id = ct.FK_Cadastro_id "+
+                    "WHERE ra.cadastrado=0";
+         Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Contribuidor contribuidor = new Contribuidor();
+            //setando informacoes referente ao contribuidor que enviou o relatorio
+            contribuidor.setCampoIdentificacao(Integer.parseInt( resultado.getString("id_contribuidor") ));
+            contribuidor.setNome(resultado.getString("nome"));
+            contribuidor.setCpf(resultado.getString("cpf"));
+            contribuidor.setNumeroRg(resultado.getString("rg"));
+            contribuidor.setEstadorg(resultado.getString("estado_rg"));
+            contribuidor.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate( resultado.getString("data_nasc") );
+            contribuidor.setDataNascimento(dataNasc);
+            contribuidor.setOrgaoAssociado(resultado.getString("orgao_associado"));
+            //
+            RelatorioAcidente relatorio = new RelatorioAcidente();
+            relatorio.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            relatorio.setAuxiliador(contribuidor); //adicionando o contribuidor ao relatorio
+            relatorio.setPlaca(resultado.getString("placa"));
+            relatorio.setNomeCondutor(resultado.getString("nome_condutor"));
+            relatorio.setNumCnh(resultado.getString("cnh_condutor"));
+            relatorio.setNumOcupantes(Integer.parseInt( resultado.getString("numero_ocupantes") ));
+            relatorio.setDescricao(resultado.getString("info_acidente"));
+            relatorio.setLatitude(Double.parseDouble( resultado.getString("latitude") ));
+            relatorio.setLongitude(Double.parseDouble( resultado.getString("longitude") ));
+            Date dataHora = Utilitarios.strDateTime(resultado.getString("data") );
+            relatorio.setData(dataHora);
+            relatorios.add(relatorio);
+        }
+        statement.close();
+        conexao.close();
+         return relatorios;
+    }
     /**
      * Apaga um relatorio do sistema com base no seu id
      * @param idRelatorio inteiro representando o id do relatorio acidente no banco de dados

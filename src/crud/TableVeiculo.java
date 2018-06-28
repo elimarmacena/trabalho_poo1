@@ -113,6 +113,28 @@ public class TableVeiculo implements OperacoesBaseDados<Veiculo> {
         conexao.close();
         return veiculo;
     }
+    
+    public Veiculo recuperarByPlaca(String placa)throws SQLException, ClassNotFoundException{
+        Veiculo veiculo = new Veiculo();
+        String sql = "SELECT * FROM Veiculo vi WHERE vi.placa = '"+placa+"'";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+         //setando informacoes para o objeto veiculo
+        veiculo.setRenavam(resultado.getString("renavam"));
+        veiculo.setPlaca(resultado.getString("placa"));
+        veiculo.setModelo(resultado.getString("modelo"));
+        veiculo.setCor(resultado.getString("cor"));
+        veiculo.setMarca(resultado.getString("marca"));
+        veiculo.setAno( Integer.parseInt( resultado.getString("ano") ) );
+        veiculo.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+        statement.close();
+        conexao.close();
+        return veiculo;
+    }
 
     
 }

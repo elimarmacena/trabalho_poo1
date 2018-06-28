@@ -5,8 +5,7 @@
  */
 package view;
 
-import static crud.Utilitarios.strDate;
-import static crud.Utilitarios.strDateFromField;
+import crud.Utilitarios;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
