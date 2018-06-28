@@ -5,7 +5,7 @@
  */
 package view;
 
-import controller.OperacoesGet;
+import controller.*;
 import crud.TableAcidente;
 import crud.TableCondutor;
 import crud.TableFuncionario;
@@ -39,6 +39,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 	JanelaCadFuncionario telaCadFunc = null;
 	JanelaCadCondutor telaCadCond = null;
         JanelaCadAcidente telaCadAc = null;
+        JanelaAtualizaFuncionario telaAtt = null;
 
 	/**
 	 * Creates new form JanelaPrincipal
@@ -832,34 +833,17 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableCadastrosMouseClicked
 
     private void jButtonCadEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadEditarActionPerformed
-        if(cadastroSelecionado != -1){
-            //WIP TODO
-            int identificador;
+            telaAtt = new JanelaAtualizaFuncionario();
+            int identificador = 0;
             Condutor cond = null;
             Funcionario func = null;
-            TableCondutor tabCond = new TableCondutor();
-            ;
-            switch (this.cadastroTipo) {
-                case 1:
-                    this.popupCadCondutor();
-                    identificador = Integer.parseInt(this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString());
-                    
-                    this.telaCadCond.setCampos(cond);
-                    this.telaCadCond.bloquearCamposEssenciais(true);
-                    break;
-                case 2:
-                    identificador = Integer.parseInt(this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString());
-                    this.popupCadFuncionario(identificador);
-                    func = OperacoesGet.getFuncinarioById(identificador);
-                    this.telaCadFunc.setCampos(func);
-                    
-                    break;
-                default:
-                    break;
-            }
-		}else{
-			System.out.println("Nenhuma linha selecionada para edição.");
-		}
+            identificador = Integer.parseInt(this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString());
+            func = OperacoesGet.getFuncinarioById(identificador);
+            telaAtt = new JanelaAtualizaFuncionario(func);
+            telaAtt.setDefaultCloseOperation(HIDE_ON_CLOSE);
+            telaAtt.setVisible(true);
+            telaAtt.setCampos(func);
+       
     }//GEN-LAST:event_jButtonCadEditarActionPerformed
 
     private void jButtonRelTabelaConsultaFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRelTabelaConsultaFiltroActionPerformed
@@ -982,7 +966,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         
         private void popupCadFuncionario(int id) {
 		if(telaCadFunc == null){
-			telaCadFunc = new JanelaCadFuncionario();
+			telaCadFunc = new JanelaCadFuncionario(id);
 			telaCadFunc.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		}
         telaCadFunc.setVisible(true);
@@ -1074,7 +1058,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         TableFuncionario tabela = new TableFuncionario();
         List<Funcionario> funcionarios;
 		try {
-			funcionarios = tabela.recuperarFuncionarios();
+			funcionarios = tabela.recuperarFuncionariosAtivos();
 			for(Funcionario funcionario : funcionarios) {
 				model.addRow(new Object[] {
 					funcionario.getCampoIdentificacao(),
@@ -1213,7 +1197,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 	}
 	
 	private void removerCadastro() {
-		//TODO stuff
+		int identificador = Integer.parseInt(this.jTableCadastros.getModel().getValueAt(cadastroSelecionado,0).toString());
+                OperacaoDelete.apagarFuncinario(identificador);
 	}
     
 }

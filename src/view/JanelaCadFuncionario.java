@@ -5,7 +5,7 @@
  */
 package view;
 
-import controller.OperacoesUpdate;
+import controller.*;
 import crud.Utilitarios;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
@@ -403,6 +403,36 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
 	private void salvarDados() {
 		if(estaoTodosPreenchidos()){
 			Funcionario funcionarioAtualizar = new Funcionario();
+			funcionarioAtualizar.setNome(jCampoNome.getText());
+			funcionarioAtualizar.setNumeroRg(jCampoRg.getText());
+			funcionarioAtualizar.setCpf(jCampoCpf.getText());  //cpf ja esta sendo coletado com - divisor dos 2 ultimos digitos
+                        //func.setSenha(jCampoSenha.getPassword().toString()); OLD
+			funcionarioAtualizar.setSenha( String.valueOf(jCampoSenha.getPassword()) ); //transforma o array q eh retornado em getpassword para string   
+			funcionarioAtualizar.setDataNascimento(Utilitarios.strBrDate( jCampoDataNascimento.getText() ));
+			funcionarioAtualizar.setSexo(Utilitarios.converteSexo(jComboBoxSexo.getItemAt(jComboBoxSexo.getSelectedIndex())));
+                        funcionarioAtualizar.setEstadorg(jCampoRg.getText());
+                        String escolhaComboBox= String.valueOf(jComboBoxSexo.getSelectedItem().toString().charAt(0));
+                        funcionarioAtualizar.setSexo(Utilitarios.converteSexo(escolhaComboBox));
+                        /*String text;
+			text = jCampoDataNascimento.getText();
+                        funcionarioAtualizar.setDataNascimento(strDateFromField(text));
+			text = "" + jComboBoxSexo.getSelectedItem().toString().charAt(0);
+			funcionarioAtualizar.setSexo(text);
+                        */
+			//considerando tabela ja criada já é feita insercao
+                        OperacoesPut.salvarFuncionario(funcionarioAtualizar);
+                        JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
+                        this.limparCampos();
+                        this.fecharJanela();
+                        
+		}else{
+			JOptionPane.showMessageDialog(null, "Erro: Preencha todos os dados!");
+		}
+	}
+	
+	private void editarDados() {
+		if(estaoTodosPreenchidos()){
+			Funcionario funcionarioAtualizar = new Funcionario();
                         funcionarioAtualizar.setCampoIdentificacao(this.idFuncinario);
 			funcionarioAtualizar.setNome(jCampoNome.getText());
 			funcionarioAtualizar.setNumeroRg(jCampoRg.getText());
@@ -422,18 +452,6 @@ public class JanelaCadFuncionario extends javax.swing.JFrame {
                         */
 			//considerando tabela ja criada já é feita insercao
                         OperacoesUpdate.updateFuncionario(funcionarioAtualizar);
-                        JOptionPane.showMessageDialog(null, "Dados Salvos com sucesso");
-                        this.limparCampos();
-                        this.fecharJanela();
-                        
-		}else{
-			JOptionPane.showMessageDialog(null, "Erro: Preencha todos os dados!");
-		}
-	}
-	
-	private void editarDados() {
-		if(estaoTodosPreenchidos()){
-			
 			JOptionPane.showMessageDialog(null, "Cadastro editado com sucesso");
 			this.limparCampos();
 			this.fecharJanela();

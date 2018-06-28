@@ -61,6 +61,39 @@ public class TableFuncionario implements OperacoesBaseDados<Funcionario>{
      * @throws SQLException
      * @throws ClassNotFoundException
      */
+    
+    public ArrayList<Funcionario> recuperarFuncionariosAtivos() throws SQLException, ClassNotFoundException{
+        ArrayList<Funcionario> funcionarios = new ArrayList();
+        String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "
+                + "fn.id as 'id' ,fn.senha AS 'senha', fn.ativo AS 'ativo' "
+                + "FROM Funcionario fn "
+                + "INNER JOIN Cadastro ca ON fn.FK_Cadastro_id = ca.id"
+                +" WHERE fn.ativo=1";
+        Connection conexao = null;
+        Statement statement = null;
+        Class.forName("org.sqlite.JDBC");
+        conexao = DriverManager.getConnection("jdbc:sqlite:sistemaAcidentes.db");
+        statement = conexao.createStatement();
+        ResultSet resultado = statement.executeQuery(sql);
+        while (resultado.next()){
+            Funcionario funcionario = new Funcionario();
+            funcionario.setCampoIdentificacao(Integer.parseInt( resultado.getString("id") ));
+            funcionario.setNome(resultado.getString("nome"));
+            funcionario.setCpf(resultado.getString("cpf"));
+            funcionario.setNumeroRg(resultado.getString("rg"));
+            funcionario.setEstadorg(resultado.getString("estado_rg"));
+            funcionario.setSexo(resultado.getString("sexo"));
+            Date dataNasc = Utilitarios.strDate(resultado.getString("data_nasc"));
+            funcionario.setDataNascimento(dataNasc);
+            funcionario.setSenha(resultado.getString("senha"));
+            boolean ativo = resultado.getString("ativo").equals("1");
+            funcionario.setAtivo(ativo);
+            funcionarios.add(funcionario);
+        }
+        statement.close();
+        conexao.close();
+        return funcionarios;
+    }
     public ArrayList<Funcionario> recuperarFuncionarios() throws SQLException, ClassNotFoundException{
         ArrayList<Funcionario> funcionarios = new ArrayList();
         String sql = "SELECT ca.nome AS 'nome', ca.numero_cpf AS 'cpf', ca.numero_rg AS 'rg', ca.estado_rg AS 'estado_rg', ca.sexo AS 'sexo', ca.data_nasc AS 'data_nasc', "

@@ -27,4 +27,16 @@ public class OperacaoDelete {
         }
         
     }
+    public static void apagarFuncinario(int idFuncionario){
+        TableFuncionario tbFn = new TableFuncionario();
+        try{
+            Funcionario funcinarioRemovido = new Funcionario();
+            funcinarioRemovido.setCampoIdentificacao(idFuncionario);
+            tbFn.removerFuncionario(funcinarioRemovido);
+            JOptionPane.showMessageDialog(null, "FUNCIONARIO REMOVIDO");
+        }
+        catch(SQLException | ClassNotFoundException err){
+            JOptionPane.showMessageDialog(null, "NAO FOI POSSIVEL REMOVER O FUNCIONARIO");
+        }
+    }
 }
