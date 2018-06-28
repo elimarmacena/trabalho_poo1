@@ -42,9 +42,6 @@ public abstract class Pessoa {
         else {
             
             String tentativaSexo = JOptionPane.showInputDialog("Entrada invalida\\nInforme (M)asculino ou (F)eminino: " );
-            /*System.out.println("Entrada invalida\nInforme (M)asculino ou (F)eminino: ");
-            Scanner scan = new Scanner(System.in);
-            String tentativaSexo = scan.nextLine();*/
             setSexo(tentativaSexo);
         }
     }

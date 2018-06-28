@@ -35,17 +35,23 @@ public class JanelaLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jCampoLoginLogin = new javax.swing.JTextField();
         jLabelLogin = new javax.swing.JLabel();
+        jLabelLogoPic = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButtonEntrarLogin = new javax.swing.JButton();
         jPassword = new javax.swing.JPasswordField();
+        jCampoLoginLogin = new javax.swing.JFormattedTextField();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setMinimumSize(new java.awt.Dimension(640, 360));
 
         jLabelLogin.setText("Login:");
+
+        jLabelLogoPic.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelLogoPic.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelLogoPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/GenericLogoTrsp.png"))); // NOI18N
 
         jLabel1.setText("Senha:");
 
@@ -62,40 +68,62 @@ public class JanelaLogin extends javax.swing.JFrame {
             }
         });
 
+        try {
+            jCampoLoginLogin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#########-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jCampoLoginLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCampoLoginLoginActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(261, Short.MAX_VALUE)
+                .addGap(213, 213, 213)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelLogin, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCampoLoginLogin))
-                        .addGap(270, 270, 270))
+                            .addComponent(jCampoLoginLogin)
+                            .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(213, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonEntrarLogin)
-                        .addGap(298, 298, 298))))
+                        .addComponent(jButtonEntrarLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(252, 252, 252))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelLogoPic)
+                        .addGap(310, 310, 310))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(248, 248, 248)
+                .addGap(169, 169, 169)
+                .addComponent(jLabelLogoPic)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCampoLoginLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelLogin))
+                    .addComponent(jLabelLogin)
+                    .addComponent(jCampoLoginLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonEntrarLogin)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(jButtonEntrarLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,21 +147,30 @@ public class JanelaLogin extends javax.swing.JFrame {
         Funcionario usuario = null;
         try {
             usuario = tbFuncionario.checkLogin(login, senha);
-            JOptionPane.showMessageDialog(null, "BEM VINDO "+usuario.getNome()+"!");
+            JOptionPane.showMessageDialog(null, "Bem Vindo, "+usuario.getNome()+"!");
+            //modularizar a troca de tela
+            JanelaPrincipal jPrincipal1 = new JanelaPrincipal();
+            jPrincipal1.setDefaultCloseOperation(HIDE_ON_CLOSE);
+            setVisible(false);
+            jPrincipal1.setVisible(true);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JanelaLogin.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "DADOS INVALIDOS.");
+            JOptionPane.showMessageDialog(null, "Dados invalidos");
         } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(null, "SENHA OU LOGIN INCORRETO.");
+            JOptionPane.showMessageDialog(null, "senha ou login incorretos");
         } catch (UnsupportedOperationException ex) {
-            JOptionPane.showMessageDialog(null, "USUARIO NAO ESTA MAIS ATIVO.");
+            JOptionPane.showMessageDialog(null, "Usuario nao esta mais ativo");
         }
     }//GEN-LAST:event_jButtonEntrarLoginActionPerformed
 
     private void jPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordActionPerformed
+
+    private void jCampoLoginLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCampoLoginLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCampoLoginLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,10 +209,12 @@ public class JanelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEntrarLogin;
-    private javax.swing.JTextField jCampoLoginLogin;
+    private javax.swing.JFormattedTextField jCampoLoginLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelLogin;
+    private javax.swing.JLabel jLabelLogoPic;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPassword;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

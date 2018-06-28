@@ -198,7 +198,7 @@ public class JanelaCadCondutor extends javax.swing.JFrame {
         );
 
         labelTituloCondutor.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        labelTituloCondutor.setText("Cadastro de Acidente");
+        labelTituloCondutor.setText("Cadastro de Condutor");
 
         jButtonCondFinalizar.setText("Salvar");
         jButtonCondFinalizar.addActionListener(new java.awt.event.ActionListener() {

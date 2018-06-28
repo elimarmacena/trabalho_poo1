@@ -13,6 +13,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.*;
+import view.JanelaLogin;
 /*import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteConfig.Pragma;*/
 
@@ -21,10 +22,8 @@ import org.sqlite.SQLiteConfig.Pragma;*/
 public class teste {
     public static void main (String[] args) {
 		
-		String data = "1952-05-12";
-		System.out.println(data);
-		Date dataOb = Utilitarios.strDate(data);
-		System.out.println(Utilitarios.dataToStringBR(dataOb));
+		JanelaLogin jLogin = new JanelaLogin();
+                jLogin.setVisible(true);
 		
     }
 }
