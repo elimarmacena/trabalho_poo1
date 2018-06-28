@@ -5,15 +5,15 @@
  */
 package view;
 
-import controller.operacoesGet;
+import controller.OperacoesGet;
 import crud.Utilitarios;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Acidente;
 import model.OcorrenciaAcidente;
 import model.Veiculo;
-import controller.operacoesGet;
-import controller.operacoesPut;
+import controller.OperacoesGet;
+import controller.OperacoesPut;
 import model.Condutor;
 
 /**
@@ -24,6 +24,7 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
     Acidente acidenteCadastro = null;
     ArrayList<OcorrenciaAcidente> ocorrencias = new ArrayList<>();
     JanelaNotificacoesAc notificacoesAc = null;
+    JanelaDadosRotina dadosRotina = null;
     /**
      * Creates new form JanelaCadAcidente
      */
@@ -68,7 +69,9 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
         finalizarCadastro = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuPendencia = new javax.swing.JMenuItem();
+        menuVeiculo = new javax.swing.JMenu();
+        menuDados = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -288,15 +291,32 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setText("exibir tela de notificao");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuPendencia.setText("exibir tela de notificao");
+        menuPendencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuPendenciaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(menuPendencia);
 
         jMenuBar1.add(jMenu1);
+
+        menuVeiculo.setText("Veiculos");
+        menuVeiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuVeiculoActionPerformed(evt);
+            }
+        });
+
+        menuDados.setText("Dados Rotina");
+        menuDados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDadosActionPerformed(evt);
+            }
+        });
+        menuVeiculo.add(menuDados);
+
+        jMenuBar1.add(menuVeiculo);
 
         setJMenuBar(jMenuBar1);
 
@@ -350,11 +370,11 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenu1ActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuPendenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPendenciaActionPerformed
         notificacoesAc = new JanelaNotificacoesAc();
         notificacoesAc.setDefaultCloseOperation(HIDE_ON_CLOSE);
         notificacoesAc.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuPendenciaActionPerformed
 
     private void adicionarAcidenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarAcidenteActionPerformed
         int pessoasEnvovidas = Integer.parseInt( jFieldPessoasEnv.getText() );
@@ -378,11 +398,10 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String placa = jFieldPlaca.getText();
-        JOptionPane.showMessageDialog(null, placa);
         int velocidadeV = Integer.parseInt(jFieldVelocidade.getText());
-        Veiculo veiculo = operacoesGet.getVeiculo(placa);
-        Condutor condutor = operacoesGet.getContudor(jFieldCnhCond.getText());
-        String resultEscolha = String.valueOf(jComboTitular.getSelectedItem().toString().charAt(0));
+        Veiculo veiculo = OperacoesGet.getVeiculo(placa);
+        Condutor condutor = OperacoesGet.getContudor(jFieldCnhCond.getText());
+        String resultEscolha = jComboTitular.getSelectedItem().toString();
         boolean titular = resultEscolha.equals("SIM");
         OcorrenciaAcidente ocorrencia = new OcorrenciaAcidente();
         ocorrencia.setCondutor(condutor);
@@ -398,10 +417,30 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
         }
         else{
             acidenteCadastro.setVeiculosEnvolvidos(ocorrencias);
-            operacoesPut.salvarAcidente(acidenteCadastro);
+            OperacoesPut.salvarAcidente(acidenteCadastro);
+            JOptionPane.showMessageDialog(null, "CADASTRO EFETUADO");
+            jFieldPessoasEnv.setText("");
+            jFieldLatitude.setText("");
+            jFieldLongitude.setText("");
+            jFieldDescricao.setText("");
+            jFieldDataAc.setValue(null);
+            jFieldHoraAc.setValue(null);
+            jFieldPlaca.setValue(null);
+            jFieldVelocidade.setText("");
+            jFieldCnhCond.setText("");
         }
         
     }//GEN-LAST:event_finalizarCadastroActionPerformed
+
+    private void menuDadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDadosActionPerformed
+        dadosRotina = new JanelaDadosRotina();
+        dadosRotina.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        dadosRotina.setVisible(true);
+    }//GEN-LAST:event_menuDadosActionPerformed
+
+    private void menuVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuVeiculoActionPerformed
+        
+    }//GEN-LAST:event_menuVeiculoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -466,8 +505,10 @@ public class JanelaCadAcidente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem menuDados;
+    private javax.swing.JMenuItem menuPendencia;
+    private javax.swing.JMenu menuVeiculo;
     private javax.swing.JPanel painelInfoAc;
     // End of variables declaration//GEN-END:variables
 }

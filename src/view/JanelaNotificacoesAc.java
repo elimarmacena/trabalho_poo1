@@ -22,7 +22,7 @@ import model.RelatorioAcidente;
  * @author elmr
  */
 public class JanelaNotificacoesAc extends javax.swing.JFrame {
-
+    int linhaSelecionada = 0;
     /**
      * Creates new form JanelaNotificacoesAc
      */
@@ -42,7 +42,7 @@ public class JanelaNotificacoesAc extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaRelatorios = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        bDeletarNotificacao = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -68,10 +68,20 @@ public class JanelaNotificacoesAc extends javax.swing.JFrame {
             }
         });
         tabelaRelatorios.setCellSelectionEnabled(true);
+        tabelaRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaRelatoriosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaRelatorios);
         tabelaRelatorios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        jButton1.setText("DELETAR NOTIFICAO");
+        bDeletarNotificacao.setText("DELETAR NOTIFICAO");
+        bDeletarNotificacao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bDeletarNotificacaoActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("ATUALIZAR STATUS");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -96,7 +106,7 @@ public class JanelaNotificacoesAc extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(101, 101, 101)
-                                .addComponent(jButton1)
+                                .addComponent(bDeletarNotificacao)
                                 .addGap(135, 135, 135)
                                 .addComponent(jButton2))
                             .addGroup(layout.createSequentialGroup()
@@ -114,7 +124,7 @@ public class JanelaNotificacoesAc extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(bDeletarNotificacao)
                     .addComponent(jButton2))
                 .addGap(29, 29, 29))
         );
@@ -125,6 +135,15 @@ public class JanelaNotificacoesAc extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tabelaRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaRelatoriosMouseClicked
+        linhaSelecionada = tabelaRelatorios.rowAtPoint(evt.getPoint());
+    }//GEN-LAST:event_tabelaRelatoriosMouseClicked
+
+    private void bDeletarNotificacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeletarNotificacaoActionPerformed
+        System.out.println((String) tabelaRelatorios.getModel().getValueAt(linhaSelecionada, 0));
+        this.atualizarTabela();
+    }//GEN-LAST:event_bDeletarNotificacaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,7 +181,7 @@ public class JanelaNotificacoesAc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton bDeletarNotificacao;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

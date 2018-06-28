@@ -16,7 +16,7 @@ import model.Acidente;
  *
  * @author elmr
  */
-public class operacoesPut {
+public class OperacoesPut {
     public static void salvarAcidente(Acidente acidenteCadastro){
         TableAcidente tbAcidente = new TableAcidente();
         try {

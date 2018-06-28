@@ -15,7 +15,7 @@ import model.*;
  *
  * @author elmr
  */
-public class operacoesGet {
+public class OperacoesGet {
     
     
     public static Veiculo getVeiculo(String placa){
@@ -31,13 +31,14 @@ public class operacoesGet {
     
     public static Condutor getContudor(String numeroCnh){
         TableBancoCondutores tbBCondutores = new TableBancoCondutores();
+        TableCondutor tbCondutores = new TableCondutor();
         Condutor recuperado = null;
         try{
             recuperado = tbBCondutores.buscaByCnh(numeroCnh);
+            tbCondutores.cadastar(recuperado);
         }
         catch(SQLException | ClassNotFoundException tr){
             try{
-            TableCondutor tbCondutores = new TableCondutor();
             recuperado = tbCondutores.recuperarPorCnh(numeroCnh);
             }
             catch(SQLException | ClassNotFoundException rt){
